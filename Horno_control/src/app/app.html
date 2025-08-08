@@ -1,134 +1,129 @@
 <div class="home-container">
+  <!-- Tarjeta de Conexión MQTT -->
   <mat-card class="configCard">
     <h2 class="emq-title">{{ title() }}</h2>
-    <div class="emq-subtitle">Configuración MQTT</div>
-    <form class="config-form">
-      <mat-grid-list cols="4" rowHeight="4:1">
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
-            <mat-label>Servidor</mat-label>
-            <input matInput [(ngModel)]="connection.hostname" name="hostname">
-          </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
-            <mat-label>Puerto</mat-label>
-            <input matInput type="number" [(ngModel)]="connection.port" name="port">
-          </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
-            <mat-label>Endpoint</mat-label>
-            <input matInput [(ngModel)]="connection.path" name="path">
-          </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
-            <mat-label>Client ID</mat-label>
-            <input matInput [(ngModel)]="connection.clientId" name="clientId">
-          </mat-form-field>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </form>
+    <div class="emq-subtitle">Configuración del Broker</div>
+    <div class="broker-info">
+      <p><strong>Broker:</strong> {{ connectionSettings.broker }}</p>
+      <p><strong>Puerto:</strong> {{ connectionSettings.port }}</p>
+      <p><strong>Protocolo:</strong> {{ connectionSettings.protocol }}</p>
+    </div>
+    
     <mat-grid-list cols="8" rowHeight="4:1">
-      <mat-grid-tile>
+      <mat-grid-tile colspan="4">
         <button mat-raised-button color="primary"
-                (click)="createConnection()" [disabled]="isConnected">
-          {{ isConnected ? 'Conectado' : 'Conectar' }}
+                (click)="connect()" [disabled]="connectionStatus">
+          {{ connectionStatus ? 'Conectado' : 'Conectar' }}
         </button>
       </mat-grid-tile>
-      <mat-grid-tile>
+      <mat-grid-tile colspan="4">
         <button mat-raised-button color="warn" 
-                (click)="destroyConnection()" [disabled]="!isConnected">
+                (click)="disconnect()" [disabled]="!connectionStatus">
           Desconectar
         </button>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card>
 
+  <!-- Tarjeta de Suscripción -->
   <mat-card class="subscriptionCard">
     <div class="emq-title">Suscripción</div>
     <form class="config-form">
       <mat-grid-list cols="4" rowHeight="4:1">
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
+        <mat-grid-tile colspan="3">
+          <mat-form-field appearance="fill" class="full-width">
             <mat-label>Tópico</mat-label>
-            <input matInput [(ngModel)]="subscription.topic" name="subTopic">
+            <input matInput [(ngModel)]="subscriptionConfig.topic" name="subTopic">
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile colspan="1">
           <mat-form-field appearance="fill">
-            <mat-label>Calidad de Servicio (QoS)</mat-label>
-            <mat-select [(ngModel)]="subscription.qos" name="subQos">
-              <mat-option *ngFor="let item of qosList" [value]="item.value">
-                {{ item.label }}
-              </mat-option>
+            <mat-label>QoS</mat-label>
+            <mat-select [(ngModel)]="subscriptionConfig.qos" name="subQos">
+              @for (item of qosOptions; track item.value) {
+                <mat-option [value]="item.value">
+                  {{ item.label }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
     </form>
     <mat-grid-list cols="8" rowHeight="4:1">
-      <mat-grid-tile>
+      <mat-grid-tile colspan="4">
         <button mat-raised-button color="primary"
-                (click)="doSubscribe()" 
-                [disabled]="!isConnected || subscribeSuccess">
-          {{ subscribeSuccess ? 'Suscrito' : 'Suscribir' }}
+                (click)="subscribe()" 
+                [disabled]="!connectionStatus || isSubscribed">
+          {{ isSubscribed ? 'Suscrito' : 'Suscribir' }}
         </button>
       </mat-grid-tile>
-      <mat-grid-tile>
+      <mat-grid-tile colspan="4">
         <button mat-raised-button color="warn" 
-                (click)="doUnsubscribe()" 
-                [disabled]="!subscribeSuccess">
+                (click)="unsubscribe()" 
+                [disabled]="!isSubscribed">
           Cancelar Suscripción
         </button>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card>
 
+  <!-- Tarjeta de Publicación -->
   <mat-card class="publishCard">
     <div class="emq-title">Publicación</div>
     <form class="config-form">
-      <mat-grid-list cols="4" rowHeight="4:1">
-        <mat-grid-tile>
+      <mat-grid-list cols="4" rowHeight="6:1">
+        <mat-grid-tile colspan="1">
           <mat-form-field appearance="fill">
             <mat-label>Tópico</mat-label>
-            <input matInput [(ngModel)]="publish.topic" name="pubTopic">
+            <input matInput [(ngModel)]="publishConfig.topic" name="pubTopic">
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
+        <mat-grid-tile colspan="2">
+          <mat-form-field appearance="fill" class="full-width">
             <mat-label>Mensaje</mat-label>
-            <textarea matInput [(ngModel)]="publish.payload" name="pubPayload"></textarea>
+            <textarea matInput [(ngModel)]="publishConfig.payload" name="pubPayload" rows="3"></textarea>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile colspan="1">
           <mat-form-field appearance="fill">
             <mat-label>QoS</mat-label>
-            <mat-select [(ngModel)]="publish.qos" name="pubQos">
-              <mat-option *ngFor="let item of qosList" [value]="item.value">
-                {{ item.label }}
-              </mat-option>
+            <mat-select [(ngModel)]="publishConfig.qos" name="pubQos">
+              @for (item of qosOptions; track item.value) {
+                <mat-option [value]="item.value">
+                  {{ item.label }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
     </form>
     <mat-grid-list cols="8" rowHeight="4:1">
-      <mat-grid-tile>
+      <mat-grid-tile colspan="8">
         <button mat-raised-button color="primary" 
-                (click)="doPublish()" 
-                [disabled]="!isConnected">
-          Publicar
+                (click)="publish()" 
+                [disabled]="!connectionStatus"
+                class="publish-button">
+          Publicar Mensaje
         </button>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card>
 
+  <!-- Tarjeta de Mensajes Recibidos -->
   <mat-card class="receiveCard">
     <div class="emq-title">Mensajes Recibidos</div>
+    <div class="message-controls">
+      <span class="message-count">{{ receivedMessages.length }} mensajes</span>
+      <button mat-raised-button color="basic" 
+              (click)="clearMessages()"
+              [disabled]="receivedMessages.length === 0">
+        Limpiar
+      </button>
+    </div>
     <mat-form-field appearance="fill" class="full-width">
-      <textarea matInput readonly>{{receiveNews}}</textarea>
+      <textarea matInput readonly class="message-log">{{ receivedMessages.join('\n') }}</textarea>
     </mat-form-field>
   </mat-card>
 </div>

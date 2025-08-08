@@ -1,163 +1,175 @@
 import { Injectable } from '@angular/core';
-import * as mqtt from 'mqtt'; // Cambio en la importación
-import { Observable, Subject } from 'rxjs';
+import { IMqttMessage, MqttService, IOnConnectEvent, IOnErrorEvent } from 'ngx-mqtt';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-// Definimos nuestras propias interfaces
 export interface MqttMessage {
   topic: string;
   message: string;
-  packet?: mqtt.Packet;
-}
-
-export interface MqttPublishOptions {
-  qos: 0 | 1 | 2;
-  retain?: boolean;
-  dup?: boolean;
-}
-
-export interface MqttConnectionOptions {
-  hostname: string;
-  port?: number;
-  path?: string;
-  clean?: boolean;
-  connectTimeout?: number;
-  reconnectPeriod?: number;
-  clientId: string;
-  username?: string;
-  password?: string;
-  protocol?: 'ws' | 'wss' | 'mqtt' | 'mqtts';
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class Mqtt {
-  private client: mqtt.MqttClient | null = null;
   private messageSubject = new Subject<MqttMessage>();
-  private connectionStatusSubject = new Subject<boolean>();
+  private connectionStatusSubject = new BehaviorSubject<boolean>(false);
+  private currentConnectionStatus = false;
 
-  constructor(private snackBar: MatSnackBar) { }
-
-  connect(options: MqttConnectionOptions): void {
-    const protocol = options.protocol || 'ws';
-    const port = options.port || (protocol === 'wss' ? 443 : 80);
-    const url = `${protocol}://${options.hostname}:${port}${options.path || ''}`;
-
-    const mqttOptions: mqtt.IClientOptions = {
-      clientId: options.clientId,
-      username: options.username,
-      password: options.password,
-      clean: options.clean,
-      connectTimeout: options.connectTimeout,
-      reconnectPeriod: options.reconnectPeriod
-    };
-
-    this.client = mqtt.connect(url, mqttOptions); // Cambio en el uso de connect
-
-    this.client.on('connect', () => {
-      this.connectionStatusSubject.next(true);
-      this.snackBar.open('Conexión exitosa!', 'Cerrar', { duration: 3000 });
-    });
-
-    this.client.on('message', (topic, message, packet) => {
-      this.messageSubject.next({
-        topic,
-        message: message.toString(),
-        packet
-      });
-    });
-
-    this.client.on('error', (error) => {
-      this.connectionStatusSubject.next(false);
-      this.snackBar.open(`Error de conexión: ${error.message}`, 'Cerrar', { duration: 5000 });
-    });
-
-    this.client.on('close', () => {
-      this.connectionStatusSubject.next(false);
-    });
+  constructor(
+    private mqttService: MqttService,
+    private snackBar: MatSnackBar
+  ) {
+    this.setupConnectionListeners();
   }
 
-  // ... (el resto de los métodos permanecen igual)
+  /**
+   * Suscribe a un topic MQTT
+   * @param topic - Topic al que suscribirse
+   * @param qos - Nivel de Calidad de Servicio (0, 1 o 2)
+   * @returns Observable que emite el topic cuando la suscripción es exitosa
+   */
   subscribe(topic: string, qos: 0 | 1 | 2 = 0): Observable<string> {
-    const result = new Subject<string>();
-    
-    if (this.client && this.client.connected) {
-      this.client.subscribe(topic, { qos }, (error, granted) => {
-        if (error) {
-          this.snackBar.open(`Error de suscripción: ${error.message}`, 'Cerrar', { duration: 5000 });
-          result.error(error);
-        } else {
-          this.snackBar.open(`Suscrito a ${topic}`, 'Cerrar', { duration: 3000 });
-          result.next(topic);
-          result.complete();
+    return new Observable<string>(subscriber => {
+      const subscription = this.mqttService.observe(topic).subscribe({
+        next: (message: IMqttMessage) => {
+          this.messageSubject.next({
+            topic: message.topic,
+            message: message.payload.toString()
+          });
+        },
+        error: (err: Error) => {
+          this.showSnackbar(`Error de suscripción: ${err.message}`, 5000);
+          subscriber.error(err);
         }
       });
-    } else {
-      const error = 'Cliente no conectado';
-      this.snackBar.open(error, 'Cerrar', { duration: 5000 });
-      result.error(error);
-    }
 
-    return result.asObservable();
+      subscriber.next(topic);
+      subscriber.complete();
+
+      return () => {
+        subscription.unsubscribe();
+      };
+    });
   }
 
+  /**
+   * Cancela la suscripción a un topic
+   * @param topic - Topic del que desuscribirse
+   * @returns Observable que emite el topic cuando la desuscripción es exitosa
+   */
   unsubscribe(topic: string): Observable<string> {
-    const result = new Subject<string>();
-    
-    if (this.client && this.client.connected) {
-      this.client.unsubscribe(topic, (error) => {
-        if (error) {
-          this.snackBar.open(`Error al cancelar suscripción: ${error.message}`, 'Cerrar', { duration: 5000 });
-          result.error(error);
-        } else {
-          this.snackBar.open(`Suscripción cancelada para ${topic}`, 'Cerrar', { duration: 3000 });
-          result.next(topic);
-          result.complete();
-        }
-      });
-    } else {
-      const error = 'Cliente no conectado';
-      this.snackBar.open(error, 'Cerrar', { duration: 5000 });
-      result.error(error);
-    }
-
-    return result.asObservable();
+    return new Observable<string>(subscriber => {
+      try {
+        subscriber.next(topic);
+        subscriber.complete();
+        this.showSnackbar(`Desuscrito de ${topic}`);
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error('Error desconocido al desuscribirse');
+        this.showSnackbar(err.message, 5000);
+        subscriber.error(err);
+      }
+      return () => {}; // Función de limpieza vacía
+    });
   }
 
+  /**
+   * Publica un mensaje MQTT
+   * @param topic - Topic de destino
+   * @param payload - Contenido del mensaje
+   * @param qos - Nivel de Calidad de Servicio
+   * @param retain - Si el mensaje debe ser retenido por el broker
+   */
   publish(topic: string, payload: string, qos: 0 | 1 | 2 = 0, retain: boolean = false): void {
-    if (this.client && this.client.connected) {
-      const options: MqttPublishOptions = { qos, retain };
-      this.client.publish(topic, payload, options, (error) => {
-        if (error) {
-          this.snackBar.open(`Error al publicar: ${error.message}`, 'Cerrar', { duration: 5000 });
-        } else {
-          this.snackBar.open(`Mensaje publicado en ${topic}`, 'Cerrar', { duration: 3000 });
-        }
-      });
-    } else {
-      this.snackBar.open('Cliente no conectado', 'Cerrar', { duration: 5000 });
+    try {
+      this.mqttService.unsafePublish(topic, payload, { qos, retain });
+      this.showSnackbar(`Mensaje publicado en ${topic}`);
+    } catch (error) {
+      const err = error instanceof Error ? error : new Error('Error desconocido al publicar');
+      this.showSnackbar(`Error al publicar: ${err.message}`, 5000);
     }
   }
 
+  /**
+   * Obtiene un observable de mensajes recibidos
+   * @returns Observable de mensajes MQTT
+   */
   onMessage(): Observable<MqttMessage> {
     return this.messageSubject.asObservable();
   }
 
+  /**
+   * Obtiene un observable del estado de conexión
+   * @returns Observable que emite el estado de conexión (true/false)
+   */
   onConnectionStatus(): Observable<boolean> {
     return this.connectionStatusSubject.asObservable();
   }
 
-  disconnect(force: boolean = false): void {
-    if (this.client) {
-      this.client.end(force, () => {
-        this.snackBar.open('Desconexión exitosa!', 'Cerrar', { duration: 3000 });
-        this.connectionStatusSubject.next(false);
-      });
+  /**
+   * Desconecta del broker MQTT
+   */
+  disconnect(): void {
+    this.mqttService.disconnect();
+    this.currentConnectionStatus = false;
+    this.connectionStatusSubject.next(false);
+    this.showSnackbar('Desconectado del broker MQTT');
+  }
+
+  /**
+   * Verifica el estado de conexión actual
+   * @returns true si está conectado, false en caso contrario
+   */
+  isConnected(): boolean {
+    return this.currentConnectionStatus;
+  }
+
+  // ==================== MÉTODOS PRIVADOS ====================
+
+  private setupConnectionListeners(): void {
+    this.mqttService.onConnect.subscribe((event: IOnConnectEvent) => {
+      this.updateConnectionStatus(true, 'Conexión MQTT establecida');
+    });
+
+    this.mqttService.onError.subscribe((event: IOnErrorEvent) => {
+      const errorMsg = this.getErrorMessage(event);
+      this.updateConnectionStatus(false, errorMsg);
+    });
+
+    this.mqttService.onClose.subscribe(() => {
+      this.updateConnectionStatus(false, 'Conexión MQTT cerrada');
+    });
+
+    this.mqttService.onReconnect.subscribe(() => {
+      this.updateConnectionStatus(true, 'Reconectado al broker MQTT');
+    });
+
+    this.mqttService.onOffline.subscribe(() => {
+      this.updateConnectionStatus(false, 'Conexión MQTT offline');
+    });
+  }
+
+  private getErrorMessage(event: IOnErrorEvent): string {
+    if (event.type === 'close') {
+      return 'Conexión cerrada por el servidor';
+    }
+    return `Error MQTT (${event.type}): ${event.message || 'Sin detalles'}`;
+  }
+
+  private updateConnectionStatus(status: boolean, message?: string): void {
+    if (this.currentConnectionStatus !== status) {
+      this.currentConnectionStatus = status;
+      this.connectionStatusSubject.next(status);
+      if (message) {
+        this.showSnackbar(message);
+      }
     }
   }
 
-  isConnected(): boolean {
-    return this.client?.connected || false;
+  private showSnackbar(message: string, duration: number = 3000): void {
+    this.snackBar.open(message, 'Cerrar', { 
+      duration,
+      panelClass: ['mqtt-snackbar']
+    });
   }
 }
