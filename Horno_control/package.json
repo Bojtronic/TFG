@@ -7,7 +7,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build --configuration production",
-    "start": "http-server dist/TICpoint/browser -p $PORT -c-1 --spa -i index.html --no-dir-listing",
+    "start": "http-server dist/horno-control/browser -p $PORT -c-1 --spa -i index.html --no-dir-listing",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
