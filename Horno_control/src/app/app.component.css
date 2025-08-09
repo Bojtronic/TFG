@@ -1,0 +1,28 @@
+.home-container {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  .conn-btn {
+    color: #fff;
+    background-color: #00b173;
+    font-size: 14px;
+  }
+
+  .publish-btn {
+    margin-bottom: 20px;
+    float: right;
+  }
+
+  .mat-card {
+    margin-bottom: 20px;
+  }
+
+  .receiveCard textarea {
+    width: 100%;
+    min-height: 200px;  /* Altura mínima */
+    height: auto;
+    resize: vertical;   /* Permite redimensionar verticalmente */
+    padding: 10px;
+    font-family: monospace; /* Mejor legibilidad para mensajes MQTT */
+    }
+}
