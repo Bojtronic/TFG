@@ -1,10 +1,13 @@
 {
   "name": "horno-control",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=18 <19"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
+    "start": "http-server dist/TICpoint/browser -p $PORT -c-1 --spa -i index.html --no-dir-listing",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
