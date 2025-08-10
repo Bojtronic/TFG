@@ -18,7 +18,7 @@
   }
 
   .receiveCard textarea {
-    width: 100%;
+    width: 50%;
     min-height: 200px;  /* Altura mínima */
     height: auto;
     resize: vertical;   /* Permite redimensionar verticalmente */
