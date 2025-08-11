@@ -159,31 +159,14 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     try {
-      // 1. Convertir payload a string si no lo es
-      const payload = typeof this.publish.payload === 'string' 
-        ? this.publish.payload 
-        : JSON.stringify(this.publish.payload);
-      
-      // 2. Opciones de publicación correctamente tipadas
-      const options: IPublishOptions = {
-        qos: this.publish.qos as 0 | 1 | 2, // Asegura el tipo QoS
-        retain: false,
-        dup: false
-      };
+      const { topic, qos, payload } = this.publish;
+      console.log('Publicando en:', topic, 'con payload:', payload);
 
-      // 3. Publicar usando el mqttService (no this.client)
-      this.mqttService.publish(this.publish.topic, payload, options)
-        .pipe(takeUntil(this.destroy$)) // Limpieza automática
-        .subscribe({
-          next: () => {
-            this.showNotification('Mensaje publicado');
-            console.log('Publicación exitosa en', this.publish.topic);
-          },
-          error: (err) => {
-            this.handleError(err);
-            console.error('Error al publicar:', err);
-          }
-        });
+      // Usando unsafePublish como en el código funcional
+      this.mqttService.unsafePublish(topic, payload, { qos } as IPublishOptions);
+      
+      this.showNotification('Mensaje publicado correctamente');
+      console.log('Publicación exitosa en', topic);
       
     } catch (error: unknown) {
       this.handleError(error);
