@@ -163,7 +163,7 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('Publicando en:', topic, 'con payload:', payload);
 
       // Usando unsafePublish como en el código funcional
-      this.mqttService.unsafePublish(topic, payload, { qos } as IPublishOptions);
+      this.mqttService.publish(topic, payload, { qos } as IPublishOptions);
       
       this.showNotification('Mensaje publicado correctamente');
       console.log('Publicación exitosa en', topic);
