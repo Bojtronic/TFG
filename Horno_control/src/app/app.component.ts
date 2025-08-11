@@ -171,11 +171,19 @@ export class AppComponent implements OnInit, OnDestroy {
         dup: false
       };
 
-      // 3. Publicar (versión síncrona)
-      this.mqttService.publish(this.publish.topic, payload, options);
-      this.showNotification('Mensaje publicado');
-      console.log('Publicación exitosa en', this.publish.topic);
-      console.log('Mensaje ', payload);
+      // 3. Publicar usando el mqttService (no this.client)
+      this.mqttService.publish(this.publish.topic, payload, options)
+        .pipe(takeUntil(this.destroy$)) // Limpieza automática
+        .subscribe({
+          next: () => {
+            this.showNotification('Mensaje publicado');
+            console.log('Publicación exitosa en', this.publish.topic);
+          },
+          error: (err) => {
+            this.handleError(err);
+            console.error('Error al publicar:', err);
+          }
+        });
       
     } catch (error: unknown) {
       this.handleError(error);
