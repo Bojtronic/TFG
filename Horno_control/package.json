@@ -6,8 +6,8 @@
   },
   "scripts": {
     "ng": "ng",
-    "build": "ng build --configuration production",
     "start": "http-server dist/horno-control/browser -p $PORT -c-1 --spa -i index.html --no-dir-listing",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "express": "^5.1.0",
     "ngx-mqtt": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

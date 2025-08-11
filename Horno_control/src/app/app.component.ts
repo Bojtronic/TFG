@@ -1,127 +1,200 @@
-import {Component} from '@angular/core';
-import {
-  IMqttMessage,
-  IMqttServiceOptions,
-  MqttService,
-  IPublishOptions,
-} from 'ngx-mqtt';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {IClientSubscribeOptions} from 'mqtt-browser';
-import {Subscription} from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IMqttMessage, MqttService, IPublishOptions } from 'ngx-mqtt';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { IClientSubscribeOptions } from 'mqtt-browser';
+import { Subscription, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  //standalone: true,
-  //imports: [],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  constructor(private _mqttService: MqttService, private _snackBar: MatSnackBar) {
-    this.client = this._mqttService;
-  }
-
+export class AppComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   private curSubscription: Subscription | undefined;
+
+  // Configuración MQTT
   connection = {
     hostname: 'broker.emqx.io',
-    port: 8083,
-    //port: 8084,
+    port: window.location.protocol === 'https:' ? 8084 : 8083,
     path: '/mqtt',
-    clean: true, // 保留会话
-    connectTimeout: 4000, // 超时时间
-    reconnectPeriod: 4000, // 重连时间间隔
-    // 认证信息
-    //clientId: 'mqttx_b7db442b',
+    clean: true,
+    connectTimeout: 4000,
+    reconnectPeriod: 4000,
     clientId: 'mqttx_' + Math.random().toString(16).substring(2, 10),
     username: '',
     password: '',
-    protocol: 'ws',
-    //protocol: 'ws',
-  }
+    protocol: window.location.protocol === 'https:' ? 'wss' : 'ws'
+  };
+
   subscription = {
     topic: 'Salida/01',
     qos: 0,
   };
+
   publish = {
     topic: 'Entrada/01',
     qos: 0,
     payload: '0',
   };
+
   receiveNews = '';
   qosList = [
-    {label: 0, value: 0},
-    {label: 1, value: 1},
-    {label: 2, value: 2},
+    { label: 0, value: 0 },
+    { label: 1, value: 1 },
+    { label: 2, value: 2 },
   ];
-  client: MqttService | undefined;
+
   isConnection = false;
   subscribeSuccess = false;
 
-  // 创建连接
-  createConnection() {
-    // 连接字符串, 通过协议指定使用的连接方式
-    // ws 未加密 WebSocket 连接
-    // wss 加密 WebSocket 连接
-    // mqtt 未加密 TCP 连接
-    // mqtts 加密 TCP 连接
-    // wxs 微信小程序连接
-    // alis 支付宝小程序连接
-    try {
-      this.client?.connect(this.connection as IMqttServiceOptions)
-    } catch (error) {
-      console.log('mqtt.connect error', error);
-    }
-    this.client?.onConnect.subscribe(() => {
-      this.isConnection = true
-      console.log('Connection succeeded!');
-    });
-    this.client?.onError.subscribe((error: any) => {
-      this.isConnection = false
-      console.log('Connection failed', error);
-    });
-    this.client?.onMessage.subscribe((packet: any) => {
-      this.receiveNews = this.receiveNews.concat([packet.payload.toString(), '\n'].join())
-      console.log(`Received message ${packet.payload.toString()} from topic ${packet.topic}`)
-    })
+  constructor(
+    private mqttService: MqttService,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.setupMqttListeners();
   }
 
-  // 订阅主题
-  doSubscribe() {
-    const {topic, qos} = this.subscription
-    if (!this.client) {
-      this._snackBar.open('There is no mqtt client available...', 'close');
-      return;
-    }
-    this.curSubscription = this.client.observe(topic, {qos} as IClientSubscribeOptions)
-      .subscribe((message: IMqttMessage) => {
-        this.subscribeSuccess = true
-        const msg = ['Received message: ', message.payload.toString()].join(' ');
-        this._snackBar.open(msg, 'close');
-        console.log(message);
+  ngOnDestroy(): void {
+    this.destroyConnection();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private setupMqttListeners(): void {
+    this.mqttService.onConnect
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.isConnection = true;
+        this.showNotification('Conectado al broker MQTT');
+        console.log('Conexión exitosa');
+      });
+
+    this.mqttService.onError
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((error: Error) => {
+        this.isConnection = false;
+        this.showNotification(`Error de conexión: ${error.message}`, 'error');
+        console.error('Error MQTT:', error);
+      });
+
+    this.mqttService.onMessage
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((packet: unknown) => {
+        const message = this.parseMqttPacket(packet);
+        if (message) {
+          this.handleIncomingMessage(message);
+        }
       });
   }
 
-  // 取消订阅
-  doUnSubscribe() {
-    this.curSubscription?.unsubscribe()
-    this.subscribeSuccess = false
-  }
-
-  // 发送消息
-  doPublish() {
-    const {topic, qos, payload} = this.publish
-    console.log(this.publish)
-    this.client?.unsafePublish(topic, payload, {qos} as IPublishOptions)
-  }
-
-  // 断开连接
-  destroyConnection() {
-    try {
-      this.client?.disconnect(true)
-      this.isConnection = false
-      console.log('Successfully disconnected!')
-    } catch (error: any) {
-      console.log('Disconnect failed', error.toString())
+  private parseMqttPacket(packet: unknown): IMqttMessage | null {
+    // Verificación de tipo segura para IMqttMessage
+    if (typeof packet === 'object' && packet !== null) {
+      const p = packet as Record<string, unknown>;
+      if (p['topic'] && p['payload']) {
+        return {
+          topic: String(p['topic']),
+          payload: p['payload'],
+          qos: Number(p['qos']) || 0,
+          retain: Boolean(p['retain']),
+          dup: Boolean(p['dup'])
+        } as IMqttMessage;
+      }
     }
+    return null;
+  }
+
+  private handleIncomingMessage(message: IMqttMessage): void {
+    try {
+      const payload = typeof message.payload === 'string' 
+        ? message.payload 
+        : message.payload.toString();
+      
+      this.receiveNews = `${payload}\n${this.receiveNews}`;
+      console.log(`Mensaje recibido [${message.topic}]: ${payload}`);
+    } catch (error) {
+      console.error('Error procesando mensaje:', error);
+    }
+  }
+
+  createConnection(): void {
+    try {
+      this.mqttService.connect();
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  doSubscribe(): void {
+    if (!this.isConnection) {
+      this.showNotification('Primero establece la conexión', 'warning');
+      return;
+    }
+
+    this.curSubscription = this.mqttService.observe(
+      this.subscription.topic,
+      { qos: this.subscription.qos } as IClientSubscribeOptions
+    ).subscribe({
+      next: (message: IMqttMessage) => {
+        this.subscribeSuccess = true;
+        this.showNotification(`Mensaje recibido: ${message.payload.toString()}`);
+      },
+      error: (err) => this.handleError(err)
+    });
+  }
+
+  doUnSubscribe(): void {
+    this.curSubscription?.unsubscribe();
+    this.subscribeSuccess = false;
+    this.showNotification('Suscripción cancelada');
+  }
+
+  doPublish(): void {
+    if (!this.isConnection) {
+      this.showNotification('No hay conexión activa', 'warning');
+      return;
+    }
+
+    try {
+      const { topic, qos, payload } = this.publish;
+      console.log('Publicando en:', topic, 'con payload:', payload);
+
+      // Usando unsafePublish como en el código funcional
+      this.mqttService.publish(topic, payload, { qos } as IPublishOptions);
+      
+      this.showNotification('Mensaje publicado correctamente');
+      console.log('Publicación exitosa en', topic);
+      
+    } catch (error: unknown) {
+      this.handleError(error);
+      console.error('Error al publicar:', error);
+    }
+  }
+
+  destroyConnection(): void {
+    try {
+      this.mqttService.disconnect(true);
+      this.isConnection = false;
+      this.curSubscription?.unsubscribe();
+      this.showNotification('Desconectado del broker');
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  private showNotification(message: string, panelClass: string = 'success'): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      panelClass: [`snackbar-${panelClass}`]
+    });
+  }
+
+  private handleError(error: unknown): void {
+    const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
+    console.error('Error:', error);
+    this.showNotification(errorMsg, 'error');
   }
 }
