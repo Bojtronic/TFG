@@ -1,39 +1,55 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IMqttMessage, MqttService, IPublishOptions } from 'ngx-mqtt';
+import { IMqttMessage, MqttService, IPublishOptions, IMqttServiceOptions } from 'ngx-mqtt';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IClientSubscribeOptions } from 'mqtt-browser';
 import { Subscription, Subject, takeUntil } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import ArduinoIotClient from '@arduino/arduino-iot-client';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private curSubscription: Subscription | undefined;
+  private accessToken = '';
 
-  // Configuración MQTT
-  connection = {
-    hostname: 'broker.emqx.io',
-    port: window.location.protocol === 'https:' ? 8084 : 8083,
-    path: '/mqtt',
+  private arduinoClient: any;
+  private devicesApi: any;
+  
+  // Tus credenciales (deberías usar environment variables en producción)
+  private readonly deviceId = 'f70e133e-27b0-4b96-87af-769e588d64f5';
+  private readonly thingId = 'b47152d2-46b8-4bcf-9cd3-2434f5d91b2d';
+  private readonly clientId = 'TU_CLIENT_ID'; // Obtener de Arduino Cloud
+  private readonly clientSecret = 'TU_CLIENT_SECRET'; // Obtener de Arduino Cloud
+  private readonly deviceKey = 'SECRET_DEVICE_KEY'; // De tu configuración
+
+  // Configuración MQTT actualizada con tipo correcto
+  connection: IMqttServiceOptions = {
+    hostname: 'mqtts-sa.iot.arduino.cc',
+    port: 8884,
+    path: '/',
     clean: true,
     connectTimeout: 4000,
     reconnectPeriod: 4000,
-    clientId: 'mqttx_' + Math.random().toString(16).substring(2, 10),
-    username: '',
-    password: '',
-    protocol: window.location.protocol === 'https:' ? 'wss' : 'ws'
+    clientId: 'angular_' + Math.random().toString(16).substring(2, 10),
+    username: '', // Se establecerá después
+    password: '', // Se establecerá después
+    protocol: 'wss' as const, // Tipo correcto para IMqttServiceOptions
+    rejectUnauthorized: true
   };
 
+  // Topics para Arduino Cloud
   subscription = {
-    topic: 'Salida/01',
+    topic: `/a/t/${this.thingId}/s/${this.deviceId}/property/+`,
     qos: 0,
   };
 
   publish = {
-    topic: 'Entrada/01',
+    topic: `/a/t/${this.thingId}/s/${this.deviceId}/property/update`,
     qos: 0,
     payload: '0',
   };
@@ -48,14 +64,61 @@ export class AppComponent implements OnInit, OnDestroy {
   isConnection = false;
   subscribeSuccess = false;
 
-  constructor(
+ constructor(
     private mqttService: MqttService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private http: HttpClient
+  ) {
+    this.initializeArduinoClient();
+  }
 
-  ngOnInit(): void {
+  private initializeArduinoClient(): void {
+    this.arduinoClient = ArduinoIotClient.ApiClient.instance;
+    this.devicesApi = new ArduinoIotClient.DevicesV2Api(this.arduinoClient);
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.getAuthToken();
+    await this.setupArduinoCloudConnection();
     this.setupMqttListeners();
   }
+
+   private async setupArduinoCloudConnection(): Promise<void> {
+    try {
+      // Ejemplo de uso del cliente Arduino IoT
+      const devices = await this.devicesApi.devicesV2List();
+      console.log('Dispositivos disponibles:', devices);
+    } catch (error) {
+      console.error('Error obteniendo dispositivos:', error);
+      this.handleError(error);
+    }
+  }
+
+  private async getAuthToken(): Promise<void> {
+    const body = new URLSearchParams();
+    body.set('grant_type', 'client_credentials');
+    body.set('client_id', this.clientId);
+    body.set('client_secret', this.clientSecret);
+    body.set('audience', 'https://api2.arduino.cc/iot');
+
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/x-www-form-urlencoded');
+
+    try {
+      const response: any = await this.http.post(
+        'https://api2.arduino.cc/iot/v1/clients/token',
+        body.toString(),
+        { headers }
+      ).toPromise();
+
+      this.accessToken = response.access_token;
+      this.arduinoClient.authentications['oauth2'].accessToken = this.accessToken;
+    } catch (error) {
+      console.error('Error obteniendo token:', error);
+      throw error;
+    }
+  }
+
 
   ngOnDestroy(): void {
     this.destroyConnection();
@@ -63,12 +126,40 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  private async initializeConnection(): Promise<void> {
+    try {
+      await this.getAuthToken();
+      await this.getMqttCredentials();
+    } catch (error) {
+      this.showNotification('Error inicializando conexión', 'error');
+      console.error('Error inicializando:', error);
+    }
+  }
+
+  private async getMqttCredentials(): Promise<void> {
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${this.accessToken}`);
+
+    try {
+      const response: any = await this.http.get(
+        `https://api2.arduino.cc/iot/v2/devices/${this.deviceId}/mqtt-config`,
+        { headers }
+      ).toPromise();
+
+      this.connection.username = response.username;
+      this.connection.password = response.password;
+    } catch (error) {
+      console.error('Error obteniendo credenciales MQTT:', error);
+      throw error;
+    }
+  }
+
   private setupMqttListeners(): void {
     this.mqttService.onConnect
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.isConnection = true;
-        this.showNotification('Conectado al broker MQTT');
+        this.showNotification('Conectado a Arduino IoT Cloud');
         console.log('Conexión exitosa');
       });
 
@@ -91,7 +182,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private parseMqttPacket(packet: unknown): IMqttMessage | null {
-    // Verificación de tipo segura para IMqttMessage
     if (typeof packet === 'object' && packet !== null) {
       const p = packet as Record<string, unknown>;
       if (p['topic'] && p['payload']) {
@@ -117,12 +207,26 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log(`Mensaje recibido [${message.topic}]: ${payload}`);
     } catch (error) {
       console.error('Error procesando mensaje:', error);
+      this.showNotification('Error procesando mensaje', 'error');
     }
+  }
+
+  private showNotification(message: string, panelClass: string = 'success'): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      panelClass: [`snackbar-${panelClass}`]
+    });
+  }
+
+  private handleError(error: unknown): void {
+    const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
+    console.error('Error:', error);
+    this.showNotification(errorMsg, 'error');
   }
 
   createConnection(): void {
     try {
-      this.mqttService.connect();
+      this.mqttService.connect(this.connection);
     } catch (error) {
       this.handleError(error);
     }
@@ -162,15 +266,19 @@ export class AppComponent implements OnInit, OnDestroy {
       const { topic, qos, payload } = this.publish;
       console.log('Publicando en:', topic, 'con payload:', payload);
 
-      // Usando unsafePublish como en el código funcional
-      this.mqttService.unsafePublish(topic, payload, { qos } as IPublishOptions);
+      const arduinoPayload = {
+        value: payload
+      };
+
+      this.mqttService.unsafePublish(
+        topic, 
+        JSON.stringify(arduinoPayload), 
+        { qos } as IPublishOptions
+      );
       
       this.showNotification('Mensaje publicado correctamente');
-      console.log('Publicación exitosa en', topic);
-      
     } catch (error: unknown) {
       this.handleError(error);
-      console.error('Error al publicar:', error);
     }
   }
 
@@ -183,18 +291,5 @@ export class AppComponent implements OnInit, OnDestroy {
     } catch (error) {
       this.handleError(error);
     }
-  }
-
-  private showNotification(message: string, panelClass: string = 'success'): void {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 5000,
-      panelClass: [`snackbar-${panelClass}`]
-    });
-  }
-
-  private handleError(error: unknown): void {
-    const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
-    console.error('Error:', error);
-    this.showNotification(errorMsg, 'error');
   }
 }

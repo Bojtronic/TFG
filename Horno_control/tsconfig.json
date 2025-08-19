@@ -9,6 +9,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,    //////////// linea agregada para la configuracion de arduino cloud
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
