@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,22 +12,17 @@ import { MatSelectModule } from "@angular/material/select";
 import { FormsModule } from "@angular/forms";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
-// Configuración para Arduino IoT Cloud
+// Configuración MQTT estática para Arduino IoT Cloud
 export const getMqttConfig = (): IMqttServiceOptions => {
   return {
-    hostname: 'mqtts-sa.iot.arduino.cc', // Servidor seguro de Arduino
-    port: 8884, // Puerto seguro MQTTS
-    path: '/',
-    clean: true,
-    connectTimeout: 4000,
-    reconnectPeriod: 4000,
-    clientId: 'angular_' + Math.random().toString(16).substring(2, 10),
-    username: '', // Se establecerá dinámicamente
-    password: '', // Se establecerá dinámicamente
+    hostname: 'mqtts-sa.iot.arduino.cc',
+    port: 8884,
     protocol: 'wss',
-    connectOnCreate: false,
-    rejectUnauthorized: true // Importante para Arduino Cloud
+    connectOnCreate: false
   };
 };
 
@@ -38,7 +33,7 @@ export const getMqttConfig = (): IMqttServiceOptions => {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule, // Necesario para obtener credenciales
+    HttpClientModule,
     MatCardModule,
     FormsModule,
     MatFormFieldModule,
@@ -47,10 +42,12 @@ export const getMqttConfig = (): IMqttServiceOptions => {
     MatButtonModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatProgressBarModule,
     MqttModule.forRoot(getMqttConfig())
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-

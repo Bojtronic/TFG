@@ -1,104 +1,86 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IMqttMessage, MqttService, IPublishOptions, IMqttServiceOptions } from 'ngx-mqtt';
+import { IMqttMessage, MqttService, IPublishOptions } from 'ngx-mqtt';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IClientSubscribeOptions } from 'mqtt-browser';
 import { Subscription, Subject, takeUntil } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import ArduinoIotClient from '@arduino/arduino-iot-client';
+import { ThemePalette } from '@angular/material/core';
+
+interface ArduinoCloudConfig {
+  clientId: string;
+  clientSecret: string;
+  deviceId: string;
+  thingId: string;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit, OnDestroy {
+
+  lastUpdate: Date = new Date();
+
   private destroy$ = new Subject<void>();
-  private curSubscription: Subscription | undefined;
   private accessToken = '';
+  private mqttSubscription: Subscription | undefined;
 
-  private arduinoClient: any;
-  private devicesApi: any;
-  
-  // Tus credenciales (deberías usar environment variables en producción)
-  private readonly deviceId = 'f70e133e-27b0-4b96-87af-769e588d64f5';
-  private readonly thingId = 'b47152d2-46b8-4bcf-9cd3-2434f5d91b2d';
-  private readonly clientId = 'TU_CLIENT_ID'; // Obtener de Arduino Cloud
-  private readonly clientSecret = 'TU_CLIENT_SECRET'; // Obtener de Arduino Cloud
-  private readonly deviceKey = 'SECRET_DEVICE_KEY'; // De tu configuración
-
-  // Configuración MQTT actualizada con tipo correcto
-  connection: IMqttServiceOptions = {
-    hostname: 'mqtts-sa.iot.arduino.cc',
-    port: 8884,
-    path: '/',
-    clean: true,
-    connectTimeout: 4000,
-    reconnectPeriod: 4000,
-    clientId: 'angular_' + Math.random().toString(16).substring(2, 10),
-    username: '', // Se establecerá después
-    password: '', // Se establecerá después
-    protocol: 'wss' as const, // Tipo correcto para IMqttServiceOptions
-    rejectUnauthorized: true
+  // Configuración - RELLENA ESTOS DATOS
+  readonly config: ArduinoCloudConfig = {
+    clientId: 'se obtiene de generar un API KEY en Arduino Cloud',
+    clientSecret: 'se obtiene de generar un API KEY en Arduino Cloud',
+    deviceId: 'f70e133e-27b0-4b96-87af-769e588d64f5',
+    thingId: 'b47152d2-46b8-4bcf-9cd3-2434f5d91b2d'
   };
+
+  // Variables para la UI
+  isConnected = false;
+  isLoading = false;
+  fotoresistorValue: number = 0;
+  ledStatus: boolean = false;
 
   // Topics para Arduino Cloud
-  subscription = {
-    topic: `/a/t/${this.thingId}/s/${this.deviceId}/property/+`,
-    qos: 0,
+  private readonly topics = {
+    fotoresistor: `/a/t/${this.config.thingId}/s/${this.config.deviceId}/property/fotoresistor`,
+    led: `/a/t/${this.config.thingId}/s/${this.config.deviceId}/property/lED`,
+    ledUpdate: `/a/t/${this.config.thingId}/s/${this.config.deviceId}/property/update`
   };
 
-  publish = {
-    topic: `/a/t/${this.thingId}/s/${this.deviceId}/property/update`,
-    qos: 0,
-    payload: '0',
-  };
-
-  receiveNews = '';
-  qosList = [
-    { label: 0, value: 0 },
-    { label: 1, value: 1 },
-    { label: 2, value: 2 },
-  ];
-
-  isConnection = false;
-  subscribeSuccess = false;
-
- constructor(
+  constructor(
     private mqttService: MqttService,
     private snackBar: MatSnackBar,
     private http: HttpClient
-  ) {
-    this.initializeArduinoClient();
-  }
-
-  private initializeArduinoClient(): void {
-    this.arduinoClient = ArduinoIotClient.ApiClient.instance;
-    this.devicesApi = new ArduinoIotClient.DevicesV2Api(this.arduinoClient);
-  }
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.getAuthToken();
-    await this.setupArduinoCloudConnection();
-    this.setupMqttListeners();
+    await this.initializeConnection();
   }
 
-   private async setupArduinoCloudConnection(): Promise<void> {
+  ngOnDestroy(): void {
+    this.disconnect();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  async initializeConnection(): Promise<void> {
+    this.isLoading = true;
     try {
-      // Ejemplo de uso del cliente Arduino IoT
-      const devices = await this.devicesApi.devicesV2List();
-      console.log('Dispositivos disponibles:', devices);
+      await this.getAuthToken();
+      await this.getMqttCredentials();
+      this.setupMqttListeners();
     } catch (error) {
-      console.error('Error obteniendo dispositivos:', error);
-      this.handleError(error);
+      this.showNotification('Error inicializando conexión', 'error');
+      console.error('Error inicializando:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
   private async getAuthToken(): Promise<void> {
     const body = new URLSearchParams();
     body.set('grant_type', 'client_credentials');
-    body.set('client_id', this.clientId);
-    body.set('client_secret', this.clientSecret);
+    body.set('client_id', this.config.clientId);
+    body.set('client_secret', this.config.clientSecret);
     body.set('audience', 'https://api2.arduino.cc/iot');
 
     const headers = new HttpHeaders()
@@ -112,27 +94,10 @@ export class AppComponent implements OnInit, OnDestroy {
       ).toPromise();
 
       this.accessToken = response.access_token;
-      this.arduinoClient.authentications['oauth2'].accessToken = this.accessToken;
+      console.log('Token obtenido correctamente');
     } catch (error) {
       console.error('Error obteniendo token:', error);
       throw error;
-    }
-  }
-
-
-  ngOnDestroy(): void {
-    this.destroyConnection();
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  private async initializeConnection(): Promise<void> {
-    try {
-      await this.getAuthToken();
-      await this.getMqttCredentials();
-    } catch (error) {
-      this.showNotification('Error inicializando conexión', 'error');
-      console.error('Error inicializando:', error);
     }
   }
 
@@ -142,12 +107,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
     try {
       const response: any = await this.http.get(
-        `https://api2.arduino.cc/iot/v2/devices/${this.deviceId}/mqtt-config`,
+        `https://api2.arduino.cc/iot/v2/devices/${this.config.deviceId}/mqtt-config`,
         { headers }
       ).toPromise();
 
-      this.connection.username = response.username;
-      this.connection.password = response.password;
+      console.log('Credenciales MQTT obtenidas (pero no se usan en conexión estática)');
+      console.log('Username:', response.username);
+      console.log('Password:', '••••••••'); // No mostrar password real
+
     } catch (error) {
       console.error('Error obteniendo credenciales MQTT:', error);
       throw error;
@@ -155,141 +122,166 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private setupMqttListeners(): void {
+    // Escuchar eventos de conexión
     this.mqttService.onConnect
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.isConnection = true;
+        this.isConnected = true;
         this.showNotification('Conectado a Arduino IoT Cloud');
-        console.log('Conexión exitosa');
+        this.subscribeToTopics();
       });
 
     this.mqttService.onError
       .pipe(takeUntil(this.destroy$))
-      .subscribe((error: Error) => {
-        this.isConnection = false;
+      .subscribe((error: any) => {
+        this.isConnected = false;
         this.showNotification(`Error de conexión: ${error.message}`, 'error');
         console.error('Error MQTT:', error);
       });
 
+    // Manejar mensajes entrantes
     this.mqttService.onMessage
       .pipe(takeUntil(this.destroy$))
-      .subscribe((packet: unknown) => {
-        const message = this.parseMqttPacket(packet);
-        if (message) {
-          this.handleIncomingMessage(message);
-        }
+      .subscribe((packet: any) => {
+        this.handleMqttPacket(packet);
       });
   }
 
-  private parseMqttPacket(packet: unknown): IMqttMessage | null {
-    if (typeof packet === 'object' && packet !== null) {
-      const p = packet as Record<string, unknown>;
-      if (p['topic'] && p['payload']) {
-        return {
-          topic: String(p['topic']),
-          payload: p['payload'],
-          qos: Number(p['qos']) || 0,
-          retain: Boolean(p['retain']),
-          dup: Boolean(p['dup'])
-        } as IMqttMessage;
-      }
+  private handleMqttPacket(packet: any): void {
+    try {
+      // Convertir el paquete MQTT a IMqttMessage
+      const message: IMqttMessage = {
+        topic: packet.topic,
+        payload: packet.payload,
+        qos: packet.qos || 0,
+        retain: packet.retain || false,
+        dup: packet.dup || false
+      };
+      
+      this.handleIncomingMessage(message);
+    } catch (error) {
+      console.error('Error procesando paquete MQTT:', error);
     }
-    return null;
+  }
+
+  private subscribeToTopics(): void {
+    // Suscribirse a los topics de las propiedades
+    this.mqttSubscription = this.mqttService.observe(this.topics.fotoresistor)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((message: IMqttMessage) => {
+        this.handleFotoresistorUpdate(message);
+      });
+
+    this.mqttService.observe(this.topics.led)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((message: IMqttMessage) => {
+        this.handleLedUpdate(message);
+      });
+
+    console.log('Suscripciones configuradas');
   }
 
   private handleIncomingMessage(message: IMqttMessage): void {
     try {
-      const payload = typeof message.payload === 'string' 
-        ? message.payload 
-        : message.payload.toString();
-      
-      this.receiveNews = `${payload}\n${this.receiveNews}`;
-      console.log(`Mensaje recibido [${message.topic}]: ${payload}`);
+      const payload = this.parsePayload(message.payload);
+      console.log(`Mensaje recibido [${message.topic}]:`, payload);
     } catch (error) {
       console.error('Error procesando mensaje:', error);
-      this.showNotification('Error procesando mensaje', 'error');
     }
   }
 
-  private showNotification(message: string, panelClass: string = 'success'): void {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 5000,
-      panelClass: [`snackbar-${panelClass}`]
-    });
-  }
-
-  private handleError(error: unknown): void {
-    const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
-    console.error('Error:', error);
-    this.showNotification(errorMsg, 'error');
-  }
-
-  createConnection(): void {
+  private handleFotoresistorUpdate(message: IMqttMessage): void {
     try {
-      this.mqttService.connect(this.connection);
+      const payload = this.parsePayload(message.payload);
+      this.fotoresistorValue = payload.value;
+      this.lastUpdate = new Date(); 
+      console.log('Fotoresistor actualizado:', this.fotoresistorValue);
     } catch (error) {
-      this.handleError(error);
+      console.error('Error procesando fotoresistor:', error);
     }
   }
 
-  doSubscribe(): void {
-    if (!this.isConnection) {
-      this.showNotification('Primero establece la conexión', 'warning');
-      return;
+  private handleLedUpdate(message: IMqttMessage): void {
+    try {
+      const payload = this.parsePayload(message.payload);
+      this.ledStatus = payload.value;
+      console.log('LED actualizado:', this.ledStatus);
+    } catch (error) {
+      console.error('Error procesando LED:', error);
     }
-
-    this.curSubscription = this.mqttService.observe(
-      this.subscription.topic,
-      { qos: this.subscription.qos } as IClientSubscribeOptions
-    ).subscribe({
-      next: (message: IMqttMessage) => {
-        this.subscribeSuccess = true;
-        this.showNotification(`Mensaje recibido: ${message.payload.toString()}`);
-      },
-      error: (err) => this.handleError(err)
-    });
   }
 
-  doUnSubscribe(): void {
-    this.curSubscription?.unsubscribe();
-    this.subscribeSuccess = false;
-    this.showNotification('Suscripción cancelada');
+  private parsePayload(payload: any): any {
+    try {
+      if (typeof payload === 'string') {
+        return JSON.parse(payload);
+      } else if (payload instanceof ArrayBuffer) {
+        return JSON.parse(new TextDecoder().decode(payload));
+      } else {
+        return JSON.parse(payload.toString());
+      }
+    } catch (error) {
+      console.error('Error parsing payload:', error, payload);
+      return {};
+    }
   }
 
-  doPublish(): void {
-    if (!this.isConnection) {
+  // Método para controlar el LED
+  toggleLed(): void {
+    if (!this.isConnected) {
       this.showNotification('No hay conexión activa', 'warning');
       return;
     }
 
+    const newLedStatus = !this.ledStatus;
+    const payload = {
+      value: newLedStatus
+    };
+
     try {
-      const { topic, qos, payload } = this.publish;
-      console.log('Publicando en:', topic, 'con payload:', payload);
-
-      const arduinoPayload = {
-        value: payload
-      };
-
       this.mqttService.unsafePublish(
-        topic, 
-        JSON.stringify(arduinoPayload), 
-        { qos } as IPublishOptions
+        this.topics.ledUpdate,
+        JSON.stringify(payload),
+        { qos: 1 } as IPublishOptions
       );
       
-      this.showNotification('Mensaje publicado correctamente');
-    } catch (error: unknown) {
-      this.handleError(error);
+      this.showNotification(`LED ${newLedStatus ? 'encendido' : 'apagado'}`);
+    } catch (error) {
+      this.showNotification('Error controlando LED', 'error');
+      console.error('Error publicando:', error);
     }
   }
 
-  destroyConnection(): void {
-    try {
-      this.mqttService.disconnect(true);
-      this.isConnection = false;
-      this.curSubscription?.unsubscribe();
-      this.showNotification('Desconectado del broker');
-    } catch (error) {
-      this.handleError(error);
+  // Método para forzar actualización de valores
+  refreshValues(): void {
+    this.showNotification('Sincronizando valores...');
+  }
+
+  private showNotification(message: string, panelClass: string = 'success'): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      panelClass: [`snackbar-${panelClass}`]
+    });
+  }
+
+  disconnect(): void {
+    if (this.mqttSubscription) {
+      this.mqttSubscription.unsubscribe();
     }
+    this.mqttService.disconnect();
+    this.isConnected = false;
+    this.showNotification('Desconectado de Arduino Cloud');
+  }
+
+  getSensorPercentage(): number {
+    return Math.min(100, (this.fotoresistorValue / 4095) * 100);
+  }
+
+  getSensorColor(): ThemePalette {
+    const percentage = this.getSensorPercentage();
+    if (percentage < 25) return 'primary';
+    if (percentage < 50) return 'accent';
+    if (percentage < 75) return 'warn';
+    return 'warn';
   }
 }
