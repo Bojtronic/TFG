@@ -1,24 +1,6 @@
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <WiFiClientSecure.h>
+#include "comunicacion.h"
+#include "config.h"
 
-// ===== CONFIGURACIÓN =====
-const char* ssid = "DIGICONTROL";
-const char* password = "7012digi19";
-const char* serverURL = "https://horno-tecnelectro.onrender.com/api/message";
-const char* commandsURL = "https://horno-tecnelectro.onrender.com/api/esp32-commands";
-
-// ===== PINES =====
-const int ledPin = 26;
-const int fotoPin = 33;
-
-// ===== VARIABLES =====
-unsigned long lastSendTime = 0;
-unsigned long lastCommandCheck = 0;
-int messageCount = 0;
-int ledState = 0;
-
-// ===== FUNCIONES =====
 void connectToWiFi() {
   Serial.print("Conectando a WiFi");
   WiFi.begin(ssid, password);
@@ -34,26 +16,22 @@ void connectToWiFi() {
     Serial.println("\n✅ WiFi conectado");
     Serial.print("📶 RSSI: ");
     Serial.println(WiFi.RSSI());
+    mensajesHMI("WiFi conectado");
   } else {
     Serial.println("\n❌ Error: No se pudo conectar a WiFi");
+    mensajesHMI("Error WiFi");
   }
 }
 
-void controlLED(int state) {
-  ledState = state;
-  digitalWrite(ledPin, state);
-  Serial.print("💡 LED ");
-  Serial.println(state ? "ENCENDIDO" : "APAGADO");
-}
-
 void checkForCommands() {
+  if (WiFi.status() != WL_CONNECTED) return;
+  
   WiFiClientSecure client;
   HTTPClient http;
   
   Serial.println("🔍 Consultando comandos...");
   
-  // CONFIGURACIÓN CRÍTICA PARA HTTPS
-  client.setInsecure(); // Permite conexiones HTTPS sin verificar certificado
+  client.setInsecure();
   client.setTimeout(15000);
   
   for (int attempt = 1; attempt <= 3; attempt++) {
@@ -74,17 +52,41 @@ void checkForCommands() {
         Serial.println(commands);
         
         if (commands != "no_commands") {
-          if (commands.indexOf("led_on") != -1) {
-            controlLED(1);
-            Serial.println("✅ Comando LED ON ejecutado");
-          } else if (commands.indexOf("led_off") != -1) {
-            controlLED(0);
-            Serial.println("✅ Comando LED OFF ejecutado");
-          } else if (commands.indexOf("led_toggle") != -1) {
-            controlLED(!ledState);
-            Serial.println("✅ Comando LED TOGGLE ejecutado");
+          // Comandos para el sistema de agua caliente
+          if (commands.indexOf("system_start") != -1 && estadoActual == SISTEMA_APAGADO) {
+            iniciarSistema();
+            Serial.println("✅ Comando SYSTEM START ejecutado");
+          } 
+          else if (commands.indexOf("system_stop") != -1 && estadoActual != SISTEMA_APAGADO) {
+            detenerSistema();
+            Serial.println("✅ Comando SYSTEM STOP ejecutado");
           }
-          http.end(); // ✅ Solo un http.end() aquí
+          else if (commands.indexOf("system_emergency") != -1) {
+            activarEmergencia("EMERGENCIA: Comando remoto!");
+            Serial.println("✅ Comando EMERGENCY ejecutado");
+          }
+          else if (commands.indexOf("system_reset") != -1 && estadoActual == EMERGENCIA) {
+            resetBtnCallback(NULL);
+            Serial.println("✅ Comando RESET ejecutado");
+          }
+          else if (commands.indexOf("valve1_on") != -1) {
+            digitalWrite(VALVULA_1, HIGH);
+            Serial.println("✅ Comando VALVE1 ON ejecutado");
+          }
+          else if (commands.indexOf("valve1_off") != -1) {
+            digitalWrite(VALVULA_1, LOW);
+            Serial.println("✅ Comando VALVE1 OFF ejecutado");
+          }
+          else if (commands.indexOf("valve2_on") != -1) {
+            digitalWrite(VALVULA_2, HIGH);
+            Serial.println("✅ Comando VALVE2 ON ejecutado");
+          }
+          else if (commands.indexOf("valve2_off") != -1) {
+            digitalWrite(VALVULA_2, LOW);
+            Serial.println("✅ Comando VALVE2 OFF ejecutado");
+          }
+          
+          http.end();
           return;
         } else {
           Serial.println("📭 No hay comandos pendientes");
@@ -108,10 +110,10 @@ void checkForCommands() {
   Serial.println("❌ Todos los intentos fallaron");
 }
 
-void sendSensorData() {
-  int fotoValue = analogRead(fotoPin);
+void sendSystemData() {
+  if (WiFi.status() != WL_CONNECTED) return;
   
-  Serial.println("\n📤 Enviando datos...");
+  Serial.println("\n📤 Enviando datos del sistema...");
   
   WiFiClientSecure client;
   HTTPClient http;
@@ -124,10 +126,24 @@ void sendSensorData() {
     http.setTimeout(15000);
     
     messageCount++;
-    String jsonPayload = "{\"topic\":\"esp32/sensors\",\"message\":\"";
+    
+    // Crear JSON con todos los datos del sistema
+    String jsonPayload = "{\"topic\":\"agua_caliente/sistema\",\"message\":\"";
     jsonPayload += "count=" + String(messageCount);
-    jsonPayload += "&led=" + String(ledState);
-    jsonPayload += "&foto=" + String(fotoValue);
+    jsonPayload += "&estado=" + String((int)estadoActual);
+    jsonPayload += "&temp_tanque=" + String(temperaturas[0], 1);
+    jsonPayload += "&temp_horno=" + String(temperaturas[1], 1);
+    jsonPayload += "&temp_camara=" + String(temperaturas[2], 1);
+    jsonPayload += "&temp_salida=" + String(temperaturas[3], 1);
+    jsonPayload += "&nivel_vacio=" + String(niveles[0]);
+    jsonPayload += "&nivel_mitad=" + String(niveles[1]);
+    jsonPayload += "&nivel_lleno=" + String(niveles[2]);
+    jsonPayload += "&presion=" + String(presionActual, 1);
+    jsonPayload += "&valvula1=" + String(digitalRead(VALVULA_1));
+    jsonPayload += "&valvula2=" + String(digitalRead(VALVULA_2));
+    jsonPayload += "&bomba1=" + String(digitalRead(BOMBA_1));
+    jsonPayload += "&bomba2=" + String(digitalRead(BOMBA_2));
+    jsonPayload += "&emergencia=" + String(emergencia);
     jsonPayload += "&rssi=" + String(WiFi.RSSI());
     jsonPayload += "\"}";
     
@@ -156,6 +172,8 @@ void sendSensorData() {
 }
 
 void testServerConnection() {
+  if (WiFi.status() != WL_CONNECTED) return;
+  
   WiFiClientSecure client;
   HTTPClient http;
   
@@ -175,9 +193,11 @@ void testServerConnection() {
       String response = http.getString();
       Serial.print("✅ Conexión exitosa. Respuesta: ");
       Serial.println(response);
+      mensajesHMI("Servidor conectado");
     } else {
       Serial.print("❌ Error en la prueba: ");
       Serial.println(http.errorToString(httpCode));
+      mensajesHMI("Error servidor");
     }
     
     http.end();
@@ -186,61 +206,22 @@ void testServerConnection() {
   }
 }
 
-void setup() {
-  Serial.begin(115200);
-  delay(3000);
-  
-  pinMode(ledPin, OUTPUT);
-  pinMode(fotoPin, INPUT);
-  controlLED(0);
-  
-  Serial.println("\n🚀 ESP32 - Horno Tecnelectro (HTTP)");
-  Serial.print("🔗 Servidor: ");
-  Serial.println(serverURL);
-  Serial.print("🔗 Comandos: ");
-  Serial.println(commandsURL);
-  
-  connectToWiFi();
-  
-  // Test inicial de conexión
-  if (WiFi.status() == WL_CONNECTED) {
-    testServerConnection();
-  }
-}
-
-void loop() {
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("⚠️  WiFi desconectado, reconectando...");
-    connectToWiFi();
-    delay(5000);
-    return;
-  }
-  
-  // Enviar datos cada 15 segundos
-  if (millis() - lastSendTime > 15000) {
+void handleServerCommunication() {
+  // Enviar datos cada 30 segundos
+  if (millis() - lastSendTime > 30000) {
     lastSendTime = millis();
-    sendSensorData();
+    sendSystemData();
   }
   
-  // Consultar comandos cada 5 segundos
-  if (millis() - lastCommandCheck > 5000) {
+  // Consultar comandos cada 10 segundos
+  if (millis() - lastCommandCheck > 10000) {
     lastCommandCheck = millis();
     checkForCommands();
   }
   
-  // Mostrar estado cada 10 segundos
-  static unsigned long lastStatusTime = 0;
-  if (millis() - lastStatusTime > 10000) {
-    lastStatusTime = millis();
-    Serial.print("💡 LED: ");
-    Serial.print(ledState);
-    Serial.print(" | 📷 Foto: ");
-    Serial.print(analogRead(fotoPin));
-    Serial.print(" | 📶 RSSI: ");
-    Serial.print(WiFi.RSSI());
-    Serial.print(" | 📱 Mensajes: ");
-    Serial.println(messageCount);
+  // Reconexión WiFi si es necesario
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("⚠️  WiFi desconectado, reconectando...");
+    connectToWiFi();
   }
-  
-  delay(1000);
 }
