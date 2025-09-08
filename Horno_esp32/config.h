@@ -15,8 +15,8 @@
 #define MAX_CS1   5
 #define MAX_DO2   23
 #define MAX_CS2   22
-#define MAX_DO3   16
-#define MAX_CS3   17
+#define MAX_DO3   16  // cambiar de pin este se usa para nextion rx
+#define MAX_CS3   17  // cambiar de pin este se usa para nextion tx
 #define MAX_DO4   4
 #define MAX_CS4   15
 

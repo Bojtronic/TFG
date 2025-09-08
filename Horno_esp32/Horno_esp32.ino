@@ -19,13 +19,15 @@ void setup() {
   stopBtn.attachPush(stopBtnCallback, &stopBtn);
   resetBtn.attachPush(resetBtnCallback, &resetBtn);
   
-  apagarTodo();
+  //apagarTodo();
   
   // Conectar a WiFi
   connectToWiFi();
+  /*
   if (WiFi.status() == WL_CONNECTED) {
     testServerConnection();
   }
+  */
   
   Serial.println("Sistema inicializado - Modo APAGADO");
   mensajesHMI("Sistema listo - Modo APAGADO");
@@ -36,8 +38,10 @@ void setup() {
 void loop() {
   nexLoop(nex_listen_list);
   
-  if (millis() - lastReadTime >= LECTURA_INTERVAL) {
-    lastReadTime = millis();
+  unsigned long now = millis();
+
+  if (now - lastReadTime >= LECTURA_INTERVAL) {
+    lastReadTime = now;
     
     leerSensores();
     actualizarHMI();
@@ -57,8 +61,8 @@ void loop() {
   // Mostrar estado del sistema periódicamente
   /*
   static unsigned long lastStatusTime = 0;
-  if (millis() - lastStatusTime > 15000) {
-    lastStatusTime = millis();
+  if (now - lastStatusTime > 15000) {
+    lastStatusTime = now;
     Serial.print("💡 Estado: ");
     Serial.print(estadoActual);
     Serial.print(" | 🌡️ Temp: ");
