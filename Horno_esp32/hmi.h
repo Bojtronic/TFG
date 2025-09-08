@@ -8,7 +8,7 @@ void actualizarHMI();
 void actualizarTextoHMI(NexText &componente, double valor, const char* unidad);
 void actualizarEstadoComponente(NexPicture &componente, bool estado);
 void actualizarEstadoSistemaHMI();
-void mensajesHMI(const char* mensaje);
+void mensajesHMI(const String& mensaje);
 
 // Callbacks Nextion
 void startBtnCallback(void *ptr);

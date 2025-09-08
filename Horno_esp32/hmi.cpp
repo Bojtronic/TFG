@@ -106,8 +106,8 @@ void actualizarEstadoSistemaHMI() {
   // Opcional: Cambiar color del texto según estado
   // estadoText.setFontColor(color);
 }
-
-void mensajesHMI(const char* mensaje) {
+void mensajesHMI(const String& mensaje) {
+//void mensajesHMI(const char* mensaje) {
   // Esta función puede implementarse de diferentes formas dependiendo
   // de cómo tengas configurado el display Nextion
   

@@ -1,5 +1,6 @@
 #include "comunicacion.h"
 #include "config.h"
+#include "hmi.h"
 
 void connectToWiFi() {
   Serial.print("Conectando a WiFi");

@@ -28,26 +28,25 @@ void leerTemperaturas() {
 
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
   double tempC = sensor.readCelsius();
-  
+
+  // Si la lectura no es válida
   if (isnan(tempC)) {
     Serial.print("Error lectura termocupla ");
     Serial.println(numero);
-    return -999.9;
+
+    // Revisar detalles del error
+    uint8_t fault = sensor.readError();
+    if (fault & MAX31855_FAULT_OPEN)       Serial.println("FALLA: Termocupla abierta o no conectada.");
+    if (fault & MAX31855_FAULT_SHORT_GND)  Serial.println("FALLA: Termocupla en corto a GND.");
+    if (fault & MAX31855_FAULT_SHORT_VCC)  Serial.println("FALLA: Termocupla en corto a VCC.");
+
+    return -999.9;  // Valor de error
   }
-  
-  // Detección de fallos en la termocupla
-  uint8_t fault = sensor.readFault();
-  if (fault) {
-    Serial.print("Fault termocupla ");
-    Serial.print(numero);
-    if (fault & MAX31855_FAULT_OPEN) Serial.println(": Circuito abierto");
-    if (fault & MAX31855_FAULT_SHORT_GND) Serial.println(": Corto a GND");
-    if (fault & MAX31855_FAULT_SHORT_VCC) Serial.println(": Corto a VCC");
-    return -999.9;
-  }
-  
+
+  // Si no hubo fallos, devolver la temperatura en °C
   return tempC;
 }
+
 
 void leerNiveles() {
   // Leer valores crudos y convertir a porcentaje
@@ -124,8 +123,8 @@ void leerPresion() {
                    (PRESSURE_MAX_VOLTAGE - PRESSURE_MIN_VOLTAGE);
   }
   
-  // Asegurar que la presión no sea negativa
-  presionActual = max(0.0, presionActual);
+  // Asegurar que la presión no sea negativas
+  presionActual = max(0.0f, presionActual);
 }
 
 void inicializarTermocuplas() {
@@ -195,4 +194,8 @@ void calibrarSensores() {
   Serial.print("Lleno: "); Serial.print(lleno1); Serial.print(", "); Serial.print(lleno2); Serial.print(", "); Serial.println(lleno3);
   
   Serial.println("Calibración completada");
+}
+
+void leerPulsadores(){
+  Serial.println("Leer pulsadores");
 }

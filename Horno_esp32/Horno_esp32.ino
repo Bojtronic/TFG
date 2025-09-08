@@ -51,10 +51,11 @@ void loop() {
   
   leerPulsadores();
   
-  // ← Añadido: Manejo de comunicación con servidor
+  // Manejo de comunicación con servidor
   handleServerCommunication();
   
   // Mostrar estado del sistema periódicamente
+  /*
   static unsigned long lastStatusTime = 0;
   if (millis() - lastStatusTime > 15000) {
     lastStatusTime = millis();
@@ -67,6 +68,7 @@ void loop() {
     Serial.print("% | 📶 RSSI: ");
     Serial.println(WiFi.RSSI());
   }
+  */
   
   delay(100);
 }

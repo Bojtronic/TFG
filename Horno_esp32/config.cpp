@@ -84,3 +84,4 @@ void configurarPines() {
   
   Serial.println("✅ Pines configurados correctamente");
 }
+
