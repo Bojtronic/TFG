@@ -39,7 +39,6 @@
 // Pulsadores de control
 #define START_BTN 32
 #define STOP_BTN  33
-#define EMO_BTN   13  // Paro de emergencia (con pull-up interno)
 
 // Comunicación con HMI Nextion (UART2)
 #define NEXTION_RX 16
@@ -67,10 +66,10 @@ extern const char* commandsURL;
 
 // ================= DECLARACIONES GLOBALES =================
 // Termocuplas
-extern Adafruit_MAX31855 thermocouple1;
-extern Adafruit_MAX31855 thermocouple2;
-extern Adafruit_MAX31855 thermocouple3;
-extern Adafruit_MAX31855 thermocouple4;
+extern Adafruit_MAX31855 thermocouple1; // tanque
+extern Adafruit_MAX31855 thermocouple2; // horno
+extern Adafruit_MAX31855 thermocouple3; // camara
+extern Adafruit_MAX31855 thermocouple4; // salida
 
 // Variables de sensores
 extern double temperaturas[4];
@@ -102,10 +101,10 @@ extern int messageCount;
 // HMI Nextion
 extern HardwareSerial nextionSerial;
 extern NexPage mainPage;
-extern NexText temp1Text;
-extern NexText temp2Text;
-extern NexText temp3Text;
-extern NexText temp4Text;
+extern NexText temp1Text; // tanque
+extern NexText temp2Text; // horno
+extern NexText temp3Text; // camara
+extern NexText temp4Text; // salida
 extern NexText nivel1Text;
 extern NexText nivel2Text;
 extern NexText nivel3Text;

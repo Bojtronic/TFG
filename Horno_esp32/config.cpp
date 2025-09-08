@@ -68,7 +68,6 @@ void configurarPines() {
   pinMode(PRESSURE_SENSOR, INPUT);
   pinMode(START_BTN, INPUT);
   pinMode(STOP_BTN, INPUT);
-  pinMode(EMO_BTN, INPUT_PULLUP);
   
   // Configurar salidas
   pinMode(VALVULA_1, OUTPUT);

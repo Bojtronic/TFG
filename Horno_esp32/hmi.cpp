@@ -193,9 +193,6 @@ void resetBtnCallback(void *ptr) {
     } else if (temperaturas[2] > TEMP_MAX_CAMARA) {
       condicionesSeguras = false;
       mensajeError = "Temp cámara alta";
-    } else if (digitalRead(EMO_BTN) == LOW) {
-      condicionesSeguras = false;
-      mensajeError = "Pulsador EMO activado";
     }
     
     if (condicionesSeguras) {
