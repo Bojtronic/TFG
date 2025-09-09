@@ -31,7 +31,7 @@ void setup() {
   
   Serial.println("Sistema inicializado - Modo APAGADO");
   mensajesHMI("Sistema listo - Modo APAGADO");
-  actualizarEstadoSistemaHMI();
+  actualizarEstadoSistemaHMI(); // esto se podria reemplazar con la funcion mensajesHMI(ESTADO) pero depende del layout en el hmi
 }
 
 // ================= BUCLE PRINCIPAL =================

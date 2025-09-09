@@ -43,6 +43,11 @@ void detenerSistema() {
   Serial.println("Sistema detenido");
 }
 
+// Hay que verificar esto, el proceso a realizar depende de varias cosas
+// Lo primero es verificar que el tanque este por encima del 50%
+// se debe verificar que haya presion de agua fria a la entrada del tanque
+// la salida de agua caliente se habilita a cierta temperatura y nivel del agua
+// el horno puede funcionar si lo anterior se cumple, si el horno aumenta la temperatura sin tener agua es grave
 void controlarSistema() {
   switch (estadoActual) {
     case LLENADO_TANQUE:

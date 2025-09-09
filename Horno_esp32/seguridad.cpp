@@ -49,6 +49,10 @@ void verificarSeguridad() {
 }
 
 // Activa el modo de emergencia, apaga el sistema y notifica HMI
+// En realidad se deben tomar diferentes medidas de emergencia
+// Si el horno esta calentando debe haber agua circulando
+// si el tanque esta vacio se debe llenar el tanque
+// si no hay presion de agua a la entrada se debe apagar todo y no permitir salida de agua caliente para que siga circulando mientras el horno se enfria
 void activarEmergencia(const char* mensaje) {
     estadoActual = EMERGENCIA;
     emergencia = true;

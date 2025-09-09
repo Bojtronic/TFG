@@ -21,10 +21,10 @@ void leerSensores() {
 }
 
 void leerTemperaturas() {
-  temperaturas[0] = leerTermocupla(thermocouple1, 1);
-  temperaturas[1] = leerTermocupla(thermocouple2, 2);
-  temperaturas[2] = leerTermocupla(thermocouple3, 3);
-  temperaturas[3] = leerTermocupla(thermocouple4, 4);
+  temperaturas[0] = leerTermocupla(thermocouple1, 1); // tanque
+  temperaturas[1] = leerTermocupla(thermocouple2, 2); // horno
+  temperaturas[2] = leerTermocupla(thermocouple3, 3); // camara
+  temperaturas[3] = leerTermocupla(thermocouple4, 4); // salida
 }
 
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
@@ -34,6 +34,7 @@ double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
   if (isnan(tempC)) {
     Serial.print("Error lectura termocupla ");
     Serial.println(numero);
+    // mostrar mensaje en HMI y enviar informacion al server
 
     // Revisar detalles del error
     uint8_t fault = sensor.readError();
@@ -196,4 +197,5 @@ void calibrarSensores() {
 
 void leerPulsadores(){
   Serial.println("Leer pulsadores");
+  // se debe implementar la funcionalidad para botones fisicos
 }
