@@ -104,7 +104,7 @@ void leerPresion() {
   avg_pressure /= 5;
   
   // Convertir lectura analógica a presión en bar (ajustar según sensor y calibración)
-  // Ejemplo: sensor 0-5V = 0-10 bar -> 0-4095 = 0-10 bar
+  // Ej: sensor 0-5V = 0-10 bar -> 0-4095 = 0-10 bar
   float voltage = (avg_pressure / 4095.0) * 3.3; // ESP32 ADC reference voltage is 3.3V
   
   // Calibración específica del sensor (ajustar estos valores según las especificaciones del sensor)
@@ -166,34 +166,6 @@ bool verificarSensoresTemperatura() {
   return true;
 }
 
-void calibrarSensores() {
-  // Rutina de calibración para sensores (ejecutar en modo mantenimiento)
-  Serial.println("Iniciando calibración de sensores...");
-  
-  // Calibración de sensores de nivel (leer valores en vacío y lleno)
-  Serial.println("Calibrando sensores de nivel...");
-  Serial.println("Vaciar tanque y presionar cualquier tecla para continuar");
-  while (!Serial.available()) delay(100);
-  Serial.read(); // Limpiar buffer
-  
-  int vacio1 = analogRead(NIVEL_1);
-  int vacio2 = analogRead(NIVEL_2);
-  int vacio3 = analogRead(NIVEL_3);
-  
-  Serial.println("Llenar tanque y presionar cualquier tecla para continuar");
-  while (!Serial.available()) delay(100);
-  Serial.read(); // Limpiar buffer
-  
-  int lleno1 = analogRead(NIVEL_1);
-  int lleno2 = analogRead(NIVEL_2);
-  int lleno3 = analogRead(NIVEL_3);
-  
-  Serial.println("Valores de calibración:");
-  Serial.print("Vacío: "); Serial.print(vacio1); Serial.print(", "); Serial.print(vacio2); Serial.print(", "); Serial.println(vacio3);
-  Serial.print("Lleno: "); Serial.print(lleno1); Serial.print(", "); Serial.print(lleno2); Serial.print(", "); Serial.println(lleno3);
-  
-  Serial.println("Calibración completada");
-}
 
 void leerPulsadores(){
   Serial.println("Leer pulsadores");

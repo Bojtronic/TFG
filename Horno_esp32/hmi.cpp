@@ -111,24 +111,14 @@ void mensajesHMI(const String& mensaje) {
   // Esta función puede implementarse de diferentes formas dependiendo
   // de cómo tengas configurado el display Nextion
   
-  // Método 1: Usar un componente de texto específico para mensajes
-  // NexText mensajeText(0, 20, "mensaje"); // Si tienes un componente para mensajes
+  // Usar un componente de texto específico para mensajes
+  // NexText mensajeText(0, 20, "mensaje");
   // mensajeText.setText(mensaje);
   
-  // Método 2: Usar la consola serial de Nextion (si está disponible)
-  // nextionSerial.print("tmsg.txt=\"");
-  // nextionSerial.print(mensaje);
-  // nextionSerial.print("\"");
-  // nextionSerial.write(0xFF);
-  // nextionSerial.write(0xFF);
-  // nextionSerial.write(0xFF);
-  
-  // Método 3: Mostrar en pantalla principal (depende de tu diseño HMI)
-  Serial.print("HMI: ");
-  Serial.println(mensaje);
-  
-  // Para una implementación más avanzada, podrías tener un sistema
+  // Para una implementación más avanzada, se podria tener un sistema
   // de cola de mensajes que muestre los mensajes por un tiempo limitado
+
+  Serial.println(mensaje);
 }
 
 // ================= CALLBACKS NEXTION =================

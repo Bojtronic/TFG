@@ -58,19 +58,17 @@ void loop() {
   // Manejo de comunicación con servidor
   handleServerCommunication();
   
-  // Mostrar estado del sistema periódicamente
+  
   /*
   static unsigned long lastStatusTime = 0;
-  if (now - lastStatusTime > 15000) {
+  if (now - lastStatusTime > 5000) {
     lastStatusTime = now;
-    Serial.print("💡 Estado: ");
-    Serial.print(estadoActual);
-    Serial.print(" | 🌡️ Temp: ");
-    Serial.print(temperaturas[0], 1);
-    Serial.print(" | 💧 Nivel: ");
-    Serial.print(niveles[2]);
-    Serial.print("% | 📶 RSSI: ");
-    Serial.println(WiFi.RSSI());
+    
+    Serial.println(" | 🌡️ Temp: ");
+    Serial.println(temperaturas[0], 1);
+    Serial.println(temperaturas[1], 1);
+    Serial.println(temperaturas[2], 1);
+    Serial.println(temperaturas[3], 1);
   }
   */
   

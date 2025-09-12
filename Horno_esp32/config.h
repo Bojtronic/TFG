@@ -10,39 +10,43 @@
 
 // ================= CONFIGURACIÓN DE PINES =================
 // Termocuplas (MAX31855) - 4 sensores de temperatura
-#define MAX_CLK   18
-#define MAX_DO1   19
+
+// SPI para MAX31855 (VSPI por defecto en ESP32)
+#define MAX_CLK   18   // SCK (VSPI)
+#define MAX_MISO  19   // MISO (compartido entre los 4 MAX31855)
+
+// CS individuales para cada MAX31855
 #define MAX_CS1   5
-#define MAX_DO2   23
 #define MAX_CS2   22
-#define MAX_DO3   16  // cambiar de pin este se usa para nextion rx
-#define MAX_CS3   17  // cambiar de pin este se usa para nextion tx
-#define MAX_DO4   4
-#define MAX_CS4   15
+#define MAX_CS3   21
+#define MAX_CS4   23
 
-// Sensores de nivel de agua (entradas analógicas)
-#define NIVEL_1   36  // Vacío (GPIO36 - solo entrada)
-#define NIVEL_2   39  // Mitad (GPIO39 - solo entrada)
-#define NIVEL_3   34  // Lleno (GPIO34 - solo entrada)
+// Sensores analógicos 
 
-// Sensor de presión (entrada analógica)
-#define PRESSURE_SENSOR 35  // GPIO35 - solo entrada
+// Sensores de nivel de agua
+#define NIVEL_1   36   // ADC1_0 - Vacío
+#define NIVEL_2   39   // ADC1_3 - Mitad
+#define NIVEL_3   34   // ADC1_6 - Lleno
+
+// Sensor de presión
+#define PRESSURE_SENSOR 33 // ADC1_5   
 
 // Electrovalvulas (salidas digitales)
 #define VALVULA_1 25  // Salida agua caliente
-#define VALVULA_2 26  // Entrada agua fría
+#define VALVULA_2 4   // Entrada agua fría
 
 // Bombas de agua (salidas digitales)
 #define BOMBA_1   27  // Circulación principal
-#define BOMBA_2   14  // Circulación redundante
+#define BOMBA_2   12  // Circulación redundante 
 
 // Pulsadores de control
 #define START_BTN 32
-#define STOP_BTN  33
+#define STOP_BTN  13 
 
 // Comunicación con HMI Nextion (UART2)
 #define NEXTION_RX 16
 #define NEXTION_TX 17
+
 
 // ================= PARÁMETROS DE CONFIGURACIÓN =================
 #define TEMP_AGUA_CALIENTE 60.0     // Temperatura objetivo agua caliente (°C)

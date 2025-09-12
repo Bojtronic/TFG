@@ -8,10 +8,10 @@ const char* commandsURL = "https://horno-tecnelectro.onrender.com/api/esp32-comm
 
 // ================= DEFINICIÓN DE VARIABLES GLOBALES =================
 // Termocuplas
-Adafruit_MAX31855 thermocouple1(MAX_CLK, MAX_CS1, MAX_DO1);
-Adafruit_MAX31855 thermocouple2(MAX_CLK, MAX_CS2, MAX_DO2);
-Adafruit_MAX31855 thermocouple3(MAX_CLK, MAX_CS3, MAX_DO3);
-Adafruit_MAX31855 thermocouple4(MAX_CLK, MAX_CS4, MAX_DO4);
+Adafruit_MAX31855 thermocouple1(MAX_CLK, MAX_CS1, MAX_MISO);
+Adafruit_MAX31855 thermocouple2(MAX_CLK, MAX_CS2, MAX_MISO);
+Adafruit_MAX31855 thermocouple3(MAX_CLK, MAX_CS3, MAX_MISO);
+Adafruit_MAX31855 thermocouple4(MAX_CLK, MAX_CS4, MAX_MISO);
 
 // Variables de sensores
 double temperaturas[4] = { 0, 0, 0, 0 };
