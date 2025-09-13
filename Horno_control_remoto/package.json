@@ -1,11 +1,18 @@
 {
   "name": "horno_control_remoto",
   "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "axios": "^1.12.1",
+    "express": "^5.1.0",
+    "mqtt": "^5.14.1",
+    "socket.io": "^4.8.1"
+  }
 }
