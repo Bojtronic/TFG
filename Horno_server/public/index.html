@@ -3,186 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Horno de Biomasa ECOVIEW</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <title>Servidor del horno de ECOVIEW</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <!-- Header con logo -->
     <header class="header">
-      <div class="logo-container">
-        <img src="/favicon.ico" alt="Logo" class="logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMDA3N0ZGIi8+Cjx0ZXh0IHg9IjQwIiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+RUMPC3RleHQ+Cjwvc3ZnPgo='">
-      </div>
-      <div class="title-container">
-        <h1>ECOVIEW</h1>
-        <h2>Servidor para el horno de biomasa</h2>
-      </div>
+      <h1><i class="fas fa-fire"></i> Control del Horno de Biomasa</h1>
+      <p>ECOVIEW - Sistema de Gestión Térmica</p>
     </header>
 
-    <!-- Panel de control -->
-    <div class="control-panel">
-      <h3><i class="fas fa-sliders-h"></i> Controles del Servidor</h3>
-      <div class="button-group">
-        <button class="control-btn btn-refresh" onclick="monitor.refreshData()">
-          <i class="fas fa-sync-alt"></i>
-          <span>Actualizar</span>
-        </button>
-        
-        <button class="control-btn btn-clear-all" onclick="monitor.clearAll()">
-          <i class="fas fa-trash"></i>
-          <span>Limpiar Todo</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Dashboard principal -->
     <div class="dashboard">
-      <!-- Panel de información del sistema -->
-      <div class="system-panel">
-        <h3><i class="fas fa-microchip"></i> Estado del Sistema</h3>
-        <div class="system-grid">
-          <div class="system-item" id="temp-tanque">
-            <div class="system-label">Temperatura Tanque</div>
-            <div class="system-value">-- <span class="system-unit">°C</span></div>
+      <!-- Panel de Temperaturas -->
+      <div class="panel">
+        <h2><i class="fas fa-thermometer-half"></i> Temperaturas</h2>
+        <div class="sensor-grid">
+          <div class="sensor-item" id="temp-tanque">
+            <span class="sensor-label">Tanque de Agua</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
           </div>
-          <div class="system-item" id="temp-horno">
-            <div class="system-label">Temperatura Horno</div>
-            <div class="system-value">-- <span class="system-unit">°C</span></div>
+          <div class="sensor-item" id="temp-horno">
+            <span class="sensor-label">Horno</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
           </div>
-          <div class="system-item" id="temp-camara">
-            <div class="system-label">Temperatura Cámara</div>
-            <div class="system-value">-- <span class="system-unit">°C</span></div>
+          <div class="sensor-item" id="temp-camara">
+            <span class="sensor-label">Cámara de Humo</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
           </div>
-          <div class="system-item" id="temp-salida">
-            <div class="system-label">Temperatura Salida</div>
-            <div class="system-value">-- <span class="system-unit">°C</span></div>
-          </div>
-          <div class="system-item" id="nivel-vacio">
-            <div class="system-label">Nivel Vacío</div>
-            <div class="system-value">-- <span class="system-unit">%</span></div>
-          </div>
-          <div class="system-item" id="nivel-mitad">
-            <div class="system-label">Nivel Mitad</div>
-            <div class="system-value">-- <span class="system-unit">%</span></div>
-          </div>
-          <div class="system-item" id="nivel-lleno">
-            <div class="system-label">Nivel Lleno</div>
-            <div class="system-value">-- <span class="system-unit">%</span></div>
-          </div>
-          <div class="system-item" id="presion">
-            <div class="system-label">Presión</div>
-            <div class="system-value">-- <span class="system-unit">bar</span></div>
-          </div>
-          <div class="system-item" id="estado-sistema">
-            <div class="system-label">Estado del Sistema</div>
-            <div class="system-value">--</div>
-          </div>
-          <div class="system-item" id="estado-emergencia">
-            <div class="system-label">Modo Emergencia</div>
-            <div class="system-value">--</div>
-          </div>
-          <div class="system-item" id="valvula1-state">
-            <div class="system-label">Válvula 1</div>
-            <div class="system-value">--</div>
-          </div>
-          <div class="system-item" id="valvula2-state">
-            <div class="system-label">Válvula 2</div>
-            <div class="system-value">--</div>
-          </div>
-          <div class="system-item" id="bomba1-state">
-            <div class="system-label">Bomba 1</div>
-            <div class="system-value">--</div>
-          </div>
-          <div class="system-item" id="bomba2-state">
-            <div class="system-label">Bomba 2</div>
-            <div class="system-value">--</div>
-          </div>
-          <div class="system-item" id="bomba-activa">
-            <div class="system-label">Bomba Activa</div>
-            <div class="system-value">--</div>
+          <div class="sensor-item" id="temp-salida">
+            <span class="sensor-label">Salida de Agua</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Panel de endpoints -->
-      <div class="endpoints-panel">
-        <h3><i class="fas fa-plug"></i> Endpoints Disponibles</h3>
-        <div class="endpoints-list">
-          <div class="endpoint-item">
-            <span class="endpoint-method method-get">GET</span>
-            <span class="endpoint-url">/api/esp32-commands</span>
-            <div class="endpoint-desc">Obtener comandos pendientes para ESP32</div>
+      <!-- Panel de Niveles y Presión -->
+      <div class="panel">
+        <h2><i class="fas fa-tachometer-alt"></i> Niveles y Presión</h2>
+        <div class="sensor-grid">
+          <div class="sensor-item" id="nivel-vacio">
+            <span class="sensor-label">Nivel Vacío</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
           </div>
-          <div class="endpoint-item">
-            <span class="endpoint-method method-get">GET</span>
-            <span class="endpoint-url">/api/system-data</span>
-            <div class="endpoint-desc">Obtener datos del sistema del horno</div>
+          <div class="sensor-item" id="nivel-mitad">
+            <span class="sensor-label">Nivel Mitad</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
           </div>
-          <div class="endpoint-item">
-            <span class="endpoint-method method-post">POST</span>
-            <span class="endpoint-url">/api/message</span>
-            <div class="endpoint-desc">Enviar mensaje al broker MQTT</div>
+          <div class="sensor-item" id="nivel-lleno">
+            <span class="sensor-label">Nivel Lleno</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
           </div>
-          <div class="endpoint-item">
-            <span class="endpoint-method method-get">GET</span>
-            <span class="endpoint-url">/events</span>
-            <div class="endpoint-desc">Conexión SSE para logs en tiempo real</div>
+          <div class="sensor-item" id="presion">
+            <span class="sensor-label">Presión</span>
+            <div class="sensor-value">-- <span class="sensor-unit">bar</span></div>
           </div>
-          <div class="endpoint-item">
-            <span class="endpoint-method method-get">GET</span>
-            <span class="endpoint-url">/status</span>
-            <div class="endpoint-desc">Estado del servidor y estadísticas</div>
+        </div>
+      </div>
+
+      <!-- Panel de Control -->
+      <div class="panel">
+        <h2><i class="fas fa-cogs"></i> Control de Actuadores</h2>
+        <div class="control-panel">
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Válvula Agua Caliente</span>
+              <span class="control-state" id="valv1-state">Cerrada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="valv1-switch" onchange="toggleValve(1)">
+              <span class="slider"></span>
+            </label>
           </div>
-          <div class="endpoint-item">
-            <span class="endpoint-method method-get">GET</span>
-            <span class="endpoint-url">/api/messages</span>
-            <div class="endpoint-desc">Obtener historial de mensajes</div>
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Válvula Agua Fría</span>
+              <span class="control-state" id="valv2-state">Cerrada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="valv2-switch" onchange="toggleValve(2)">
+              <span class="slider"></span>
+            </label>
           </div>
-          <div class="endpoint-item">
-            <span class="endpoint-method method-delete">DELETE</span>
-            <span class="endpoint-url">/api/messages</span>
-            <div class="endpoint-desc">Limpiar historial de mensajes</div>
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Bomba Principal</span>
+              <span class="control-state" id="bomba1-state">Apagada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="bomba1-switch" onchange="toggleBomba(1)">
+              <span class="slider"></span>
+            </label>
           </div>
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Bomba Redundante</span>
+              <span class="control-state" id="bomba2-state">Apagada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="bomba2-switch" onchange="toggleBomba(2)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Estado -->
+      <div class="panel">
+        <h2><i class="fas fa-info-circle"></i> Estado del Sistema</h2>
+        <div class="status-panel">
+          <div class="status-item">
+            <span class="status-label">Estado Actual:</span>
+            <span class="status-value status-apagado" id="system-state">APAGADO</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Modo Emergencia:</span>
+            <span class="status-value" id="emergency-state">INACTIVO</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Bomba Activa:</span>
+            <span class="status-value" id="active-pump">PRINCIPAL</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Última Actualización:</span>
+            <span class="status-value" id="last-update">--</span>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-start" onclick="sendCommand('start')"><i class="fas fa-play"></i> Iniciar</button>
+          <button class="btn btn-stop" onclick="sendCommand('stop')"><i class="fas fa-stop"></i> Detener</button>
+          <button class="btn btn-reset" onclick="sendCommand('reset')"><i class="fas fa-redo"></i> Reset</button>
+          <button class="btn btn-emergency" onclick="sendCommand('emergency')"><i class="fas fa-exclamation-triangle"></i> Emergencia</button>
         </div>
       </div>
     </div>
 
-    <!-- Panel de logs -->
-    <div class="logs-panel">
-      <div class="panel-header">
-        <h3><i class="fas fa-terminal"></i> Logs en Tiempo Real</h3>
-        <button id="clearBtn" class="btn-clear"><i class="fas fa-broom"></i> Limpiar</button>
+    <!-- Mensajes del Sistema -->
+    <div class="panel">
+      <h2><i class="fas fa-comment-alt"></i> Mensajes del Sistema</h2>
+      <div class="message-log" id="message-log">
+        <div class="log-entry"><span class="log-time">00:00:00</span> Sistema inicializado</div>
       </div>
-      <div id="logs" class="logs-content"></div>
     </div>
 
-    <!-- Información del servidor -->
-    <div class="info-panel">
-      <div class="info-item">
-        <span class="label"><span class="status-indicator status-online"></span> Estado:</span>
-        <span class="value" id="status">Conectado</span>
-      </div>
-      <div class="info-item">
-        <span class="label"><i class="fas fa-clock"></i> Última actualización:</span>
-        <span class="value" id="lastUpdate">--:--:--</span>
-      </div>
-      <div class="info-item">
-        <span class="label"><i class="fas fa-envelope"></i> Mensajes:</span>
-        <span class="value" id="messageCount">0</span>
-      </div>
-      <div class="info-item">
-        <span class="label"><i class="fas fa-users"></i> Clientes conectados:</span>
-        <span class="value" id="clientCount">0</span>
-      </div>
-      <div class="info-item">
-        <span class="label"><i class="fas fa-list"></i> Comandos pendientes:</span>
-        <span class="value" id="commandCount">0</span>
-      </div>
+    <!-- Estado de Conexión -->
+    <div class="connection-status">
+      <span id="connection-status" class="status-offline"><i class="fas fa-plug"></i> Desconectado</span>
+      <span id="broker-status">Broker: Desconectado</span>
     </div>
   </div>
 
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
