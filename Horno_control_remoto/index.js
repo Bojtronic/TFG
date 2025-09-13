@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Configuración del broker principal
-const BROKER_URL = 'https://horno-tecnelectro.onrender.com';
+const BROKER_URL = 'https://tfg-server-ecoview.onrender.com';
 const API_ENDPOINT = `${BROKER_URL}/api/message`;
 
 // Almacenamiento de datos del sistema de horno de biomasa
