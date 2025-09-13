@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <title>Servidor del horno de ECOVIEW</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -12,7 +13,7 @@
     <!-- Header con logo -->
     <header class="header">
       <div class="logo-container">
-        <img src="./images/logo.png" alt="Logo" class="logo">
+        <img src="/favicon.ico" alt="Logo" class="logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMDA3N0ZGIi8+Cjx0ZXh0IHg9IjQwIiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+RUMPC3RleHQ+Cjwvc3ZnPgo='">
       </div>
       <div class="title-container">
         <h1>ECOVIEW</h1>
@@ -20,28 +21,144 @@
       </div>
     </header>
 
+    <!-- Panel de control -->
+    <div class="control-panel">
+      <h3><i class="fas fa-sliders-h"></i> Controles del Servidor</h3>
+      <div class="button-group">
+        <button class="control-btn btn-refresh" onclick="monitor.refreshData()">
+          <i class="fas fa-sync-alt"></i>
+          <span>Actualizar</span>
+        </button>
+        
+        <button class="control-btn btn-clear-all" onclick="monitor.clearAll()">
+          <i class="fas fa-trash"></i>
+          <span>Limpiar Todo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Dashboard principal -->
+    <div class="dashboard">
+      <!-- Panel de información del sistema -->
+      <div class="system-panel">
+        <h3><i class="fas fa-microchip"></i> Estado del Sistema</h3>
+        <div class="system-grid">
+          <div class="system-item" id="temp-tanque">
+            <div class="system-label">Temperatura Tanque</div>
+            <div class="system-value">-- <span class="system-unit">°C</span></div>
+          </div>
+          <div class="system-item" id="temp-horno">
+            <div class="system-label">Temperatura Horno</div>
+            <div class="system-value">-- <span class="system-unit">°C</span></div>
+          </div>
+          <div class="system-item" id="temp-camara">
+            <div class="system-label">Temperatura Cámara</div>
+            <div class="system-value">-- <span class="system-unit">°C</span></div>
+          </div>
+          <div class="system-item" id="temp-salida">
+            <div class="system-label">Temperatura Salida</div>
+            <div class="system-value">-- <span class="system-unit">°C</span></div>
+          </div>
+          <div class="system-item" id="nivel-vacio">
+            <div class="system-label">Nivel Vacío</div>
+            <div class="system-value">-- <span class="system-unit">%</span></div>
+          </div>
+          <div class="system-item" id="nivel-mitad">
+            <div class="system-label">Nivel Mitad</div>
+            <div class="system-value">-- <span class="system-unit">%</span></div>
+          </div>
+          <div class="system-item" id="nivel-lleno">
+            <div class="system-label">Nivel Lleno</div>
+            <div class="system-value">-- <span class="system-unit">%</span></div>
+          </div>
+          <div class="system-item" id="presion">
+            <div class="system-label">Presión</div>
+            <div class="system-value">-- <span class="system-unit">bar</span></div>
+          </div>
+          <div class="system-item" id="estado-sistema">
+            <div class="system-label">Estado del Sistema</div>
+            <div class="system-value">--</div>
+          </div>
+          <div class="system-item" id="estado-emergencia">
+            <div class="system-label">Modo Emergencia</div>
+            <div class="system-value">--</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de endpoints -->
+      <div class="endpoints-panel">
+        <h3><i class="fas fa-plug"></i> Endpoints Disponibles</h3>
+        <div class="endpoints-list">
+          <div class="endpoint-item">
+            <span class="endpoint-method method-get">GET</span>
+            <span class="endpoint-url">/api/esp32-commands</span>
+            <div class="endpoint-desc">Obtener comandos pendientes para ESP32</div>
+          </div>
+          <div class="endpoint-item">
+            <span class="endpoint-method method-get">GET</span>
+            <span class="endpoint-url">/api/system-data</span>
+            <div class="endpoint-desc">Obtener datos del sistema del horno</div>
+          </div>
+          <div class="endpoint-item">
+            <span class="endpoint-method method-post">POST</span>
+            <span class="endpoint-url">/api/message</span>
+            <div class="endpoint-desc">Enviar mensaje al broker MQTT</div>
+          </div>
+          <div class="endpoint-item">
+            <span class="endpoint-method method-get">GET</span>
+            <span class="endpoint-url">/events</span>
+            <div class="endpoint-desc">Conexión SSE para logs en tiempo real</div>
+          </div>
+          <div class="endpoint-item">
+            <span class="endpoint-method method-get">GET</span>
+            <span class="endpoint-url">/status</span>
+            <div class="endpoint-desc">Estado del servidor y estadísticas</div>
+          </div>
+          <div class="endpoint-item">
+            <span class="endpoint-method method-get">GET</span>
+            <span class="endpoint-url">/api/messages</span>
+            <div class="endpoint-desc">Obtener historial de mensajes</div>
+          </div>
+          <div class="endpoint-item">
+            <span class="endpoint-method method-delete">DELETE</span>
+            <span class="endpoint-url">/api/messages</span>
+            <div class="endpoint-desc">Limpiar historial de mensajes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Panel de logs -->
     <div class="logs-panel">
       <div class="panel-header">
-        <h3>📡 Logs en Tiempo Real</h3>
-        <button id="clearBtn" class="btn-clear">🔄 Limpiar</button>
+        <h3><i class="fas fa-terminal"></i> Logs en Tiempo Real</h3>
+        <button id="clearBtn" class="btn-clear"><i class="fas fa-broom"></i> Limpiar</button>
       </div>
       <div id="logs" class="logs-content"></div>
     </div>
 
-    <!-- Información del sistema -->
+    <!-- Información del servidor -->
     <div class="info-panel">
       <div class="info-item">
-        <span class="label">🟢 Estado:</span>
+        <span class="label"><span class="status-indicator status-online"></span> Estado:</span>
         <span class="value" id="status">Conectado</span>
       </div>
       <div class="info-item">
-        <span class="label">🕐 Última actualización:</span>
+        <span class="label"><i class="fas fa-clock"></i> Última actualización:</span>
         <span class="value" id="lastUpdate">--:--:--</span>
       </div>
       <div class="info-item">
-        <span class="label">📊 Mensajes:</span>
+        <span class="label"><i class="fas fa-envelope"></i> Mensajes:</span>
         <span class="value" id="messageCount">0</span>
+      </div>
+      <div class="info-item">
+        <span class="label"><i class="fas fa-users"></i> Clientes conectados:</span>
+        <span class="value" id="clientCount">0</span>
+      </div>
+      <div class="info-item">
+        <span class="label"><i class="fas fa-list"></i> Comandos pendientes:</span>
+        <span class="value" id="commandCount">0</span>
       </div>
     </div>
   </div>
