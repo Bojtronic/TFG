@@ -164,11 +164,11 @@ void checkForCommands() {
         
         // Parsear respuesta JSON
         if (response.indexOf('{') != -1) {
-          // Es una respuesta JSON
-          if (response.indexOf("\"commands\":") != -1) {
-            int start = response.indexOf("\"commands\":\"") + 11;
-            int end = response.indexOf("\"", start);
-            String commands = response.substring(start, end);
+          // Es una respuesta JSON - buscar el campo "commands"
+          int commandsStart = response.indexOf("\"commands\":\"") + 11;
+          if (commandsStart > 10) { // +11-1=10, significa que encontró
+            int commandsEnd = response.indexOf("\"", commandsStart);
+            String commands = response.substring(commandsStart, commandsEnd);
             
             if (commands != "no_commands") {
               // Procesar cada comando separado por comas

@@ -142,16 +142,33 @@ async function sendCommand(command) {
       })
     });
     
-    const data = await response.json();
-    
-    if (data.success) {
-      addLogEntry(`Comando enviado: ${command}`);
+    // Verificar si la respuesta es JSON válido
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const data = await response.json();
+      
+      if (data.success || data.status === 'success') {
+        addLogEntry(`Comando enviado: ${command}`);
+        return true;
+      } else {
+        addLogEntry(`Error en servidor: ${data.message || 'Error desconocido'}`);
+        return false;
+      }
     } else {
-      addLogEntry(`Error al enviar comando: ${command}`);
+      // Si no es JSON, puede ser una respuesta simple
+      const text = await response.text();
+      if (response.ok) {
+        addLogEntry(`Comando enviado: ${command}`);
+        return true;
+      } else {
+        addLogEntry(`Error en servidor: ${text}`);
+        return false;
+      }
     }
   } catch (error) {
     console.error('Error al enviar comando:', error);
     addLogEntry('Error de conexión al enviar comando');
+    return false;
   }
 }
 
