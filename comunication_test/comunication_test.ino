@@ -11,9 +11,10 @@ const char* commandsURL = "https://tfg-server-ecoview.onrender.com/api/esp32-com
 // ===== VARIABLES =====
 unsigned long lastSendTime = 0;
 unsigned long lastCommandCheck = 0;
+unsigned long lastSensorSimulation = 0;
 int messageCount = 0;
 
-// Variables simuladas para el horno de biomasa
+// Variables del sistema de horno
 float temperaturaTanque = 65.0;
 float temperaturaHorno = 180.0;
 float temperaturaCamara = 120.0;
@@ -51,8 +52,8 @@ void connectToWiFi() {
   }
 }
 
-void simularDatosSensores() {
-  // Simular variaciones en los datos
+void simularSoloDatosSensores() {
+  // Simular variaciones en los datos de sensores solamente
   temperaturaTanque = 60.0 + random(0, 100) / 10.0;
   temperaturaHorno = 175.0 + random(0, 150) / 10.0;
   temperaturaCamara = 115.0 + random(0, 100) / 10.0;
@@ -65,13 +66,144 @@ void simularDatosSensores() {
   presion = 2.5 + random(0, 30) / 10.0;
 }
 
+void simularCambiosEstado() {
+  static unsigned long lastStateChange = 0;
+  static int stateCounter = 0;
+  
+  // Cambiar estado cada 30 segundos para pruebas
+  if (millis() - lastStateChange > 30000) {
+    lastStateChange = millis();
+    stateCounter++;
+    
+    // Ciclo through diferentes estados para pruebas
+    switch (stateCounter % 6) {
+      case 0:
+        estadoSistema = "SISTEMA_APAGADO";
+        valvula1 = false;
+        valvula2 = false;
+        bomba1 = false;
+        bomba2 = false;
+        emergencia = false;
+        Serial.println("🔁 Simulación: Estado cambiado a SISTEMA_APAGADO");
+        break;
+        
+      case 1:
+        estadoSistema = "LLENADO_TANQUE";
+        valvula1 = true;
+        valvula2 = false;
+        bomba1 = true;
+        bomba2 = false;
+        emergencia = false;
+        bombaActiva = "PRINCIPAL";
+        Serial.println("🔁 Simulación: Estado cambiado a LLENADO_TANQUE");
+        break;
+        
+      case 2:
+        estadoSistema = "CALENTAMIENTO";
+        valvula1 = false;
+        valvula2 = true;
+        bomba1 = true;
+        bomba2 = false;
+        emergencia = false;
+        Serial.println("🔁 Simulación: Estado cambiado a CALENTAMIENTO");
+        break;
+        
+      case 3:
+        estadoSistema = "MANTENIMIENTO";
+        valvula1 = random(0, 2);
+        valvula2 = random(0, 2);
+        bomba1 = random(0, 2);
+        bomba2 = !bomba1;
+        emergencia = false;
+        bombaActiva = bomba1 ? "PRINCIPAL" : "REDUNDANTE";
+        Serial.println("🔁 Simulación: Estado cambiado a MANTENIMIENTO");
+        break;
+        
+      case 4:
+        estadoSistema = "MODO_EMERGENCIA";
+        valvula1 = false;
+        valvula2 = false;
+        bomba1 = false;
+        bomba2 = false;
+        emergencia = true;
+        Serial.println("🔁 Simulación: Estado cambiado a MODO_EMERGENCIA");
+        break;
+        
+      case 5:
+        estadoSistema = "ENFRIAMIENTO";
+        valvula1 = false;
+        valvula2 = true;
+        bomba1 = true;
+        bomba2 = false;
+        emergencia = false;
+        Serial.println("🔁 Simulación: Estado cambiado a ENFRIAMIENTO");
+        break;
+    }
+    
+    // Enviar datos inmediatamente después de cambiar estado
+    sendSensorData();
+    lastSendTime = millis();
+  }
+}
+
+void simularCambiosActuadores() {
+  static unsigned long lastActuatorChange = 0;
+  
+  // Cambios aleatorios cada 15-25 segundos para pruebas
+  if (millis() - lastActuatorChange > (15000 + random(0, 10000))) {
+    lastActuatorChange = millis();
+    
+    // Solo simular cambios si no estamos en emergencia
+    if (!emergencia && estadoSistema != "SISTEMA_APAGADO") {
+      // Cambio aleatorio de válvulas
+      if (random(0, 100) < 30) {
+        valvula1 = !valvula1;
+        Serial.println(valvula1 ? "🔁 Simulación: Válvula 1 ABIERTA" : "🔁 Simulación: Válvula 1 CERRADA");
+      }
+      
+      if (random(0, 100) < 30) {
+        valvula2 = !valvula2;
+        Serial.println(valvula2 ? "🔁 Simulación: Válvula 2 ABIERTA" : "🔁 Simulación: Válvula 2 CERRADA");
+      }
+      
+      // Cambio aleatorio de bombas
+      if (random(0, 100) < 20) {
+        if (bomba1) {
+          bomba1 = false;
+          bomba2 = true;
+          bombaActiva = "REDUNDANTE";
+          Serial.println("🔁 Simulación: Cambiando a Bomba 2");
+        } else {
+          bomba1 = true;
+          bomba2 = false;
+          bombaActiva = "PRINCIPAL";
+          Serial.println("🔁 Simulación: Cambiando a Bomba 1");
+        }
+      }
+      
+      // Enviar datos inmediatamente después de cambiar actuadores
+      sendSensorData();
+      lastSendTime = millis();
+    }
+  }
+}
+
 void procesarComando(String comando) {
   Serial.print("🎯 Procesando comando: ");
   Serial.println(comando);
   
+  // Guardar estado anterior para comparar
+  bool valv1_anterior = valvula1;
+  bool valv2_anterior = valvula2;
+  bool bomba1_anterior = bomba1;
+  bool bomba2_anterior = bomba2;
+  String estado_anterior = estadoSistema;
+  bool emergencia_anterior = emergencia;
+  String bombaActiva_anterior = bombaActiva;
+  
   if (comando == "start") {
-    estadoSistema = "LLENADO_TANQUE";
-    Serial.println("✅ Sistema iniciado - Modo LLENADO");
+    estadoSistema = "SISTEMA_ENCENDIDO";
+    Serial.println("✅ Sistema iniciado");
   } 
   else if (comando == "stop") {
     estadoSistema = "SISTEMA_APAGADO";
@@ -84,10 +216,14 @@ void procesarComando(String comando) {
   else if (comando == "reset") {
     estadoSistema = "SISTEMA_APAGADO";
     emergencia = false;
+    valvula1 = false;
+    valvula2 = false;
+    bomba1 = false;
+    bomba2 = false;
     Serial.println("✅ Sistema reseteado");
   }
   else if (comando == "emergency") {
-    estadoSistema = "EMERGENCIA";
+    estadoSistema = "MODO_EMERGENCIA";
     emergencia = true;
     valvula1 = false;
     valvula2 = false;
@@ -113,6 +249,7 @@ void procesarComando(String comando) {
   }
   else if (comando == "bomba1_on") {
     bomba1 = true;
+    bomba2 = false;
     bombaActiva = "PRINCIPAL";
     Serial.println("✅ Bomba 1 activada");
   }
@@ -122,6 +259,7 @@ void procesarComando(String comando) {
   }
   else if (comando == "bomba2_on") {
     bomba2 = true;
+    bomba1 = false;
     bombaActiva = "REDUNDANTE";
     Serial.println("✅ Bomba 2 activada");
   }
@@ -132,7 +270,17 @@ void procesarComando(String comando) {
   else {
     Serial.print("❌ Comando no reconocido: ");
     Serial.println(comando);
+    return;
   }
+  
+  // Verificar si hubo cambios
+  if (valv1_anterior != valvula1) Serial.println("🔄 Válvula 1 cambió: " + String(valvula1 ? "ON" : "OFF"));
+  if (valv2_anterior != valvula2) Serial.println("🔄 Válvula 2 cambió: " + String(valvula2 ? "ON" : "OFF"));
+  if (bomba1_anterior != bomba1) Serial.println("🔄 Bomba 1 cambió: " + String(bomba1 ? "ON" : "OFF"));
+  if (bomba2_anterior != bomba2) Serial.println("🔄 Bomba 2 cambió: " + String(bomba2 ? "ON" : "OFF"));
+  if (estado_anterior != estadoSistema) Serial.println("🔄 Estado cambió: " + estadoSistema);
+  if (emergencia_anterior != emergencia) Serial.println("🔄 Emergencia cambió: " + String(emergencia ? "ON" : "OFF"));
+  if (bombaActiva_anterior != bombaActiva) Serial.println("🔄 Bomba activa cambió: " + bombaActiva);
 }
 
 void checkForCommands() {
@@ -141,8 +289,7 @@ void checkForCommands() {
   
   Serial.println("🔍 Consultando comandos...");
   
-  // CONFIGURACIÓN CRÍTICA PARA HTTPS
-  client.setInsecure(); // Permite conexiones HTTPS sin verificar certificado
+  client.setInsecure();
   client.setTimeout(15000);
   
   for (int attempt = 1; attempt <= 3; attempt++) {
@@ -162,16 +309,16 @@ void checkForCommands() {
         Serial.print("📨 Respuesta: ");
         Serial.println(response);
         
-        // Parsear respuesta JSON
+        bool comandosProcesados = false;
+        
         if (response.indexOf('{') != -1) {
-          // Es una respuesta JSON - buscar el campo "commands"
           int commandsStart = response.indexOf("\"commands\":\"") + 11;
-          if (commandsStart > 10) { // +11-1=10, significa que encontró
+          if (commandsStart > 10) {
             int commandsEnd = response.indexOf("\"", commandsStart);
             String commands = response.substring(commandsStart, commandsEnd);
             
             if (commands != "no_commands") {
-              // Procesar cada comando separado por comas
+              comandosProcesados = true;
               int commaPos = 0;
               while (commaPos != -1) {
                 int nextComma = commands.indexOf(',', commaPos);
@@ -193,8 +340,8 @@ void checkForCommands() {
             }
           }
         } else {
-          // Formato antiguo (solo texto)
           if (response != "no_commands") {
+            comandosProcesados = true;
             procesarComando(response);
           } else {
             Serial.println("📭 No hay comandos pendientes");
@@ -202,6 +349,13 @@ void checkForCommands() {
         }
         
         http.end();
+        
+        if (comandosProcesados) {
+          Serial.println("🔄 Enviando datos actualizados por comando recibido");
+          sendSensorData();
+          lastSendTime = millis();
+        }
+        
         return;
       } else {
         Serial.print("❌ Error obteniendo comandos: ");
@@ -214,7 +368,6 @@ void checkForCommands() {
     }
     
     if (attempt < 3) {
-      Serial.println("⏳ Esperando 2 segundos antes de reintentar...");
       delay(2000);
     }
   }
@@ -223,9 +376,6 @@ void checkForCommands() {
 }
 
 void sendSensorData() {
-  // Simular lectura de sensores
-  simularDatosSensores();
-  
   Serial.println("\n📤 Enviando datos...");
   
   WiFiClientSecure client;
@@ -240,7 +390,6 @@ void sendSensorData() {
     
     messageCount++;
     
-    // Crear JSON con datos del sistema de horno
     String jsonPayload = "{\"topic\":\"horno/data\",\"message\":\"";
     jsonPayload += "temperaturas=[" + String(temperaturaTanque, 1) + ",";
     jsonPayload += String(temperaturaHorno, 1) + ",";
@@ -376,9 +525,10 @@ void setup() {
   
   connectToWiFi();
   
-  // Test inicial de conexión
   if (WiFi.status() == WL_CONNECTED) {
     testServerConnection();
+    sendSensorData();
+    lastSendTime = millis();
   }
 }
 
@@ -390,19 +540,24 @@ void loop() {
     return;
   }
   
-  // Enviar datos cada 15 segundos
+  if (millis() - lastSensorSimulation > 15000) {
+    simularSoloDatosSensores();
+    lastSensorSimulation = millis();
+  }
+  
+  simularCambiosEstado();
+  simularCambiosActuadores();
+  
   if (millis() - lastSendTime > 15000) {
     lastSendTime = millis();
     sendSensorData();
   }
   
-  // Consultar comandos cada 5 segundos
   if (millis() - lastCommandCheck > 5000) {
     lastCommandCheck = millis();
     checkForCommands();
   }
   
-  // Mostrar estado completo cada 20 segundos
   static unsigned long lastStatusTime = 0;
   if (millis() - lastStatusTime > 20000) {
     lastStatusTime = millis();

@@ -10,26 +10,35 @@ const elements = {
   connectionStatus: document.getElementById('connection-status'),
   brokerStatus: document.getElementById('broker-status'),
   messageLog: document.getElementById('message-log'),
+  
+  // Temperaturas
   tempTanque: document.getElementById('temp-tanque'),
   tempHorno: document.getElementById('temp-horno'),
   tempCamara: document.getElementById('temp-camara'),
   tempSalida: document.getElementById('temp-salida'),
+  
+  // Niveles y presión
   nivelVacio: document.getElementById('nivel-vacio'),
   nivelMitad: document.getElementById('nivel-mitad'),
   nivelLleno: document.getElementById('nivel-lleno'),
   presion: document.getElementById('presion'),
+  
+  // Estados de actuadores
   valv1State: document.getElementById('valv1-state'),
   valv2State: document.getElementById('valv2-state'),
   bomba1State: document.getElementById('bomba1-state'),
   bomba2State: document.getElementById('bomba2-state'),
+  
+  // Switches de control
   valv1Switch: document.getElementById('valv1-switch'),
   valv2Switch: document.getElementById('valv2-switch'),
   bomba1Switch: document.getElementById('bomba1-switch'),
   bomba2Switch: document.getElementById('bomba2-switch'),
+  
+  // Estado del sistema (SOLO LOS QUE QUEDAN)
   systemState: document.getElementById('system-state'),
-  emergencyState: document.getElementById('emergency-state'),
-  activePump: document.getElementById('active-pump'),
   lastUpdate: document.getElementById('last-update')
+  
 };
 
 // Inicialización
@@ -206,6 +215,8 @@ function updateBombaState(bombaNumber, state) {
 
 // Actualizar datos del sistema en la interfaz
 function updateSystemData(data) {
+  console.log('Actualizando datos del sistema:', data);
+  
   // Actualizar temperaturas
   if (data.temperaturas && Array.isArray(data.temperaturas)) {
     elements.tempTanque.querySelector('.sensor-value').textContent = `${data.temperaturas[0]} °C`;
@@ -226,7 +237,12 @@ function updateSystemData(data) {
     elements.presion.querySelector('.sensor-value').textContent = `${data.presion} bar`;
   }
   
-  // Actualizar estados de actuadores
+  // Actualizar estados de actuadores (QUITAR event listeners temporalmente para evitar bucles)
+  elements.valv1Switch.removeEventListener('change', () => toggleValve(1));
+  elements.valv2Switch.removeEventListener('change', () => toggleValve(2));
+  elements.bomba1Switch.removeEventListener('change', () => toggleBomba(1));
+  elements.bomba2Switch.removeEventListener('change', () => toggleBomba(2));
+  
   if (data.valvula1 !== undefined) {
     elements.valv1Switch.checked = data.valvula1;
     updateValveState(1, data.valvula1);
@@ -247,20 +263,21 @@ function updateSystemData(data) {
     updateBombaState(2, data.bomba2);
   }
   
-  // Actualizar estado del sistema
+  // RESTAURAR event listeners
+  setTimeout(() => {
+    elements.valv1Switch.addEventListener('change', () => toggleValve(1));
+    elements.valv2Switch.addEventListener('change', () => toggleValve(2));
+    elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
+    elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
+  }, 100);
+  
+  // Actualizar estado del sistema (SOLO ESTADO ACTUAL Y ÚLTIMA ACTUALIZACIÓN)
   if (data.estado) {
     elements.systemState.textContent = data.estado;
     elements.systemState.className = `status-value ${getStatusClass(data.estado)}`;
   }
   
-  if (data.emergencia !== undefined) {
-    elements.emergencyState.textContent = data.emergencia ? 'ACTIVO' : 'INACTIVO';
-    elements.emergencyState.className = `status-value ${data.emergencia ? 'status-emergency' : ''}`;
-  }
-  
-  if (data.bombaActiva) {
-    elements.activePump.textContent = data.bombaActiva;
-  }
+  // NOTA: Se han eliminado las referencias a emergency-state y active-pump
   
   if (data.lastUpdate) {
     elements.lastUpdate.textContent = formatDateTime(data.lastUpdate);
