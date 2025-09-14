@@ -283,6 +283,30 @@ input:checked+.slider:before {
   color: #dc3545;
 }
 
+/* Contenedor del logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px;
+}
+
+/* Estilos para el logo */
+.logo {
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover para el logo */
+.logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 1024px) {
   .dashboard {
     grid-template-columns: 1fr; /* Una columna en tablets */
@@ -300,5 +324,19 @@ input:checked+.slider:before {
 
   .button-group {
     grid-template-columns: 1fr;
+  }
+
+  .logo {
+    max-width: 150px;
+  }
+  
+  .logo-container {
+    margin: 15px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    max-width: 120px;
   }
 }

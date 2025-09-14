@@ -71,16 +71,21 @@ function serveScript(req, res) {
 
 // Función para servir favicon
 function serveFavicon(req, res) {
+  console.log('📝 Solicitando favicon.ico');
   const faviconPath = path.join(__dirname, '../public/favicon.ico');
+  
+  console.log('🔍 Buscando favicon en:', faviconPath);
   
   fs.readFile(faviconPath, (err, data) => {
     if (err) {
-      // Si no hay favicon, servir uno por defecto (opcional)
+      console.log('❌ Favicon no encontrado:', err.message);
+      console.log('📌 Sirviendo respuesta vacía (204)');
       res.writeHead(204); // No Content
       res.end();
       return;
     }
     
+    console.log('✅ Favicon encontrado, sirviendo...');
     res.writeHead(200, {
       'Content-Type': 'image/x-icon',
       'Cache-Control': 'public, max-age=86400' // Cache por 24 horas
@@ -99,7 +104,8 @@ function serveStaticFile(req, res) {
     '.jpg': 'image/jpeg',
     '.jpeg': 'image/jpeg',
     '.gif': 'image/gif',
-    '.svg': 'image/svg+xml'
+    '.svg': 'image/svg+xml',
+    '.ico': 'image/x-icon'
   };
 
   fs.readFile(filePath, (err, data) => {
