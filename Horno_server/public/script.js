@@ -1,32 +1,8 @@
-// script.js - Cliente Web para Control del Horno de Biomasa
-
-// Configuración
-const BROKER_URL = window.location.hostname;
-const BROKER_PORT = window.location.port || (window.location.protocol === 'https:' ? 443 : 80);
-const WS_PROTOCOL = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-const WS_URL = `${WS_PROTOCOL}//${BROKER_URL}:${BROKER_PORT}/simple`;
-const API_BASE_URL = `${window.location.protocol}//${BROKER_URL}:${BROKER_PORT}`;
-
 // Estado de la aplicación
 let appState = {
   connected: false,
-  ws: null,
-  reconnectAttempts: 0,
-  maxReconnectAttempts: 10,
-  reconnectInterval: 3000,
-  systemData: {
-    temperaturas: [0, 0, 0, 0],
-    niveles: [0, 0, 0],
-    presion: 0,
-    valvula1: false,
-    valvula2: false,
-    bomba1: false,
-    bomba2: false,
-    estado: 'SISTEMA_APAGADO',
-    emergencia: false,
-    bombaActiva: 'PRINCIPAL',
-    lastUpdate: new Date().toISOString()
-  }
+  systemData: {},
+  eventSource: null
 };
 
 // Elementos de la interfaz
@@ -34,32 +10,22 @@ const elements = {
   connectionStatus: document.getElementById('connection-status'),
   brokerStatus: document.getElementById('broker-status'),
   messageLog: document.getElementById('message-log'),
-  
-  // Temperaturas
   tempTanque: document.getElementById('temp-tanque'),
   tempHorno: document.getElementById('temp-horno'),
   tempCamara: document.getElementById('temp-camara'),
   tempSalida: document.getElementById('temp-salida'),
-  
-  // Niveles y presión
   nivelVacio: document.getElementById('nivel-vacio'),
   nivelMitad: document.getElementById('nivel-mitad'),
   nivelLleno: document.getElementById('nivel-lleno'),
   presion: document.getElementById('presion'),
-  
-  // Estados de actuadores
   valv1State: document.getElementById('valv1-state'),
   valv2State: document.getElementById('valv2-state'),
   bomba1State: document.getElementById('bomba1-state'),
   bomba2State: document.getElementById('bomba2-state'),
-  
-  // Switches de control
   valv1Switch: document.getElementById('valv1-switch'),
   valv2Switch: document.getElementById('valv2-switch'),
   bomba1Switch: document.getElementById('bomba1-switch'),
   bomba2Switch: document.getElementById('bomba2-switch'),
-  
-  // Estado del sistema
   systemState: document.getElementById('system-state'),
   emergencyState: document.getElementById('emergency-state'),
   activePump: document.getElementById('active-pump'),
@@ -68,133 +34,104 @@ const elements = {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
-  initializeWebSocket();
   setupEventListeners();
-  startDataPolling();
-  addLogEntry('Sistema inicializado. Conectando al broker...');
+  initializeSSE();
+  loadSystemData();
+  addLogEntry('Sistema inicializado. Conectando al servidor...');
 });
 
-// Configurar WebSocket
-function initializeWebSocket() {
+// Configurar EventSource para SSE
+function initializeSSE() {
   try {
-    appState.ws = new WebSocket(WS_URL);
+    appState.eventSource = new EventSource('/events');
     
-    appState.ws.onopen = function() {
-      handleConnectionSuccess();
+    appState.eventSource.onopen = function() {
+      console.log('✅ Conexión SSE establecida');
+      appState.connected = true;
+      updateConnectionStatus(true);
+      addLogEntry('Conexión con el servidor establecida');
     };
     
-    appState.ws.onmessage = function(event) {
-      handleIncomingMessage(event);
-    };
-    
-    appState.ws.onclose = function() {
-      handleConnectionClose();
-    };
-    
-    appState.ws.onerror = function(error) {
-      handleConnectionError(error);
-    };
-    
-  } catch (error) {
-    console.error('Error al inicializar WebSocket:', error);
-    addLogEntry('Error de conexión: ' + error.message);
-    attemptReconnection();
-  }
-}
-
-// Manejar conexión exitosa
-function handleConnectionSuccess() {
-  appState.connected = true;
-  appState.reconnectAttempts = 0;
-  
-  elements.connectionStatus.textContent = 'Conectado';
-  elements.connectionStatus.className = 'status-online';
-  elements.brokerStatus.textContent = 'Broker: Conectado';
-  
-  addLogEntry('Conexión WebSocket establecida correctamente');
-  
-  // Solicitar datos actuales al conectarse
-  sendWebSocketMessage('horno/status', 'get_data');
-}
-
-// Manejar mensajes entrantes
-function handleIncomingMessage(event) {
-  try {
-    const data = JSON.parse(event.data);
-    
-    if (data.type === 'systemData') {
-      updateSystemData(data.data);
-    } else if (data.message) {
-      addLogEntry(data.message);
-    }
-    
-  } catch (error) {
-    console.log('Mensaje recibido (texto plano):', event.data);
-    // Intentar procesar como datos del sistema en formato texto
-    try {
-      const systemData = JSON.parse(event.data);
-      if (systemData.temperaturas) {
-        updateSystemData(systemData);
+    appState.eventSource.onmessage = function(event) {
+      try {
+        const data = JSON.parse(event.data);
+        
+        if (data.type === 'systemData') {
+          updateSystemData(data.data);
+        }
+      } catch (error) {
+        console.log('Mensaje recibido:', event.data);
       }
-    } catch (e) {
-      addLogEntry(event.data);
-    }
+    };
+    
+    appState.eventSource.onerror = function(error) {
+      console.error('Error en SSE:', error);
+      appState.connected = false;
+      updateConnectionStatus(false);
+      
+      // Intentar reconectar después de 5 segundos
+      setTimeout(() => {
+        if (!appState.connected) {
+          console.log('🔄 Intentando reconectar SSE...');
+          appState.eventSource.close();
+          initializeSSE();
+        }
+      }, 5000);
+    };
+  } catch (error) {
+    console.error('Error al inicializar SSE:', error);
+    appState.connected = false;
+    updateConnectionStatus(false);
   }
 }
 
-// Manejar cierre de conexión
-function handleConnectionClose() {
-  appState.connected = false;
-  
-  elements.connectionStatus.textContent = 'Desconectado';
-  elements.connectionStatus.className = 'status-offline';
-  elements.brokerStatus.textContent = 'Broker: Desconectado';
-  
-  addLogEntry('Conexión WebSocket cerrada. Intentando reconectar...');
-  attemptReconnection();
-}
-
-// Manejar error de conexión
-function handleConnectionError(error) {
-  console.error('Error de WebSocket:', error);
-  addLogEntry('Error de conexión WebSocket');
-}
-
-// Intentar reconexión
-function attemptReconnection() {
-  if (appState.reconnectAttempts < appState.maxReconnectAttempts) {
-    appState.reconnectAttempts++;
-    addLogEntry(`Intento de reconexión ${appState.reconnectAttempts}/${appState.maxReconnectAttempts}`);
-    
-    setTimeout(() => {
-      initializeWebSocket();
-    }, appState.reconnectInterval);
+// Actualizar estado de conexión en la UI
+function updateConnectionStatus(connected) {
+  if (connected) {
+    elements.connectionStatus.textContent = 'Conectado';
+    elements.connectionStatus.className = 'status-online';
+    elements.brokerStatus.textContent = 'Servidor: Conectado';
   } else {
-    addLogEntry('No se pudo reconectar después de múltiples intentos');
+    elements.connectionStatus.textContent = 'Desconectado';
+    elements.connectionStatus.className = 'status-offline';
+    elements.brokerStatus.textContent = 'Servidor: Desconectado';
+  }
+}
+
+// Cargar datos del sistema
+async function loadSystemData() {
+  try {
+    const response = await fetch('/api/system-data');
+    const data = await response.json();
+    
+    if (data.success) {
+      updateSystemData(data.data);
+    }
+  } catch (error) {
+    console.error('Error cargando datos:', error);
+    addLogEntry('Error al cargar datos del sistema');
   }
 }
 
 // Configurar event listeners
 function setupEventListeners() {
-  // Event listeners para los switches ya están configurados en el HTML
+  // Listeners para switches
+  elements.valv1Switch.addEventListener('change', () => toggleValve(1));
+  elements.valv2Switch.addEventListener('change', () => toggleValve(2));
+  elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
+  elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
+  
+  // Listeners para botones
+  document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
+  document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
+  document.getElementById('btn-reset').addEventListener('click', () => sendCommand('reset'));
+  document.getElementById('btn-emergency').addEventListener('click', () => sendCommand('emergency'));
 }
 
-// Enviar mensaje a través de WebSocket
-function sendWebSocketMessage(topic, message) {
-  if (appState.ws && appState.ws.readyState === WebSocket.OPEN) {
-    const payload = JSON.stringify({ topic, message });
-    appState.ws.send(payload);
-    return true;
-  } else {
-    addLogEntry('Error: No hay conexión WebSocket activa');
-    return false;
-  }
-}
-
-// Enviar comando al servidor (usando fetch como fallback)
+// Enviar comando al servidor
 async function sendCommand(command) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/message`, {
+    const response = await fetch('/api/message', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -215,9 +152,6 @@ async function sendCommand(command) {
   } catch (error) {
     console.error('Error al enviar comando:', error);
     addLogEntry('Error de conexión al enviar comando');
-    
-    // Intentar enviar por WebSocket como fallback
-    sendWebSocketMessage('esp32/control', command);
   }
 }
 
@@ -351,27 +285,3 @@ function addLogEntry(message) {
     elements.messageLog.removeChild(elements.messageLog.lastChild);
   }
 }
-
-// Polling periódico para datos del sistema
-function startDataPolling() {
-  // Polling cada 5 segundos para obtener datos actualizados
-  setInterval(async () => {
-    if (!appState.connected) return;
-    
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/system-data`);
-      const data = await response.json();
-      
-      if (data.success) {
-        updateSystemData(data.data);
-      }
-    } catch (error) {
-      console.error('Error en polling de datos:', error);
-    }
-  }, 5000);
-}
-
-// Hacer funciones globales para que estén disponibles en los onclick del HTML
-window.sendCommand = sendCommand;
-window.toggleValve = toggleValve;
-window.toggleBomba = toggleBomba;
