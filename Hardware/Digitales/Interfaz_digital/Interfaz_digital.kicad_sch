@@ -1985,7 +1985,7 @@
 	)
 	(text "Interfaz de señales digitales"
 		(exclude_from_sim no)
-		(at 212.344 172.72 0)
+		(at 235.204 173.228 0)
 		(effects
 			(font
 				(face "Arial Black")
@@ -3512,7 +3512,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 102.87 0)
 			(effects
 				(font
@@ -3655,7 +3655,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 68.58 0)
 			(effects
 				(font
@@ -3868,7 +3868,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 156.21 0)
 			(effects
 				(font
@@ -4435,7 +4435,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 138.43 0)
 			(effects
 				(font
@@ -4840,7 +4840,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 33.02 0)
 			(effects
 				(font
@@ -5194,7 +5194,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 50.8 0)
 			(effects
 				(font
@@ -5750,7 +5750,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 120.65 0)
 			(effects
 				(font
@@ -6109,7 +6109,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/32438/TOSHIBA/TLP521/245/1/TLP521.html"
+		(property "Datasheet" "https://docs.rs-online.com/d620/0900766b800287f7.pdf"
 			(at 160.02 86.36 0)
 			(effects
 				(font
