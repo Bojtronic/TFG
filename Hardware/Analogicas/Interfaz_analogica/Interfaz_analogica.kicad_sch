@@ -3363,7 +3363,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LM741_TH:LM471_TH"
 			(at 142.24 120.65 0)
 			(effects
 				(font
@@ -3448,7 +3448,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LM741_TH:LM471_TH"
 			(at 142.24 69.85 0)
 			(effects
 				(font
@@ -4026,7 +4026,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LM741_TH:LM471_TH"
 			(at 142.24 95.25 0)
 			(effects
 				(font
@@ -5009,7 +5009,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LM741_TH:LM471_TH"
 			(at 142.24 44.45 0)
 			(effects
 				(font
