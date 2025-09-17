@@ -67,33 +67,21 @@ void actualizarEstadoSistemaHMI() {
   uint32_t color = 0; // 0 = Negro (default)
   
   switch (estadoActual) {
-    case SISTEMA_APAGADO:
+    case APAGADO:
       estadoStr = "APAGADO";
       color = 63488; // Rojo para apagado
       break;
-    case LLENADO_TANQUE:
-      estadoStr = "LLENANDO";
+    case DETENER:
+      estadoStr = "DETENER";
       color = 65504; // Amarillo para llenado
       break;
-    case CALENTAMIENTO:
-      estadoStr = "CALENTANDO";
+    case PROCESANDO:
+      estadoStr = "PROCESANDO";
       color = 64512; // Naranja para calentamiento
-      break;
-    case CIRCULACION:
-      estadoStr = "CIRCULANDO";
-      color = 1024;  // Verde para circulación
-      break;
-    case ENTREGA_AGUA:
-      estadoStr = "ENTREGANDO";
-      color = 2016;  // Azul claro para entrega
       break;
     case EMERGENCIA:
       estadoStr = "EMERGENCIA!";
       color = 63488; // Rojo brillante para emergencia
-      break;
-    case MANTENIMIENTO:
-      estadoStr = "MANTENIMIENTO";
-      color = 50712; // Morado para mantenimiento
       break;
     default:
       estadoStr = "DESCONOCIDO";
@@ -126,7 +114,7 @@ void mensajesHMI(const String& mensaje) {
 void startBtnCallback(void *ptr) {
   Serial.println("🟢 Botón START presionado en HMI");
   
-  if (estadoActual == SISTEMA_APAGADO) {
+  if (estadoActual == APAGADO) {
     if (!emergencia) {
       iniciarSistema();
     } else {
@@ -147,7 +135,7 @@ void startBtnCallback(void *ptr) {
 void stopBtnCallback(void *ptr) {
   Serial.println("🔴 Botón STOP presionado en HMI");
   
-  if (estadoActual != SISTEMA_APAGADO && estadoActual != EMERGENCIA) {
+  if (estadoActual != APAGADO && estadoActual != EMERGENCIA) {
     detenerSistema();
   } else if (estadoActual == EMERGENCIA) {
     mensajesHMI("Use RESET para salir de emergencia");
@@ -157,12 +145,9 @@ void stopBtnCallback(void *ptr) {
     Serial.println("ℹ️  Sistema ya está apagado");
   }
   
-  // Feedback visual opcional
-  // stopBtn.setPic(2); // Cambiar a imagen de botón presionado
-  // delay(200);
-  // stopBtn.setPic(0); // Volver a imagen normal
 }
 
+/*
 void resetBtnCallback(void *ptr) {
   Serial.println("🔄 Botón RESET presionado en HMI");
   
@@ -199,12 +184,8 @@ void resetBtnCallback(void *ptr) {
     mensajesHMI("Reset solo disponible en emergencia");
     Serial.println("ℹ️  Reset solo funciona en modo emergencia");
   }
-  
-  // Feedback visual opcional
-  // resetBtn.setPic(2); // Cambiar a imagen de botón presionado
-  // delay(200);
-  // resetBtn.setPic(0); // Volver a imagen normal
 }
+*/
 
 // ================= FUNCIONES AUXILIARES HMI =================
 

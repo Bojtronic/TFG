@@ -15,11 +15,12 @@ Adafruit_MAX31855 thermocouple4(MAX_CLK, MAX_CS4, MAX_MISO);
 
 // Variables de sensores
 double temperaturas[4] = { 0, 0, 0, 0 };
+int nivelTanque = 0;
 int niveles[3] = { 0, 0, 0 };
 float presionActual = 0.0;
 
 // Estados del sistema
-EstadoSistema estadoActual = SISTEMA_APAGADO;
+EstadoSistema estadoActual = APAGADO;
 bool emergencia = false;
 bool bombaPrincipalActiva = true;
 unsigned long ultimoCambioBomba = 0;

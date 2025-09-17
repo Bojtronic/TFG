@@ -10,8 +10,8 @@ void inicializarTermocuplas();
 void leerSensores();
 void leerTemperaturas();
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero);
-void leerNiveles();
 void leerPresion();
+void leerNiveles();
 void leerPulsadores();
 
 #endif

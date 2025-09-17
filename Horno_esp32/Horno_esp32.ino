@@ -17,7 +17,7 @@ void setup() {
   // Configurar callbacks de Nextion
   startBtn.attachPush(startBtnCallback, &startBtn);
   stopBtn.attachPush(stopBtnCallback, &stopBtn);
-  resetBtn.attachPush(resetBtnCallback, &resetBtn);
+  //resetBtn.attachPush(resetBtnCallback, &resetBtn);
   
   //apagarTodo();
   
@@ -44,35 +44,17 @@ void loop() {
     lastReadTime = now;
     
     leerSensores();
-    /*
-    actualizarHMI();
+    verificarSeguridad();
+    controlarSistema();
     
-    if (estadoActual != SISTEMA_APAGADO && estadoActual != EMERGENCIA) {
-      verificarSeguridad();
-      controlarSistema();
-      alternarBombas();
-    }
-    */
+    //actualizarHMI();
+    
   }
   
-  //leerPulsadores();
-  
+  leerPulsadores();
+
   // Manejo de comunicación con servidor
-  handleServerCommunication();
-  
-  
-  /*
-  static unsigned long lastStatusTime = 0;
-  if (now - lastStatusTime > 5000) {
-    lastStatusTime = now;
-    
-    Serial.println(" | 🌡️ Temp: ");
-    Serial.println(temperaturas[0], 1);
-    Serial.println(temperaturas[1], 1);
-    Serial.println(temperaturas[2], 1);
-    Serial.println(temperaturas[3], 1);
-  }
-  */
+  handleServerCommunication();  
   
   delay(100);
 }

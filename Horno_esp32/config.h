@@ -50,14 +50,16 @@
 
 // ================= PARÁMETROS DE CONFIGURACIÓN =================
 #define TEMP_AGUA_CALIENTE 60.0     // Temperatura objetivo agua caliente (°C)
-#define TEMP_MAX_TANQUE    85.0     // Temperatura máxima en tanque (°C)
-#define TEMP_MAX_HORNO     250.0    // Temperatura máxima en horno (°C)
+#define TEMP_MAX_TANQUE    70.0     // Temperatura máxima en tanque (°C)
+#define TEMP_MAX_HORNO     200.0    // Temperatura máxima en horno (°C)
 #define TEMP_MAX_CAMARA    150.0    // Temperatura máxima en cámara (°C)
-#define PRESION_MAXIMA     4.0      // Presión máxima permitida (bar)
+#define TEMP_MIN_HORNO     35.0     // Temperatura minima en horno (°C)
+//#define PRESION_MAXIMA     7.0      // Presión máxima permitida (bar)
 #define NIVEL_LLENO        80       // % para considerar tanque lleno
 #define NIVEL_MITAD        40       // % para considerar tanque a la mitad
 #define NIVEL_VACIO        10       // % para considerar tanque vacío
-#define PRESION_UMBRAL     3.5      // Presión para alerta (bar)
+//#define PRESION_UMBRAL     2.0      // Presión para alerta (bar)
+#define PRESION_MINIMA     2.0      // Presión para alerta (bar)
 
 #define INTERVALO_CAMBIO_BOMBA 3600000 // 1 hora
 #define LECTURA_INTERVAL 1000          // 1 segundo
@@ -77,18 +79,16 @@ extern Adafruit_MAX31855 thermocouple4; // salida
 
 // Variables de sensores
 extern double temperaturas[4];
+extern int nivelTanque;
 extern int niveles[3];
 extern float presionActual;
 
 // Estados del sistema
 enum EstadoSistema {
-  SISTEMA_APAGADO,
-  LLENADO_TANQUE,
-  CALENTAMIENTO,
-  CIRCULACION,
-  ENTREGA_AGUA,
-  EMERGENCIA,
-  MANTENIMIENTO
+  APAGADO,
+  DETENER,
+  PROCESANDO,
+  EMERGENCIA
 };
 
 extern EstadoSistema estadoActual;
@@ -120,7 +120,7 @@ extern NexPicture bomba1State;
 extern NexPicture bomba2State;
 extern NexButton startBtn;
 extern NexButton stopBtn;
-extern NexButton resetBtn;
+//extern NexButton resetBtn;
 extern NexTouch *nex_listen_list[];
 
 // ================= DECLARACIONES DE FUNCIONES =================
@@ -169,6 +169,6 @@ void handleServerCommunication();
 // Callbacks Nextion
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
-void resetBtnCallback(void *ptr);
+//void resetBtnCallback(void *ptr);
 
 #endif

@@ -765,12 +765,12 @@
 			)
 		)
 	)
-	(footprint "LM741_TH:LM471_TH"
+	(footprint "LM741_TH:LM741_TH"
 		(layer "F.Cu")
 		(uuid "23a5f3aa-d7fc-44f0-aee7-f227bf3dbf28")
 		(at 29 60.6 -90)
 		(property "Reference" "U3"
-			(at 0.045 -6 180)
+			(at -0.565 -5.607 270)
 			(layer "F.SilkS")
 			(uuid "70d481a0-6e10-4028-8aa6-bd4d4d2a99e9")
 			(effects
@@ -781,7 +781,7 @@
 			)
 		)
 		(property "Value" "LM741"
-			(at 0.135 6 90)
+			(at 10.865 5.607 270)
 			(layer "F.Fab")
 			(uuid "4ddc952b-1f0c-4777-8783-5043e41cc494")
 			(effects
@@ -792,7 +792,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm741.pdf"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "6ed992a6-c85b-431d-95be-b27f623c56fe")
@@ -804,7 +804,7 @@
 			)
 		)
 		(property "Description" "Operational Amplifier, DIP-8/TO-99-8"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "5ff8e3a4-d9ec-41e7-b9d6-ce3bcdcd4317")
@@ -828,7 +828,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "efaa2a89-d0da-4c14-a0ff-50071f5ee65c")
+			(uuid "6f53de47-a4d9-4086-9f37-e59a5e97dd54")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -838,7 +838,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "b344b8d2-71b5-4ff6-8b52-7b9e08bc61e6")
+			(uuid "db7546ed-de03-4a62-87ae-884f17258ab0")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -849,7 +849,7 @@
 			)
 			(fill no)
 			(layer "F.SilkS")
-			(uuid "7dc00ba6-08e9-4a0a-9522-cc5ceaf3db5a")
+			(uuid "2086cc6c-87b5-4a16-902e-573c86b68247")
 		)
 		(fp_line
 			(start 4.785 5.045)
@@ -859,7 +859,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "6db4ab21-e36b-4b1a-9a61-0c73fcb83889")
+			(uuid "30f892c2-c256-4a5f-8659-1ac57e49b883")
 		)
 		(fp_line
 			(start -4.785 -5.045)
@@ -869,7 +869,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "05ff7eb6-784d-40f5-9d35-5e28e80275e2")
+			(uuid "8f981ff6-13fc-44b9-8d85-77fe71a414f3")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -879,7 +879,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "121da3d8-47c6-4815-a071-fe67ebef6338")
+			(uuid "0d25b1f7-68c4-4e5b-bfef-ab2f94f46933")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -889,7 +889,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "f8b0002a-8cbf-4c87-9c26-ef42b879bf01")
+			(uuid "be6f431e-5a2d-4fe5-afbb-cfdae7d5ef7d")
 		)
 		(fp_line
 			(start -3.175 4.795)
@@ -899,7 +899,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "1af4531b-61f7-4d2c-9986-fc67ba0a213c")
+			(uuid "a599ed21-c443-43da-8a65-5d24af761818")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -909,7 +909,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "91f09920-1527-476f-a18b-bd0a2eb7973c")
+			(uuid "bb4f06df-ee6b-4320-9584-79fdace74a8d")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -919,7 +919,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "8408060b-44e5-4955-b347-a07729b54cfb")
+			(uuid "88f646f2-3691-410d-af91-620aa81a5206")
 		)
 		(fp_line
 			(start 3.175 -4.795)
@@ -929,7 +929,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "2febb598-1d09-44e1-8208-b1b1d6b28a56")
+			(uuid "a6899328-02ff-489a-b519-e063c8384c62")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -940,7 +940,7 @@
 			)
 			(fill no)
 			(layer "F.Fab")
-			(uuid "db8d6914-cdd8-40f7-91be-09e79835bc1f")
+			(uuid "3a1696ba-28ef-42b5-bb50-6083718864d6")
 		)
 		(pad "1" thru_hole rect
 			(at -3.97 -3.81 270)
@@ -1038,7 +1038,7 @@
 			(uuid "38fe300c-6444-452e-85f9-735fc49adcce")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Bojtronic/Documents/KiCad/9.0/library/LM741/LM741CN_NOPB.step"
+		(model "/home/bojorge/Documents/TEC/TFG/Kicad library/LM741CN_NOPB/LM741CN_NOPB.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -1880,12 +1880,12 @@
 			)
 		)
 	)
-	(footprint "LM741_TH:LM471_TH"
+	(footprint "LM741_TH:LM741_TH"
 		(layer "F.Cu")
 		(uuid "330a1d2a-e3d6-4d3d-9439-98995656a3b3")
 		(at 28.93 84.23 -90)
 		(property "Reference" "U4"
-			(at 0 -6 180)
+			(at -0.565 -5.607 270)
 			(layer "F.SilkS")
 			(uuid "94de896b-76bc-45f1-873f-514d896da0f8")
 			(effects
@@ -1896,7 +1896,7 @@
 			)
 		)
 		(property "Value" "LM741"
-			(at 0.135 6 90)
+			(at 10.865 5.607 270)
 			(layer "F.Fab")
 			(uuid "64dc9dc2-4a52-46d2-8c34-cdfc5743c7b1")
 			(effects
@@ -1907,7 +1907,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm741.pdf"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "0fdff80d-54c8-4280-ba86-290de36f6811")
@@ -1919,7 +1919,7 @@
 			)
 		)
 		(property "Description" "Operational Amplifier, DIP-8/TO-99-8"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "7726f08d-a997-486f-bba1-b0d2fe3c625f")
@@ -1943,7 +1943,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "8d4416a7-3a14-4690-915d-edd828360007")
+			(uuid "40d68d77-8c37-4e72-9587-a268ac8a27b0")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -1953,7 +1953,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "85500de6-14fb-4b31-b477-61f2c85c2ad4")
+			(uuid "f5462708-8042-4e4c-b0c1-549b126ce12e")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -1964,7 +1964,7 @@
 			)
 			(fill no)
 			(layer "F.SilkS")
-			(uuid "59f94fb0-950f-45ff-a59c-9718a57f96f1")
+			(uuid "79faa177-a08a-453c-8865-7ea694d5f691")
 		)
 		(fp_line
 			(start 4.785 5.045)
@@ -1974,7 +1974,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "ff833f91-1f26-4eef-898b-2aaa52824931")
+			(uuid "f036b238-2065-4b21-9457-968e10633ca4")
 		)
 		(fp_line
 			(start -4.785 -5.045)
@@ -1984,7 +1984,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "f5eb134e-71e5-48e5-bda0-79f743e61dd5")
+			(uuid "8fed1ac8-ef66-461d-aecd-e92b9afbeadf")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -1994,7 +1994,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "70d2c129-d2e2-455a-8400-958d43da73ed")
+			(uuid "bab772c3-7644-4c80-93a6-ce9850960cee")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -2004,7 +2004,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "2841ba05-291b-46ce-9ce4-4708eb874195")
+			(uuid "a25883f3-0ed7-4a19-90f7-90e42d23f4a9")
 		)
 		(fp_line
 			(start -3.175 4.795)
@@ -2014,7 +2014,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "c70fc70a-21c6-47be-943f-1ca3519469da")
+			(uuid "8efccfe1-eb52-40fa-a771-3c9855f10517")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -2024,7 +2024,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "dcab2bee-657a-4287-a078-2af90d5b307b")
+			(uuid "980f2141-53e8-4d3b-ba9f-466872fc2194")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -2034,7 +2034,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "f201763c-ecfa-4f3f-bf96-bc970dccffdf")
+			(uuid "4f36f8fb-ce01-4e14-b597-d7492be064ce")
 		)
 		(fp_line
 			(start 3.175 -4.795)
@@ -2044,7 +2044,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "22c1da9b-0a2f-4065-a0ec-737ab3077dc9")
+			(uuid "34bb5566-4cea-47ec-851f-14ea5c667fe7")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -2055,7 +2055,7 @@
 			)
 			(fill no)
 			(layer "F.Fab")
-			(uuid "57e38a63-2e74-4782-bebd-af8bda22d32f")
+			(uuid "f7b382c3-75d0-4394-8570-532e6977c9ad")
 		)
 		(pad "1" thru_hole rect
 			(at -3.97 -3.81 270)
@@ -2153,7 +2153,7 @@
 			(uuid "61c53619-8f08-42c4-96ff-ad201085459a")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Bojtronic/Documents/KiCad/9.0/library/LM741/LM741CN_NOPB.step"
+		(model "/home/bojorge/Documents/TEC/TFG/Kicad library/LM741CN_NOPB/LM741CN_NOPB.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -5114,12 +5114,12 @@
 			)
 		)
 	)
-	(footprint "LM741_TH:LM471_TH"
+	(footprint "LM741_TH:LM741_TH"
 		(layer "F.Cu")
 		(uuid "a67ee8b2-896e-4f54-a748-938455911a12")
 		(at 28.6 37.6 -90)
 		(property "Reference" "U2"
-			(at 0.09 -6 180)
+			(at -0.565 -5.607 270)
 			(layer "F.SilkS")
 			(uuid "f62e9c03-3994-48d9-a629-3e153a28b640")
 			(effects
@@ -5130,7 +5130,7 @@
 			)
 		)
 		(property "Value" "LM741"
-			(at 0.135 6 90)
+			(at 10.865 5.607 270)
 			(layer "F.Fab")
 			(uuid "358a2161-ccab-4d5a-84c3-712afd5324d1")
 			(effects
@@ -5141,7 +5141,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm741.pdf"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "0b3a48ee-7e67-4880-951c-9dd632dd43b8")
@@ -5153,7 +5153,7 @@
 			)
 		)
 		(property "Description" "Operational Amplifier, DIP-8/TO-99-8"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "59e34272-689d-4ebe-8c8b-4f9820d7a0ac")
@@ -5177,7 +5177,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "984459b5-afaa-4ee0-a3ab-41305cbc8754")
+			(uuid "964776a2-66ad-4cda-9553-0097d42f3d0f")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -5187,7 +5187,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "bf521d0e-f530-470f-b038-00ba807dff0d")
+			(uuid "f2326f08-dad1-46ee-82c6-026891c21728")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -5198,7 +5198,7 @@
 			)
 			(fill no)
 			(layer "F.SilkS")
-			(uuid "7b2d97a6-ad58-460f-8e8b-45de93a337d5")
+			(uuid "7d42d0c3-0a07-4396-a46b-7c222e493837")
 		)
 		(fp_line
 			(start 4.785 5.045)
@@ -5208,7 +5208,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "34afffdb-5fc1-4a6f-b288-a2f80639c9b1")
+			(uuid "84a3326d-dd7c-469d-9b9a-e10ba592a056")
 		)
 		(fp_line
 			(start -4.785 -5.045)
@@ -5218,7 +5218,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "2057c7cd-c743-4dfd-a04c-722e6fda471f")
+			(uuid "c3e4bb80-f33c-4b96-b164-690d09e74a34")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -5228,7 +5228,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "74bbbf6b-21df-42d3-b58a-025a49dc6391")
+			(uuid "7ebd5d3e-33db-44e2-850a-9dc8873290f9")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -5238,7 +5238,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "cf095c68-d665-4b93-ab38-4963f1af977c")
+			(uuid "8fb607c7-84ae-4d42-a14d-617ec2c0435c")
 		)
 		(fp_line
 			(start -3.175 4.795)
@@ -5248,7 +5248,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "c4208e1a-7db6-41a3-b45b-011e30db7de5")
+			(uuid "b6e9727d-c8ee-44d1-b872-ec735fe3b32a")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -5258,7 +5258,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "5ce3586d-e432-49a4-bf68-a587bd7cd4d7")
+			(uuid "a0ab3a9c-541b-4ba0-b323-05d8b393405b")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -5268,7 +5268,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "84e58186-23aa-49a3-a589-fc042c2b1aad")
+			(uuid "77574feb-fa74-441f-94a5-623c82f4e996")
 		)
 		(fp_line
 			(start 3.175 -4.795)
@@ -5278,7 +5278,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "1bb469bc-8614-4a2f-a424-f2817ef768d1")
+			(uuid "d2b3977b-f9c1-4f11-a8fb-ab732873cd44")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -5289,7 +5289,7 @@
 			)
 			(fill no)
 			(layer "F.Fab")
-			(uuid "a733af7a-43b0-4aa4-a615-ad6d0ccfeda2")
+			(uuid "2e7fa69e-6e75-4f0b-91a5-f1258a1591db")
 		)
 		(pad "1" thru_hole rect
 			(at -3.97 -3.81 270)
@@ -5387,7 +5387,7 @@
 			(uuid "0b8f2deb-e296-4580-9879-741933742d56")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Bojtronic/Documents/KiCad/9.0/library/LM741/LM741CN_NOPB.step"
+		(model "/home/bojorge/Documents/TEC/TFG/Kicad library/LM741CN_NOPB/LM741CN_NOPB.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -6986,12 +6986,12 @@
 			)
 		)
 	)
-	(footprint "LM741_TH:LM471_TH"
+	(footprint "LM741_TH:LM741_TH"
 		(layer "F.Cu")
 		(uuid "e16c7cf5-172d-447b-ab36-2179cf77b68d")
 		(at 29 13.8 -90)
 		(property "Reference" "U1"
-			(at 0.135 -6 180)
+			(at -0.565 -5.607 270)
 			(layer "F.SilkS")
 			(uuid "ee4ca122-ee83-48b6-be5d-43b32b47cd98")
 			(effects
@@ -7002,7 +7002,7 @@
 			)
 		)
 		(property "Value" "LM741"
-			(at 0.135 6 90)
+			(at 10.865 5.607 270)
 			(layer "F.Fab")
 			(uuid "e46e4b12-cba2-4a72-a5a9-d7b6363e2ed6")
 			(effects
@@ -7013,7 +7013,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lm741.pdf"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "3c6cb195-c3ad-4617-bccb-c5d340d2b012")
@@ -7025,7 +7025,7 @@
 			)
 		)
 		(property "Description" "Operational Amplifier, DIP-8/TO-99-8"
-			(at 0 0 90)
+			(at 0 0 270)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "cc536308-9904-42bf-85ae-6e4881af07f1")
@@ -7049,7 +7049,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "8a0875b6-e67c-4fc9-9496-c13603236980")
+			(uuid "8efcb458-3e61-4e93-9961-ddc38ee5034e")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -7059,7 +7059,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "d9b8abe2-71a5-43e4-89cc-1b2b31c4ef40")
+			(uuid "a4fcc8f5-2498-43d8-9f01-246de3491ffb")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -7070,7 +7070,7 @@
 			)
 			(fill no)
 			(layer "F.SilkS")
-			(uuid "2cb8f7f3-f986-47e5-b425-2ee6fbc80504")
+			(uuid "f12583f8-b3ba-44d3-bd3e-fe4ae857f76e")
 		)
 		(fp_line
 			(start 4.785 5.045)
@@ -7080,7 +7080,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "8b113e8e-09b5-41fc-bc28-01cfaa5b46fc")
+			(uuid "59ae506b-8dca-4866-b2b7-5a2279989831")
 		)
 		(fp_line
 			(start -4.785 -5.045)
@@ -7090,7 +7090,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "4847b1fc-7023-41b0-ace7-6607393330b9")
+			(uuid "133f72fe-d816-4246-8c87-d4c3f8012f53")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -7100,7 +7100,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "9a2143bd-2ca5-4c9b-9469-a977d99847c9")
+			(uuid "4ed6583d-b42c-489c-a364-6a133eaef593")
 		)
 		(fp_line
 			(start 4.785 -5.045)
@@ -7110,7 +7110,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "65caf210-4b2a-4228-8732-7fb00e244a3d")
+			(uuid "1d56e9be-a0df-4663-a3d5-f00bba0660a2")
 		)
 		(fp_line
 			(start -3.175 4.795)
@@ -7120,7 +7120,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "19a51626-5e04-4980-9bf7-92c168ea9467")
+			(uuid "dde4912a-b587-49c4-a212-1e0935aa547b")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -7130,7 +7130,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "400cb126-3fcf-44ba-a9a8-fbc585538f00")
+			(uuid "5d0a087a-79b3-4e96-b49f-f96d12754986")
 		)
 		(fp_line
 			(start -3.175 -4.795)
@@ -7140,7 +7140,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "d07293df-90e0-452b-8cb5-3e3d2b7925f9")
+			(uuid "c72bd858-7531-40d0-a430-8f5b4ae1a7f7")
 		)
 		(fp_line
 			(start 3.175 -4.795)
@@ -7150,7 +7150,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "fa31349c-d92f-42c2-b550-53c8b3c4f6c8")
+			(uuid "40d848c7-3bd8-44d5-b613-9fc2e814407b")
 		)
 		(fp_circle
 			(center -5.035 -3.81)
@@ -7161,7 +7161,7 @@
 			)
 			(fill no)
 			(layer "F.Fab")
-			(uuid "4f95d133-0891-4b67-b263-11fe736bce57")
+			(uuid "36a3b4d0-d433-4598-a650-7966d054bbc8")
 		)
 		(pad "1" thru_hole rect
 			(at -3.97 -3.81 270)
@@ -7259,7 +7259,7 @@
 			(uuid "15cb8a31-9c0c-4c77-885e-9f4c30aac565")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Bojtronic/Documents/KiCad/9.0/library/LM741/LM741CN_NOPB.step"
+		(model "/home/bojorge/Documents/TEC/TFG/Kicad library/LM741CN_NOPB/LM741CN_NOPB.step"
 			(offset
 				(xyz 0 0 0)
 			)

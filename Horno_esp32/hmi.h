@@ -13,6 +13,6 @@ void mensajesHMI(const String& mensaje);
 // Callbacks Nextion
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
-void resetBtnCallback(void *ptr);
+//void resetBtnCallback(void *ptr);
 
 #endif

@@ -5,20 +5,12 @@
 
 // Control principal
 void controlarSistema();
-
-// Gestión de estados
 void iniciarSistema();
-void detenerSistema();
 bool verificarCondicionesInicio();
-
-// Sub-estados
-void controlarLlenado();
-void controlarCalentamiento();
-void controlarCirculacion();
-void controlarEntregaAgua();
+void detenerSistema();
 
 // Control de actuadores
-void activarCirculacion();
+//void activarCirculacion();
 void alternarBombas();
 
 #endif
