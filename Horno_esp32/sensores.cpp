@@ -16,8 +16,8 @@ extern float presionActual;
 
 void leerSensores() {
   leerTemperaturas();
+  leerPresion();
   //leerNiveles();
-  //leerPresion();
 }
 
 void leerTemperaturas() {
@@ -110,17 +110,15 @@ void leerPresion() {
   }
   avg_pressure /= 5;
   
-  // Convertir lectura analógica a presión en bar (ajustar según sensor y calibración)
-  // Ej: sensor 0-5V = 0-10 bar -> 0-4095 = 0-10 bar
-  float voltage = (avg_pressure / 4095.0) * 3.3; // ESP32 ADC reference voltage is 3.3V
-  
-  // Calibración específica del sensor (ajustar estos valores según las especificaciones del sensor)
-  const float PRESSURE_MIN_VOLTAGE = 0.5;    // Voltage at 0 bar
-  const float PRESSURE_MAX_VOLTAGE = 4.5;    // Voltage at 10 bar
-  const float PRESSURE_MIN_BAR = 0.0;
-  const float PRESSURE_MAX_BAR = 10.0;
-  
-  // Aplicar calibración lineal
+  // Convertir lectura analógica a voltaje (ESP32 -> 0-4095 equivale a 0-3.3V)
+  float voltage = (avg_pressure / 4095.0f) * 3.3f;
+
+  // Calibración específica de tu sensor (0–3.0 V = 0–10 bar)
+  const float PRESSURE_MIN_VOLTAGE = 0.0f;   // Voltaje a 0 bar
+  const float PRESSURE_MAX_VOLTAGE = 3.0f;   // Voltaje a 10 bar
+  const float PRESSURE_MIN_BAR = 0.0f;
+  const float PRESSURE_MAX_BAR = 10.0f;
+
   if (voltage <= PRESSURE_MIN_VOLTAGE) {
     presionActual = PRESSURE_MIN_BAR;
   } else if (voltage >= PRESSURE_MAX_VOLTAGE) {
@@ -132,9 +130,17 @@ void leerPresion() {
                    (PRESSURE_MAX_VOLTAGE - PRESSURE_MIN_VOLTAGE);
   }
   
-  // Asegurar que la presión no sea negativas
+  // Evitar valores negativos por ruido
   presionActual = max(0.0f, presionActual);
+
+  Serial.println("********************************************************");
+  Serial.print("🔧 Raw ADC: "); Serial.print(avg_pressure);
+  Serial.print(" | Voltaje: "); Serial.print(voltage, 3);
+  Serial.print(" V | Presión: "); Serial.print(presionActual, 2);
+  Serial.println(" bar");
+  Serial.println("********************************************************");
 }
+
 
 void inicializarTermocuplas() {
   Serial.println("Inicializando termocuplas...");
