@@ -113,48 +113,47 @@ void checkForCommands() {
 
 void sendSystemData() {
   if (WiFi.status() != WL_CONNECTED) return;
-  
+
   Serial.println("\n📤 Enviando datos del sistema...");
-  
+
   WiFiClientSecure client;
   HTTPClient http;
-  
+
   client.setInsecure();
   client.setTimeout(15000);
-  
+
   if (http.begin(client, serverURL)) {
     http.addHeader("Content-Type", "application/json");
     http.setTimeout(15000);
-    
+
     messageCount++;
-    
-    // Crear JSON con todos los datos del sistema
-    String jsonPayload = "{\"topic\":\"agua_caliente/sistema\",\"message\":\"";
-    jsonPayload += "count=" + String(messageCount);
-    jsonPayload += "&estado=" + String((int)estadoActual);
-    jsonPayload += "&temp_tanque=" + String(temperaturas[0], 1);
-    jsonPayload += "&temp_horno=" + String(temperaturas[1], 1);
-    jsonPayload += "&temp_camara=" + String(temperaturas[2], 1);
-    jsonPayload += "&temp_salida=" + String(temperaturas[3], 1);
-    jsonPayload += "&nivel_vacio=" + String(niveles[0]);
-    jsonPayload += "&nivel_mitad=" + String(niveles[1]);
-    jsonPayload += "&nivel_lleno=" + String(niveles[2]);
+
+    // 🔧 Armar JSON con el mismo formato que el primer código
+    String jsonPayload = "{\"topic\":\"horno/data\",\"message\":\"";
+    jsonPayload += "temperaturas=[" + String(temperaturas[0], 1) + ",";
+    jsonPayload += String(temperaturas[1], 1) + ",";
+    jsonPayload += String(temperaturas[2], 1) + ",";
+    jsonPayload += String(temperaturas[3], 1) + "]";
+    jsonPayload += "&niveles=[" + String(niveles[0]) + ",";
+    jsonPayload += String(niveles[1]) + ",";
+    jsonPayload += String(niveles[2]) + "]";
     jsonPayload += "&presion=" + String(presionActual, 1);
-    jsonPayload += "&valvula1=" + String(digitalRead(VALVULA_1));
-    jsonPayload += "&valvula2=" + String(digitalRead(VALVULA_2));
-    jsonPayload += "&bomba1=" + String(digitalRead(BOMBA_1));
-    jsonPayload += "&bomba2=" + String(digitalRead(BOMBA_2));
-    jsonPayload += "&emergencia=" + String(emergencia);
+    jsonPayload += "&valvula1=" + String(digitalRead(VALVULA_1) ? "true" : "false");
+    jsonPayload += "&valvula2=" + String(digitalRead(VALVULA_2) ? "true" : "false");
+    jsonPayload += "&bomba1=" + String(digitalRead(BOMBA_1) ? "true" : "false");
+    jsonPayload += "&bomba2=" + String(digitalRead(BOMBA_2) ? "true" : "false");
+    jsonPayload += "&estado=" + String((int)estadoActual);
+    jsonPayload += "&emergencia=" + String(emergencia ? "true" : "false");
     jsonPayload += "&rssi=" + String(WiFi.RSSI());
     jsonPayload += "\"}";
-    
+
     Serial.print("📦 JSON: ");
     Serial.println(jsonPayload);
-    
+
     int httpCode = http.POST(jsonPayload);
     Serial.print("📡 Respuesta HTTP: ");
     Serial.println(httpCode);
-    
+
     if (httpCode == 200) {
       String response = http.getString();
       Serial.print("✅ Respuesta: ");
@@ -163,14 +162,15 @@ void sendSystemData() {
       Serial.print("❌ Error: ");
       Serial.println(http.errorToString(httpCode));
     }
-    
+
     http.end();
   } else {
     Serial.println("❌ No se pudo conectar para enviar datos");
   }
-  
+
   Serial.println("--------------------------------");
 }
+
 
 void testServerConnection() {
   if (WiFi.status() != WL_CONNECTED) return;
@@ -208,14 +208,14 @@ void testServerConnection() {
 }
 
 void handleServerCommunication() {
-  // Enviar datos cada 30 segundos
-  if (millis() - lastSendTime > 30000) {
+  // Enviar datos cada 10 segundos
+  if (millis() - lastSendTime > 10000) {
     lastSendTime = millis();
     sendSystemData();
   }
   
-  // Consultar comandos cada 10 segundos
-  if (millis() - lastCommandCheck > 10000) {
+  // Consultar comandos cada 5 segundos
+  if (millis() - lastCommandCheck > 5000) {
     lastCommandCheck = millis();
     checkForCommands();
   }

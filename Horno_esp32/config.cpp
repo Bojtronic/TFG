@@ -1,10 +1,10 @@
 #include "config.h"
 
 // ================= CONFIGURACIÓN SERVIDOR =================
-const char* ssid = "Familia G.V";
-const char* password = "VerseK3r98";
-const char* serverURL = "https://horno-tecnelectro.onrender.com/api/message";
-const char* commandsURL = "https://horno-tecnelectro.onrender.com/api/esp32-commands";
+const char* ssid = "DIGICONTROL";
+const char* password = "7012digi19";
+const char* serverURL = "https://tfg-server-ecoview.onrender.com/api/message";
+const char* commandsURL = "https://tfg-server-ecoview.onrender.com/api/esp32-commands";
 
 // ================= DEFINICIÓN DE VARIABLES GLOBALES =================
 // Termocuplas

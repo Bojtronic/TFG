@@ -16,8 +16,8 @@ extern float presionActual;
 
 void leerSensores() {
   leerTemperaturas();
-  leerNiveles();
-  leerPresion();
+  //leerNiveles();
+  //leerPresion();
 }
 
 void leerTemperaturas() {
@@ -25,6 +25,13 @@ void leerTemperaturas() {
   temperaturas[1] = leerTermocupla(thermocouple2, 2); // horno
   temperaturas[2] = leerTermocupla(thermocouple3, 3); // camara
   temperaturas[3] = leerTermocupla(thermocouple4, 4); // salida
+
+  Serial.println("Temperaturas (°C): ");
+  Serial.println(temperaturas[0], 1);
+  Serial.println(temperaturas[1], 1);
+  Serial.println(temperaturas[2], 1);
+  Serial.println(temperaturas[3], 1);
+  Serial.println("--------------------------------------");
 }
 
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {

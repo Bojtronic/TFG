@@ -3,7 +3,7 @@
 #include "control.h"
 #include "seguridad.h"
 #include "hmi.h"
-#include "comunicacion.h"  // ← Añadido
+#include "comunicacion.h"
 
 // ================= CONFIGURACIÓN INICIAL =================
 void setup() {
@@ -44,6 +44,7 @@ void loop() {
     lastReadTime = now;
     
     leerSensores();
+    /*
     actualizarHMI();
     
     if (estadoActual != SISTEMA_APAGADO && estadoActual != EMERGENCIA) {
@@ -51,9 +52,10 @@ void loop() {
       controlarSistema();
       alternarBombas();
     }
+    */
   }
   
-  leerPulsadores();
+  //leerPulsadores();
   
   // Manejo de comunicación con servidor
   handleServerCommunication();

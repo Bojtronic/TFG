@@ -16,10 +16,10 @@
 #define MAX_MISO  19   // MISO (compartido entre los 4 MAX31855)
 
 // CS individuales para cada MAX31855
-#define MAX_CS1   5
-#define MAX_CS2   22
-#define MAX_CS3   21
-#define MAX_CS4   23
+#define MAX_CS1   22
+#define MAX_CS2   23
+#define MAX_CS3   5
+#define MAX_CS4   21
 
 // Sensores analógicos 
 
