@@ -185,9 +185,6 @@ void leerNiveles() {
 
 
 void leerPulsadores(){
-  Serial.println("Leer pulsadores");
-  // se debe implementar la funcionalidad para botones fisicos
-
   // Lógica negativa: el botón presionado devuelve LOW
   bool startPressed = (digitalRead(START_BTN) == LOW);
   bool stopPressed  = (digitalRead(STOP_BTN)  == LOW);

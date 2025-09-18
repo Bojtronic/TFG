@@ -29,9 +29,14 @@ void setup() {
   }
   */
   
-  Serial.println("Sistema inicializado - Modo APAGADO");
-  mensajesHMI("Sistema listo - Modo APAGADO");
-  actualizarEstadoSistemaHMI(); // esto se podria reemplazar con la funcion mensajesHMI(ESTADO) pero depende del layout en el hmi
+  
+  //actualizarEstadoSistemaHMI(); // esto se podria reemplazar con la funcion mensajesHMI(ESTADO) pero depende del layout en el hmi
+
+  Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+  Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+  Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+  Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+  Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 }
 
 // ================= BUCLE PRINCIPAL =================
@@ -49,12 +54,15 @@ void loop() {
     
     //actualizarHMI();
     
+    leerPulsadores();
+
+    // Manejo de comunicación con servidor
+    handleServerCommunication(); 
+
+    Serial.println("-------------- PROCESO --------------"); 
   }
   
-  leerPulsadores();
-
-  // Manejo de comunicación con servidor
-  handleServerCommunication();  
+  Serial.println("**************** LOOP ****************");
   
   delay(100);
 }

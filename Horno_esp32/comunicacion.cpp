@@ -104,8 +104,8 @@ void checkForCommands() {
     }
     
     if (attempt < 3) {
-      Serial.println("⏳ Esperando 2 segundos antes de reintentar...");
-      delay(2000);
+      Serial.println("⏳ Esperando 5 segundos antes de reintentar...");
+      delay(5000);
     }
   }
   
@@ -220,8 +220,8 @@ void handleServerCommunication() {
     sendSystemData();
   }
   
-  // Consultar comandos cada 5 segundos
-  if (millis() - lastCommandCheck > 5000) {
+  // Consultar comandos cada 2 segundos
+  if (millis() - lastCommandCheck > 6000) {
     lastCommandCheck = millis();
     checkForCommands();
   }

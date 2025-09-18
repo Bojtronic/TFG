@@ -51,12 +51,12 @@ NexPicture bomba1State(0, 12, "bomba1State");
 NexPicture bomba2State(0, 13, "bomba2State");
 NexButton startBtn(0, 14, "startBtn");  // pagina, id, nombre
 NexButton stopBtn(0, 15, "stopBtn");    // pagina, id, nombre
-NexButton resetBtn(0, 16, "resetBtn");  // pagina, id, nombre
+//NexButton resetBtn(0, 16, "resetBtn");  // pagina, id, nombre
 
 NexTouch* nex_listen_list[] = {
   &startBtn,
   &stopBtn,
-  &resetBtn,
+  //&resetBtn,
   NULL
 };
 
