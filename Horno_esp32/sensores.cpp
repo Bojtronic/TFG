@@ -19,6 +19,11 @@ extern bool valvula_2_auto; // Estado automático de la válvula 2
 extern bool bomba_1_auto;   // Estado automático de la bomba 1
 extern bool bomba_2_auto;   // Estado automático de la bomba 2
 
+// Variables para manejo de pulsadores
+extern bool startPressed;
+extern bool stopPressed;
+extern bool manualPressed;
+
 // ================= FUNCIONES DE LECTURA DE SENSORES =================
 
 void leerSensores() {
@@ -51,7 +56,7 @@ void inicializarTermocuplas() {
 
   // Mostrar resumen en Serial y en la HMI
   Serial.println("Resumen termocuplas -> " + resumen);
-  mensajesHMI(resumen);
+  //mensajesHMI(resumen);
 }
 
 bool verificarSensoresTemperatura() {
@@ -150,23 +155,6 @@ void leerNiveles() {
   // - Solo alto cerrado -> 100%
   // (Si llegara más de uno cerrado, tomamos el mayor nivel válido)
 
-  /*
-  if (!s1 && !s2 && !s3) {
-    nivelTanque = 0;      // Vacío
-  } else if (s1 && !s2 && !s3) {
-    nivelTanque = 30;     // Bajo
-  } else if (!s1 && s2 && !s3) {
-    nivelTanque = 60;     // Medio
-  } else if (!s1 && !s2 && s3) {
-    nivelTanque = 100;    // Lleno
-  } else {
-    // Caso inconsistente (más de un contacto cerrado)
-    if (s3) nivelTanque = 100;
-    else if (s2) nivelTanque = 60;
-    else if (s1) nivelTanque = 30;
-  }
-  */
-
   if (s1 && s2 && s3) {
     nivelTanque = 0;      // Vacío
   } else if (!s1 && s2 && s3) {
@@ -182,10 +170,8 @@ void leerNiveles() {
     else if (!s1) nivelTanque = 30;
   }
 
-  Serial.print("Nivel del tanque: ");
-  Serial.println(nivelTanque);
 
-  niveles[0] = nivelTanque;
+  niveles[0] = nivelTanque; 
   niveles[1] = nivelTanque;
   niveles[2] = nivelTanque;
 }
@@ -193,14 +179,37 @@ void leerNiveles() {
 
 void leerPulsadores(){
   // Lógica negativa: el botón presionado devuelve LOW
-  bool startPressed = (digitalRead(START_BTN) == LOW);
-  bool stopPressed  = (digitalRead(STOP_BTN)  == LOW);
+  bool startButton = (digitalRead(START_BTN) == LOW);
+  bool stopButton  = (digitalRead(STOP_BTN)  == LOW);
+  bool manualButton  = (digitalRead(MANUAL_BTN)  == LOW);
+
+
+  if(startButton){
+    startPressed = true;
+    stopPressed = false;
+    manualPressed = false;
+  }
+
+  if(stopButton){
+    startPressed = false;
+    stopPressed = true;
+    manualPressed = false;
+  }
+  if(manualButton){
+    startPressed = false;
+    stopPressed = false;
+    manualPressed = true;
+  }
 
   if(startPressed){
     estadoActual = PROCESANDO;
   }
-
-  if(stopPressed){
+  if (stopPressed)
+  {
     estadoActual = DETENER;
   }
+  if(manualPressed){
+    estadoActual = MANUAL;
+  }
+  
 }

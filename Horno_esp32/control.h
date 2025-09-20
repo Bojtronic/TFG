@@ -8,6 +8,7 @@ void controlarSistema();
 void iniciarSistema();
 bool verificarCondicionesInicio();
 void detenerSistema();
+bool verificarCondicionesApagado();
 
 // Control de actuadores
 //void activarCirculacion();

@@ -32,6 +32,11 @@ bool bombaPrincipalActiva = true;
 unsigned long ultimoCambioBomba = 0;
 unsigned long lastReadTime = 0;
 
+// Variables para manejo de pulsadores
+bool startPressed;
+bool stopPressed;
+bool manualPressed;
+
 // Variables comunicación
 unsigned long lastSendTime = 0;
 unsigned long lastCommandCheck = 0;

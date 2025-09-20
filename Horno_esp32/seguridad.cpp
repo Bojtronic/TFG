@@ -48,13 +48,14 @@ void verificarSeguridad() {
             // Enviar mensaje por whatsapp
             Serial.println("Emergencia moderada no hay agua en la entrada y el horno está caliente, pero queda agua en el tanque");
         }
+        estadoActual = EMERGENCIA;
         return;
     }
 
     // 2. Sobretemperatura en tanque
-    if (temperaturas[0] > TEMP_MAX_TANQUE) {
+    if (temperaturas[0] >= TEMP_MAX_TANQUE) {
         activarEmergencia("EMERGENCIA: Tanque muy caliente!");
-        if((nivelTanque <= NIVEL_LLENO) && (temperaturas[1] >= TEMP_MIN_HORNO) && (temperaturas[2] >= TEMP_MIN_HORNO)){
+        if((nivelTanque <= NIVEL_LLENO) && (temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO)){
             digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
             // Activar la bomba principal o redundante según alternancia
             if (bombaPrincipalActiva) {
@@ -66,7 +67,7 @@ void verificarSeguridad() {
             }
         }
         else if((nivelTanque <= NIVEL_LLENO) && (temperaturas[1] < TEMP_MIN_HORNO) && (temperaturas[2] < TEMP_MIN_HORNO)){
-            digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
+            digitalWrite(VALVULA_2, LOW); // No hace falta abrir la llave para llenar el tanque con agua fria porque el horno esta frio
             digitalWrite(BOMBA_1, LOW);
             digitalWrite(BOMBA_2, LOW);
         }
@@ -76,7 +77,7 @@ void verificarSeguridad() {
     // 3. Sobretemperatura en horno
     if (temperaturas[1] > TEMP_MAX_HORNO) {
         activarEmergencia("EMERGENCIA: Horno muy caliente!");
-        if(nivelTanque <= NIVEL_LLENO){
+        if((nivelTanque < NIVEL_LLENO)){
             digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
             // Activar la bomba principal o redundante según alternancia
             if (bombaPrincipalActiva) {
@@ -87,6 +88,18 @@ void verificarSeguridad() {
                 digitalWrite(BOMBA_2, HIGH);
             }
         }
+        else if ((nivelTanque >= NIVEL_LLENO)){
+            digitalWrite(VALVULA_2, LOW); // No hace falta abrir la llave para llenar el tanque con agua fria porque el horno esta frio
+            // Activar la bomba principal o redundante según alternancia
+            if (bombaPrincipalActiva) {
+                digitalWrite(BOMBA_1, HIGH);
+                digitalWrite(BOMBA_2, LOW);
+            } else {
+                digitalWrite(BOMBA_1, LOW);
+                digitalWrite(BOMBA_2, HIGH);
+            }
+        }
+        estadoActual = EMERGENCIA;
         return;
     }
 

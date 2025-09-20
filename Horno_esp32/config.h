@@ -40,8 +40,14 @@
 #define BOMBA_2   12  // Circulación redundante 
 
 // Pulsadores de control
-#define START_BTN 32
-#define STOP_BTN  13 
+#define START_BTN   32
+#define STOP_BTN    13 
+#define MANUAL_BTN  35   // GPIO35 -> SOLO ENTRADA
+
+// Pilotos (salidas seguras, sin pines de boot)
+#define PILOTO_MANUAL     14   // GPIO14 -> salida digital
+#define PILOTO_EMERGENCIA 26   // GPIO26 -> salida digital 
+//#define PILOTO_START      2   // GPIO2 -> tener cuidado, pin de boot, al arranque debe estar el LOW
 
 // Comunicación con HMI Nextion (UART2)
 #define NEXTION_RX 16
@@ -53,13 +59,13 @@
 #define TEMP_MAX_TANQUE    70.0     // Temperatura máxima en tanque (°C)
 #define TEMP_MAX_HORNO     200.0    // Temperatura máxima en horno (°C)
 #define TEMP_MAX_CAMARA    150.0    // Temperatura máxima en cámara (°C)
-#define TEMP_MIN_HORNO     5.0     // Temperatura minima en horno (°C)
+#define TEMP_MIN_HORNO     35.0     // Temperatura minima en horno (°C)
 //#define PRESION_MAXIMA     7.0      // Presión máxima permitida (bar)
 #define NIVEL_LLENO        80       // % para considerar tanque lleno
 #define NIVEL_MITAD        40       // % para considerar tanque a la mitad
 #define NIVEL_VACIO        10       // % para considerar tanque vacío
 //#define PRESION_UMBRAL     2.0      // Presión para alerta (bar)
-#define PRESION_MINIMA     2.0      // Presión para alerta (bar)
+#define PRESION_MINIMA     1.0      // Presión para alerta (bar)
 
 #define INTERVALO_CAMBIO_BOMBA 3600000 // 1 hora
 #define LECTURA_INTERVAL 2000          // 2 segundos
@@ -88,6 +94,12 @@ extern bool valvula_1_auto; // Estado automático de la válvula 1
 extern bool valvula_2_auto; // Estado automático de la válvula 2
 extern bool bomba_1_auto;   // Estado automático de la bomba 1
 extern bool bomba_2_auto;   // Estado automático de la bomba 2
+
+// Variables para manejo de pulsadores
+extern bool startPressed;
+extern bool stopPressed;
+extern bool manualPressed;
+
 
 // Estados del sistema
 enum EstadoSistema {
