@@ -53,7 +53,7 @@
 #define TEMP_MAX_TANQUE    70.0     // Temperatura máxima en tanque (°C)
 #define TEMP_MAX_HORNO     200.0    // Temperatura máxima en horno (°C)
 #define TEMP_MAX_CAMARA    150.0    // Temperatura máxima en cámara (°C)
-#define TEMP_MIN_HORNO     35.0     // Temperatura minima en horno (°C)
+#define TEMP_MIN_HORNO     5.0     // Temperatura minima en horno (°C)
 //#define PRESION_MAXIMA     7.0      // Presión máxima permitida (bar)
 #define NIVEL_LLENO        80       // % para considerar tanque lleno
 #define NIVEL_MITAD        40       // % para considerar tanque a la mitad
@@ -83,12 +83,19 @@ extern int nivelTanque;
 extern int niveles[3];
 extern float presionActual;
 
+// Variables para el control automático
+extern bool valvula_1_auto; // Estado automático de la válvula 1
+extern bool valvula_2_auto; // Estado automático de la válvula 2
+extern bool bomba_1_auto;   // Estado automático de la bomba 1
+extern bool bomba_2_auto;   // Estado automático de la bomba 2
+
 // Estados del sistema
 enum EstadoSistema {
   APAGADO,
   DETENER,
   PROCESANDO,
-  EMERGENCIA
+  EMERGENCIA,
+  MANUAL
 };
 
 extern EstadoSistema estadoActual;

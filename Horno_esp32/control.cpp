@@ -18,6 +18,9 @@ void controlarSistema() {
       break;
     case EMERGENCIA:
       break;
+    case MANUAL:
+      manual();
+      break;
     default:
       Serial.println("ESTADO DESCONOCIDO");
       break;
@@ -130,4 +133,18 @@ void alternarBombas() {
   }
 }
 
+void manual(){
+  estadoActual = AUTOMATICO;
+
+  if (!emergencia) {
+    
+    digitalWrite(VALVULA_1, valvula_1_auto ? HIGH : LOW);
+    digitalWrite(VALVULA_2, valvula_2_auto ? HIGH : LOW);
+    digitalWrite(BOMBA_1,   bomba_1_auto   ? HIGH : LOW);
+    digitalWrite(BOMBA_2,   bomba_2_auto   ? HIGH : LOW);
+
+  } else {
+    detenerSistema();
+  }
+}
 

@@ -19,6 +19,12 @@ int nivelTanque = 0;
 int niveles[3] = { 0, 0, 0 };
 float presionActual = 0.0;
 
+// Variables para el control automático
+bool valvula_1_auto; // Estado automático de la válvula 1
+bool valvula_2_auto; // Estado automático de la válvula 2
+bool bomba_1_auto;   // Estado automático de la bomba 1
+bool bomba_2_auto;   // Estado automático de la bomba 2
+
 // Estados del sistema
 EstadoSistema estadoActual = APAGADO;
 bool emergencia = false;

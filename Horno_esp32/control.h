@@ -12,5 +12,6 @@ void detenerSistema();
 // Control de actuadores
 //void activarCirculacion();
 void alternarBombas();
+void manual();
 
 #endif

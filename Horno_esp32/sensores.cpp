@@ -3,7 +3,7 @@
 #include "hmi.h"
 #include <Adafruit_MAX31855.h>
 
-// Variables globales definidas en el main
+// Variables globales definidas en 
 extern Adafruit_MAX31855 thermocouple1;
 extern Adafruit_MAX31855 thermocouple2;
 extern Adafruit_MAX31855 thermocouple3;
@@ -12,6 +12,12 @@ extern int nivelTanque;
 extern double temperaturas[4];
 extern int niveles[3];
 extern float presionActual;
+
+// Variables para el control automático
+extern bool valvula_1_auto; // Estado automático de la válvula 1
+extern bool valvula_2_auto; // Estado automático de la válvula 2
+extern bool bomba_1_auto;   // Estado automático de la bomba 1
+extern bool bomba_2_auto;   // Estado automático de la bomba 2
 
 // ================= FUNCIONES DE LECTURA DE SENSORES =================
 
@@ -128,60 +134,61 @@ void leerPresion() {
 }
 
 
-//Falta de verificar la funcion de niveles dependiendo del sensor a utilizar
+//Hay 3 contactos secos, se cierra un contacto (1 o 0 segun la logica implementada) por cada nivel detectado
+//En principio el tanque vacío tendría los 3 contactos abiertos
+//Cuando hay agua en el tanque solo 1 contacto se cierra, ya sea para nivel bajo, medio o lleno
+//Con base en el contacto que esté cerrado se establece el valor de la variable nivelTanque
 void leerNiveles() {
-  // Leer valores crudos de los tres sensores
-  int raw1 = analogRead(NIVEL_1);
-  int raw2 = analogRead(NIVEL_2);
-  int raw3 = analogRead(NIVEL_3);
+  // Leer los tres contactos secos (lógica negativa/positiva según cableado)
+  bool s1 = digitalRead(NIVEL_1);  // contacto para nivel bajo
+  bool s2 = digitalRead(NIVEL_2);  // contacto para nivel medio
+  bool s3 = digitalRead(NIVEL_3);  // contacto para nivel alto
 
-  // Promediado simple para reducir ruido
-  static int buffer1[5] = {0}, buffer2[5] = {0}, buffer3[5] = {0};
-  static int index = 0;
+  // - Vacío: los 3 abiertos -> 0
+  // - Solo bajo cerrado -> 30%
+  // - Solo medio cerrado -> 60%
+  // - Solo alto cerrado -> 100%
+  // (Si llegara más de uno cerrado, tomamos el mayor nivel válido)
 
-  buffer1[index] = raw1;
-  buffer2[index] = raw2;
-  buffer3[index] = raw3;
-  index = (index + 1) % 5;
-
-  int avg1 = 0, avg2 = 0, avg3 = 0;
-  for (int i = 0; i < 5; i++) {
-    avg1 += buffer1[i];
-    avg2 += buffer2[i];
-    avg3 += buffer3[i];
-  }
-  avg1 /= 5;
-  avg2 /= 5;
-  avg3 /= 5;
-
-  // Definir umbral de detección (ajustar según el sensor: ej. >2000 significa "agua detectada")
-  const int THRESHOLD = 2000;
-
-  bool nivel_bajo  = avg1 > THRESHOLD;
-  bool nivel_medio = avg2 > THRESHOLD;
-  bool nivel_alto  = avg3 > THRESHOLD;
-
-  // Determinar nivel del tanque en porcentaje
-  if (!nivel_bajo && !nivel_medio && !nivel_alto) {
-    nivelTanque = 0;     // Vacío
-  } else if (nivel_bajo && !nivel_medio && !nivel_alto) {
-    nivelTanque = 30;    // Bajo
-  } else if (nivel_bajo && nivel_medio && !nivel_alto) {
-    nivelTanque = 60;    // Medio
-  } else if (nivel_bajo && nivel_medio && nivel_alto) {
-    nivelTanque = 100;   // Lleno
+  /*
+  if (!s1 && !s2 && !s3) {
+    nivelTanque = 0;      // Vacío
+  } else if (s1 && !s2 && !s3) {
+    nivelTanque = 30;     // Bajo
+  } else if (!s1 && s2 && !s3) {
+    nivelTanque = 60;     // Medio
+  } else if (!s1 && !s2 && s3) {
+    nivelTanque = 100;    // Lleno
   } else {
-    // Caso inconsistente (ej: medio detecta agua pero bajo no) -> tomar el mayor válido
-    if (nivel_alto) nivelTanque = 100;
-    else if (nivel_medio) nivelTanque = 60;
-    else if (nivel_bajo) nivelTanque = 30;
+    // Caso inconsistente (más de un contacto cerrado)
+    if (s3) nivelTanque = 100;
+    else if (s2) nivelTanque = 60;
+    else if (s1) nivelTanque = 30;
   }
+  */
+
+  if (s1 && s2 && s3) {
+    nivelTanque = 0;      // Vacío
+  } else if (!s1 && s2 && s3) {
+    nivelTanque = 30;     // Bajo
+  } else if (s1 && !s2 && s3) {
+    nivelTanque = 60;     // Medio
+  } else if (s1 && s2 && !s3) {
+    nivelTanque = 100;    // Lleno
+  } else {
+    // Caso inconsistente (más de un contacto cerrado)
+    if (!s3) nivelTanque = 100;
+    else if (!s2) nivelTanque = 60;
+    else if (!s1) nivelTanque = 30;
+  }
+
+  Serial.print("Nivel del tanque: ");
+  Serial.println(nivelTanque);
 
   niveles[0] = nivelTanque;
   niveles[1] = nivelTanque;
   niveles[2] = nivelTanque;
 }
-
 
 
 void leerPulsadores(){
