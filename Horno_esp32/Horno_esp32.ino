@@ -15,8 +15,8 @@ void setup() {
   inicializarTermocuplas();
   
   // Configurar callbacks de Nextion
-  startBtn.attachPush(startBtnCallback, &startBtn);
-  stopBtn.attachPush(stopBtnCallback, &stopBtn);
+  //startBtn.attachPush(startBtnCallback, &startBtn);
+  //stopBtn.attachPush(stopBtnCallback, &stopBtn);
   //resetBtn.attachPush(resetBtnCallback, &resetBtn);
   
   //apagarTodo();
@@ -31,6 +31,7 @@ void setup() {
   
   
   //actualizarEstadoSistemaHMI(); // esto se podria reemplazar con la funcion mensajesHMI(ESTADO) pero depende del layout en el hmi
+  estadoActual = APAGADO;
 
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");

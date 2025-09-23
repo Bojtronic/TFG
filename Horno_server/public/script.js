@@ -237,7 +237,7 @@ function updateSystemData(data) {
   }
   
   // Actualizar niveles
-  if (data.niveles && Array.isArray(data.niveles)) {
+  if (data.nivelTanque !== undefined) {
     elements.nivelTanque.querySelector('.sensor-value').textContent = `${data.nivelTanque} %`;
     //elements.nivelVacio.querySelector('.sensor-value').textContent = `${data.niveles[0]} %`;
     //elements.nivelMitad.querySelector('.sensor-value').textContent = `${data.niveles[1]} %`;
