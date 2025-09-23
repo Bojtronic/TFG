@@ -214,8 +214,9 @@ void sendSystemData() {
     jsonPayload += "&estado=" + String((int)estadoActual);  
 
 
-    jsonPayload += "&emergencia=" + String(emergencia ? "true" : "false");
-    jsonPayload += "&rssi=" + String(WiFi.RSSI());
+    //jsonPayload += "&emergencia=" + String(emergencia ? "true" : "false");
+    //jsonPayload += "&rssi=" + String(WiFi.RSSI());
+    //jsonPayload += "&lastUpdate=" + String(millis());
     jsonPayload += "\"}";
 
     Serial.print("📦 JSON: ");
