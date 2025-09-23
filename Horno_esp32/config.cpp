@@ -37,6 +37,11 @@ bool startPressed;
 bool stopPressed;
 bool manualPressed;
 
+// Guardar el último estado de cada botón
+bool lastStartState = HIGH;
+bool lastStopState = HIGH;
+bool lastManualState = HIGH;
+
 // Variables comunicación
 unsigned long lastSendTime = 0;
 unsigned long lastCommandCheck = 0;

@@ -8,6 +8,7 @@
 void controlarSistema() {
   switch (estadoActual) {
     case APAGADO:
+      Serial.println("Estado APAGADO");
       digitalWrite(PILOTO_MANUAL, LOW);
       digitalWrite(PILOTO_EMERGENCIA, LOW);
       if(verificarCondicionesApagado()){
@@ -16,32 +17,35 @@ void controlarSistema() {
       else{
         detenerSistema();
       }
-      
       break;
     case DETENER:
+      Serial.println("Estado DETENER");
       digitalWrite(PILOTO_MANUAL, LOW);
       digitalWrite(PILOTO_EMERGENCIA, LOW);
       detenerSistema();
       break;
     case PROCESANDO:
+      Serial.println("Estado PROCESANDO");
       digitalWrite(PILOTO_MANUAL, LOW);
       digitalWrite(PILOTO_EMERGENCIA, LOW);
       iniciarSistema();
       break;
     case EMERGENCIA:
+      Serial.println("Estado EMERGENCIA");
       digitalWrite(PILOTO_MANUAL, LOW);
       digitalWrite(PILOTO_EMERGENCIA, HIGH);
       detenerSistema();
       break;
     case MANUAL:
+      Serial.println("Estado MANUAL");
       digitalWrite(PILOTO_MANUAL, HIGH);
       digitalWrite(PILOTO_EMERGENCIA, LOW);
       manual();
       break;
     default:
+      Serial.println("ESTADO DESCONOCIDO");
       digitalWrite(PILOTO_MANUAL, LOW);
       digitalWrite(PILOTO_EMERGENCIA, LOW);
-      Serial.println("ESTADO DESCONOCIDO");
       detenerSistema();
       break;
   }
@@ -120,6 +124,7 @@ bool verificarCondicionesInicio() {
     }
   }
   
+  /*
   // Verificar que no haya emergencias activas
   if (emergencia) {
     //mensajesHMI("No se puede iniciar: Emergencia");
@@ -127,6 +132,7 @@ bool verificarCondicionesInicio() {
     //detenerSistema(); // considerar ejecutar el apagado seguro en este punto
     return false;
   }
+  */
   
   // Verificar nivel mínimo para iniciar
   if (nivelTanque <= NIVEL_VACIO) {
@@ -201,15 +207,12 @@ void alternarBombas() {
 }
 
 void manual(){
-  if (!emergencia) {
-    digitalWrite(VALVULA_1, valvula_1_auto ? HIGH : LOW);
-    digitalWrite(VALVULA_2, valvula_2_auto ? HIGH : LOW);
-    digitalWrite(BOMBA_1,   bomba_1_auto   ? HIGH : LOW);
-    digitalWrite(BOMBA_2,   bomba_2_auto   ? HIGH : LOW);
+  digitalWrite(VALVULA_1, valvula_1_auto ? HIGH : LOW);
+  digitalWrite(VALVULA_2, valvula_2_auto ? HIGH : LOW);
+  digitalWrite(BOMBA_1,   bomba_1_auto   ? HIGH : LOW);
+  digitalWrite(BOMBA_2,   bomba_2_auto   ? HIGH : LOW);
 
-  } else {
-    detenerSistema();
-  }
+  verificarSeguridad();
 }
 
 bool verificarCondicionesApagado(){

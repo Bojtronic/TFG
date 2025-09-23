@@ -4,6 +4,7 @@
 #include "seguridad.h"
 #include "hmi.h"
 #include "comunicacion.h"
+#include "test.h"
 
 // ================= CONFIGURACIÓN INICIAL =================
 void setup() {
@@ -40,6 +41,7 @@ void setup() {
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 }
 
+
 // ================= BUCLE PRINCIPAL =================
 void loop() {
   nexLoop(nex_listen_list);
@@ -49,7 +51,8 @@ void loop() {
   if (now - lastReadTime >= LECTURA_INTERVAL) {
     lastReadTime = now;
     
-    leerSensores();
+    ejecutarPruebas();
+    //leerSensores();
     verificarSeguridad();
     controlarSistema();
     

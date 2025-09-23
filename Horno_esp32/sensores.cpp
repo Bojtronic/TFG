@@ -19,10 +19,17 @@ extern bool valvula_2_auto; // Estado automático de la válvula 2
 extern bool bomba_1_auto;   // Estado automático de la bomba 1
 extern bool bomba_2_auto;   // Estado automático de la bomba 2
 
+/*
 // Variables para manejo de pulsadores
 extern bool startPressed;
 extern bool stopPressed;
 extern bool manualPressed;
+
+// Guardar el último estado de cada botón
+extern bool lastStartState = HIGH;
+extern bool lastStopState  = HIGH;
+extern bool lastManualState = HIGH;
+*/
 
 // ================= FUNCIONES DE LECTURA DE SENSORES =================
 
@@ -164,52 +171,43 @@ void leerNiveles() {
   } else if (s1 && s2 && !s3) {
     nivelTanque = 100;    // Lleno
   } else {
-    // Caso inconsistente (más de un contacto cerrado)
-    if (!s3) nivelTanque = 100;
+    // Caso inconsistente (más de un contacto cerrado) toma el nivel mas bajo por seguridad
+    if (!s1) nivelTanque = 0;
     else if (!s2) nivelTanque = 60;
-    else if (!s1) nivelTanque = 30;
+    else if (!s3) nivelTanque = 100;
   }
 
 
-  niveles[0] = nivelTanque; 
-  niveles[1] = nivelTanque;
-  niveles[2] = nivelTanque;
+  //niveles[0] = nivelTanque; 
+  //niveles[1] = nivelTanque;
+  //niveles[2] = nivelTanque;
 }
 
 
-void leerPulsadores(){
-  // Lógica negativa: el botón presionado devuelve LOW
-  bool startButton = (digitalRead(START_BTN) == LOW);
-  bool stopButton  = (digitalRead(STOP_BTN)  == LOW);
-  bool manualButton  = (digitalRead(MANUAL_BTN)  == LOW);
+void leerPulsadores() {
+  // Lógica negativa: LOW cuando está presionado
+  bool startButton  = (digitalRead(START_BTN)  == LOW);
+  bool stopButton   = (digitalRead(STOP_BTN)   == LOW);
+  bool manualButton = (digitalRead(MANUAL_BTN) == LOW);
 
-
-  if(startButton){
-    startPressed = true;
-    stopPressed = false;
-    manualPressed = false;
-  }
-
-  if(stopButton){
-    startPressed = false;
-    stopPressed = true;
-    manualPressed = false;
-  }
-  if(manualButton){
-    startPressed = false;
-    stopPressed = false;
-    manualPressed = true;
-  }
-
-  if(startPressed){
+  // Flanco de HIGH -> LOW para cada botón
+  if (startButton && lastStartState == HIGH && !stopButton && !manualButton) {
     estadoActual = PROCESANDO;
+    Serial.println("📌 Botón START presionado → Estado PROCESANDO");
   }
-  if (stopPressed)
-  {
+  else if (stopButton && lastStopState == HIGH && !startButton && !manualButton) {
     estadoActual = DETENER;
+    Serial.println("📌 Botón STOP presionado → Estado DETENER");
   }
-  if(manualPressed){
+  else if (manualButton && lastManualState == HIGH && !startButton && !stopButton) {
     estadoActual = MANUAL;
+    Serial.println("📌 Botón MANUAL presionado → Estado MANUAL");
   }
-  
+  // else: no hacer nada, se mantiene el estado actual
+
+  // Actualizar últimas lecturas
+  lastStartState  = startButton;
+  lastStopState   = stopButton;
+  lastManualState = manualButton;
 }
+

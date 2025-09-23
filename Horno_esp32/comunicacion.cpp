@@ -17,10 +17,10 @@ void connectToWiFi() {
     Serial.println("\n✅ WiFi conectado");
     Serial.print("📶 RSSI: ");
     Serial.println(WiFi.RSSI());
-    mensajesHMI("WiFi conectado");
+    //mensajesHMI("WiFi conectado");
   } else {
     Serial.println("\n❌ Error: No se pudo conectar a WiFi");
-    mensajesHMI("Error WiFi");
+    //mensajesHMI("Error WiFi");
   }
 }
 
@@ -53,11 +53,11 @@ void checkForCommands() {
         Serial.println(commands);
         
         if (commands != "no_commands") {
-          if (commands.indexOf("start") != -1 && estadoActual == APAGADO) {
+          if (commands.indexOf("start") != -1 && (estadoActual == APAGADO || estadoActual == MANUAL)) {
             estadoActual = PROCESANDO;
             Serial.println("✅ Comando START ejecutado");
           } 
-          else if (commands.indexOf("stop") != -1 && estadoActual != APAGADO) {
+          else if (commands.indexOf("stop") != -1 && (estadoActual == PROCESANDO || estadoActual == MANUAL)) {
             //detenerSistema();
             estadoActual = DETENER;
             Serial.println("✅ Comando STOP ejecutado");
@@ -75,7 +75,7 @@ void checkForCommands() {
             Serial.println("✅ Comando RESET ejecutado");
           }
           */
-          else if (commands.indexOf("manual") != -1 && estadoActual == EMERGENCIA) {
+          else if (commands.indexOf("manual") != -1 && (estadoActual == PROCESANDO || estadoActual == APAGADO)) {
             estadoActual = MANUAL;
             Serial.println("✅ Comando MANUAL ejecutado");
           }
@@ -211,7 +211,7 @@ void sendSystemData() {
     jsonPayload += "&bomba2=" + String(digitalRead(BOMBA_2) ? "true" : "false");
 
     // CAMBIAR LOS ESTADOS EN EL SERVIDOR
-    jsonPayload += "&estado=" + String((int)estadoActual);  
+    jsonPayload += "&estado=" + String(estadoActual);  
 
 
     //jsonPayload += "&emergencia=" + String(emergencia ? "true" : "false");
@@ -228,8 +228,9 @@ void sendSystemData() {
 
     if (httpCode == 200) {
       String response = http.getString();
-      Serial.print("✅ Respuesta: ");
-      Serial.println(response);
+      Serial.println("✅ El servidor recibió los datos \n");
+      //Serial.print("✅ Respuesta: ");
+      //Serial.println(response);
     } else {
       Serial.print("❌ Error: ");
       Serial.println(http.errorToString(httpCode));
@@ -280,14 +281,14 @@ void testServerConnection() {
 }
 
 void handleServerCommunication() {
-  // Enviar datos cada 10 segundos
-  if (millis() - lastSendTime > 10000) {
+  // Enviar datos cada 4 segundos
+  if (millis() - lastSendTime > 4000) {
     lastSendTime = millis();
     sendSystemData();
   }
   
   // Consultar comandos cada 2 segundos
-  if (millis() - lastCommandCheck > 6000) {
+  if (millis() - lastCommandCheck > 2000) {
     lastCommandCheck = millis();
     checkForCommands();
   }

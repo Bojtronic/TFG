@@ -67,8 +67,8 @@
 //#define PRESION_UMBRAL     2.0      // Presión para alerta (bar)
 #define PRESION_MINIMA     1.0      // Presión para alerta (bar)
 
-#define INTERVALO_CAMBIO_BOMBA 3600000 // 1 hora
-#define LECTURA_INTERVAL 2000          // 2 segundos
+#define INTERVALO_CAMBIO_BOMBA 3000 // 20 minutos 1200000 milisegundos
+#define LECTURA_INTERVAL 2000          // 2 segundos 2000 milisegundos
 
 // ================= CONFIGURACIÓN SERVIDOR =================
 extern const char* ssid;
@@ -99,6 +99,11 @@ extern bool bomba_2_auto;   // Estado automático de la bomba 2
 extern bool startPressed;
 extern bool stopPressed;
 extern bool manualPressed;
+
+// Guardar el último estado de cada botón
+extern bool lastStartState;
+extern bool lastStopState;
+extern bool lastManualState;
 
 
 // Estados del sistema
