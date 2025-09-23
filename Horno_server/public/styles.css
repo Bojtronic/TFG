@@ -197,11 +197,19 @@ input:checked+.slider:before {
 }
 
 .status-off {
-  color: #dc3545;
+  color: #000000;
+}
+
+.status-stop {
+  color: #ffc107;
 }
 
 .status-emergency {
-  color: #ffc107;
+  color: #ff0000;
+}
+
+.status-manual {
+  color: #6c757d;
 }
 
 .button-group {

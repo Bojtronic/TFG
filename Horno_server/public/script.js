@@ -5,6 +5,15 @@ let appState = {
   eventSource: null
 };
 
+const ESTADOS = {
+  0: 'APAGADO',
+  1: 'DETENER',
+  2: 'PROCESANDO',
+  3: 'EMERGENCIA',
+  4: 'MANUAL'
+};
+
+
 // Elementos de la interfaz
 const elements = {
   connectionStatus: document.getElementById('connection-status'),
@@ -275,10 +284,18 @@ function updateSystemData(data) {
   }, 100);
   
   // Actualizar estado del sistema (SOLO ESTADO ACTUAL Y ÚLTIMA ACTUALIZACIÓN)
+  /*
   if (data.estado) {
     elements.systemState.textContent = data.estado;
     elements.systemState.className = `status-value ${getStatusClass(data.estado)}`;
   }
+  */
+  if (data.estado !== undefined) {
+    const estadoTexto = ESTADOS[data.estado] || 'DESCONOCIDO';
+    elements.systemState.textContent = estadoTexto;
+    elements.systemState.className = `status-value ${getStatusClass(data.estado)}`;
+  }
+
   
   // NOTA: Se han eliminado las referencias a emergency-state y active-pump
   
@@ -293,12 +310,15 @@ function updateSystemData(data) {
 // Obtener clase CSS para el estado del sistema
 function getStatusClass(status) {
   switch (status) {
-    case 'SISTEMA_APAGADO': return 'status-off';
-    case 'SISTEMA_ENCENDIDO': return 'status-on';
-    case 'MODO_EMERGENCIA': return 'status-emergency';
+    case 0: return 'status-off';        // APAGADO
+    case 1: return 'status-stop';       // DETENER
+    case 2: return 'status-on';         // PROCESANDO
+    case 3: return 'status-emergency';  // EMERGENCIA
+    case 4: return 'status-manual';     // MANUAL
     default: return '';
   }
 }
+
 
 // Formatear fecha y hora
 function formatDateTime(dateString) {

@@ -169,8 +169,8 @@ void checkForCommands() {
     }
     
     if (attempt < 3) {
-      Serial.println("⏳ Esperando 5 segundos antes de reintentar...");
-      delay(5000);
+      Serial.println("⏳ Esperando 2 segundos antes de reintentar...");
+      delay(2000);
     }
   }
   
@@ -200,10 +200,10 @@ void sendSystemData() {
     jsonPayload += String(temperaturas[1], 1) + ",";
     jsonPayload += String(temperaturas[2], 1) + ",";
     jsonPayload += String(temperaturas[3], 1) + "]";
-    //jsonPayload += "&nivelTanque=" + String((int)nivelTanque);
-    jsonPayload += "&niveles=[" + String(niveles[0]) + ",";
-    jsonPayload += String(niveles[1]) + ",";
-    jsonPayload += String(niveles[2]) + "]";
+    jsonPayload += "&nivelTanque=" + String((int)nivelTanque);
+    //jsonPayload += "&niveles=[" + String(niveles[0]) + ",";
+    //jsonPayload += String(niveles[1]) + ",";
+    //jsonPayload += String(niveles[2]) + "]";
     jsonPayload += "&presion=" + String(presionActual, 1);
     jsonPayload += "&valvula1=" + String(digitalRead(VALVULA_1) ? "true" : "false");
     jsonPayload += "&valvula2=" + String(digitalRead(VALVULA_2) ? "true" : "false");

@@ -1,14 +1,14 @@
 // Almacenamiento de datos del sistema de horno
 let systemData = {
   temperaturas: [0, 0, 0, 0],
-  //niveles: [0, 0, 0],
   nivelTanque: 0,
+  //niveles: [0, 0, 0],
   presion: 0,
   valvula1: false,
   valvula2: false,
   bomba1: false,
   bomba2: false,
-  estado: 'SISTEMA_APAGADO',
+  estado: 0,
   emergencia: false,
   bombaActiva: 'PRINCIPAL',
   lastUpdate: new Date().toISOString()
