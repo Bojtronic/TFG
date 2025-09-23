@@ -76,7 +76,7 @@ void checkForCommands() {
           }
           */
           else if (commands.indexOf("manual") != -1 && estadoActual == EMERGENCIA) {
-            estadoActual = MANUAL
+            estadoActual = MANUAL;
             Serial.println("✅ Comando MANUAL ejecutado");
           }
 
@@ -101,7 +101,7 @@ void checkForCommands() {
           else if (commands.indexOf("valv2_on") != -1) {
             if(estadoActual == MANUAL){
               valvula_2_auto = true; // Actualizar estado automático
-              Serial.println("✅ Comando VALVE2 ON ejecutado en estado MANUAL");
+              Serial.println("✅ Comando VALV2 ON ejecutado en estado MANUAL");
             }
             else{
               Serial.println("✅❌ Comando VALV2 ON ejecutado pero no esta en estado MANUAL");
@@ -110,10 +110,10 @@ void checkForCommands() {
           else if (commands.indexOf("valv2_off") != -1) {
             if(estadoActual == MANUAL){
               valvula_2_auto = false; // Actualizar estado automático
-              Serial.println("✅ Comando VALVE2 OFF ejecutado en estado MANUAL");
+              Serial.println("✅ Comando VALV2 OFF ejecutado en estado MANUAL");
             }
             else{
-              Serial.println("✅❌ Comando VALVE2 OFF ejecutado pero no esta en estado MANUAL");
+              Serial.println("✅❌ Comando VALV2 OFF ejecutado pero no esta en estado MANUAL");
             }
           }
           else if (commands.indexOf("bomba1_on") != -1) {

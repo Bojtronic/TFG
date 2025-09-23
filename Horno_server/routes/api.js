@@ -10,22 +10,22 @@ function handleApiRoutes(req, res, clients) {
     handleSSE(req, res, clients);
     return;
   }
-  
+
   // Endpoint para comandos ESP32
   if (req.url === '/api/esp32-commands' && req.method === 'GET') {
     handleEsp32Commands(req, res);
     return;
-  } 
+  }
   // Endpoint para datos del sistema
   else if (req.url === '/api/system-data' && req.method === 'GET') {
     handleSystemData(req, res);
     return;
-  } 
+  }
   // Endpoint para recibir datos del ESP32
   else if (req.url === '/api/message' && req.method === 'POST') {
     handlePostMessage(req, res, clients);
     return;
-  } 
+  }
   // Ruta no encontrada
   else {
     res.writeHead(404);
@@ -38,9 +38,9 @@ function handleApiRoutes(req, res, clients) {
 function handleEsp32Commands(req, res) {
   console.log(`📡 Comandos solicitados por: ${req.socket.remoteAddress}`);
   console.log(`📊 Comandos pendientes: ${pendingCommands.length}`);
-  
+
   res.setHeader('Content-Type', 'application/json');
-  
+
   if (pendingCommands.length > 0) {
     const commands = pendingCommands.join(',');
     pendingCommands = [];
@@ -86,11 +86,11 @@ function handlePostMessage(req, res, clients) {
         // Procesar mensajes de control
         if (data.topic === 'esp32/control') {
           const validCommands = [
-            'start', 'stop', 'reset', 'emergency', 
+            'start', 'stop', 'manual', 'emergency',
             'valv1_on', 'valv1_off', 'valv2_on', 'valv2_off',
             'bomba1_on', 'bomba1_off', 'bomba2_on', 'bomba2_off'
           ];
-          
+
           if (validCommands.includes(data.message)) {
             if (pendingCommands.length < MAX_PENDING_COMMANDS) {
               pendingCommands.push(data.message);
@@ -103,34 +103,37 @@ function handlePostMessage(req, res, clients) {
           try {
             // Parsear el formato de cadena de consulta
             const params = new URLSearchParams(data.message);
-            
+
             // Extraer y convertir datos
             const temperaturas = params.get('temperaturas').match(/[\d.]+/g).map(Number);
-            const niveles = params.get('niveles').match(/[\d.]+/g).map(Number);
+            const nivelTanque = parseInt(params.get('nivelTanque'));
+            //const niveles = params.get('niveles').match(/[\d.]+/g).map(Number);
             const presion = parseFloat(params.get('presion'));
             const valvula1 = params.get('valvula1') === 'true';
             const valvula2 = params.get('valvula2') === 'true';
             const bomba1 = params.get('bomba1') === 'true';
             const bomba2 = params.get('bomba2') === 'true';
-            const estado = params.get('estado');
-            const emergencia = params.get('emergencia') === 'true';
-            const bombaActiva = params.get('bombaActiva');
-            
+            const estado = parseInt(params.get('estado'));
+            //const emergencia = params.get('emergencia') === 'true';
+            //const bombaActiva = params.get('bombaActiva');
+
             // Actualizar datos del sistema
             const systemUpdate = {
               temperaturas,
-              niveles,
+              nivelTanque,
+              //niveles,
               presion,
               valvula1,
               valvula2,
               bomba1,
               bomba2,
               estado,
-              emergencia,
-              bombaActiva,
+              //emergencia,
+              //bombaActiva,
               lastUpdate: new Date().toISOString()
             };
-            
+
+
             updateSystemData(systemUpdate);
             broadcastSystemData(clients);
           } catch (e) {
@@ -167,8 +170,8 @@ function handlePostMessage(req, res, clients) {
         'Access-Control-Allow-Origin': '*'
       });
       res.end(JSON.stringify({
-          status: 'error',
-          message: 'Error procesando JSON: ' + error.message
+        status: 'error',
+        message: 'Error procesando JSON: ' + error.message
       }));
     }
   });
@@ -184,12 +187,12 @@ function handleSSE(req, res, clients) {
     'Access-Control-Allow-Origin': '*'
   });
   res.write('\n');
-  
+
   // Guardar referencia a la respuesta
   clients.push(res);
 
   // Enviar datos iniciales
-  res.write(`data: ${JSON.stringify({type: 'systemData', data: systemData})}\n\n`);
+  res.write(`data: ${JSON.stringify({ type: 'systemData', data: systemData })}\n\n`);
 
   req.on('close', () => {
     console.log('❌ Cliente SSE desconectado');
