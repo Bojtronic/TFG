@@ -41,8 +41,13 @@
 
       <!-- Panel de Niveles y Presión -->
       <div class="panel">
-        <h2><i class="fas fa-tachometer-alt"></i> Niveles y Presión</h2>
+        <h2><i class="fas fa-tachometer-alt"></i> Nivel y Presión</h2>
         <div class="sensor-grid">
+          <div class="sensor-item" id="nivel-tanque">
+            <span class="sensor-label">Nivel de agua en el tanque</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
+          </div>
+          <!-- 
           <div class="sensor-item" id="nivel-vacio">
             <span class="sensor-label">Nivel Vacío</span>
             <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
@@ -55,6 +60,7 @@
             <span class="sensor-label">Nivel Lleno</span>
             <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
           </div>
+          -->
           <div class="sensor-item" id="presion">
             <span class="sensor-label">Presión</span>
             <div class="sensor-value">-- <span class="sensor-unit">bar</span></div>
@@ -125,10 +131,13 @@
         </div>
 
         <div class="button-group">
-          <button class="btn btn-start" id="btn-start"><i class="fas fa-play"></i> Iniciar</button>
-          <button class="btn btn-stop" id="btn-stop"><i class="fas fa-stop"></i> Detener</button>
+          <button class="btn btn-start" id="btn-start"><i class="fas fa-play"></i>Iniciar automatico</button>
+          <button class="btn btn-stop" id="btn-stop"><i class="fas fa-stop"></i>Detener/Apagar</button>
+          <button class="btn btn-manual" id="btn-manual"><i class="fas fa-hand-paper"></i>Manual</button>
+          <!--
           <button class="btn btn-reset" id="btn-reset"><i class="fas fa-redo"></i> Reset</button>
           <button class="btn btn-emergency" id="btn-emergency"><i class="fas fa-exclamation-triangle"></i> Emergencia</button>
+          -->
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 // Almacenamiento de datos del sistema de horno
 let systemData = {
   temperaturas: [0, 0, 0, 0],
-  niveles: [0, 0, 0],
+  //niveles: [0, 0, 0],
+  nivelTanque: 0,
   presion: 0,
   valvula1: false,
   valvula2: false,

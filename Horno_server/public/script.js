@@ -18,9 +18,10 @@ const elements = {
   tempSalida: document.getElementById('temp-salida'),
   
   // Niveles y presión
-  nivelVacio: document.getElementById('nivel-vacio'),
-  nivelMitad: document.getElementById('nivel-mitad'),
-  nivelLleno: document.getElementById('nivel-lleno'),
+  nivelTanque: document.getElementById('nivel-tanque'),
+  //nivelVacio: document.getElementById('nivel-vacio'),
+  //nivelMitad: document.getElementById('nivel-mitad'),
+  //nivelLleno: document.getElementById('nivel-lleno'),
   presion: document.getElementById('presion'),
   
   // Estados de actuadores
@@ -133,8 +134,9 @@ function setupEventListeners() {
   // Listeners para botones
   document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
   document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
-  document.getElementById('btn-reset').addEventListener('click', () => sendCommand('reset'));
-  document.getElementById('btn-emergency').addEventListener('click', () => sendCommand('emergency'));
+  document.getElementById('btn-manual').addEventListener('click', () => sendCommand('manual'));
+  //document.getElementById('btn-reset').addEventListener('click', () => sendCommand('reset'));
+  //document.getElementById('btn-emergency').addEventListener('click', () => sendCommand('emergency'));
 }
 
 // Enviar comando al servidor
@@ -227,9 +229,10 @@ function updateSystemData(data) {
   
   // Actualizar niveles
   if (data.niveles && Array.isArray(data.niveles)) {
-    elements.nivelVacio.querySelector('.sensor-value').textContent = `${data.niveles[0]} %`;
-    elements.nivelMitad.querySelector('.sensor-value').textContent = `${data.niveles[1]} %`;
-    elements.nivelLleno.querySelector('.sensor-value').textContent = `${data.niveles[2]} %`;
+    elements.nivelTanque.querySelector('.sensor-value').textContent = `${data.nivelTanque} %`;
+    //elements.nivelVacio.querySelector('.sensor-value').textContent = `${data.niveles[0]} %`;
+    //elements.nivelMitad.querySelector('.sensor-value').textContent = `${data.niveles[1]} %`;
+    //elements.nivelLleno.querySelector('.sensor-value').textContent = `${data.niveles[2]} %`;
   }
   
   // Actualizar presión

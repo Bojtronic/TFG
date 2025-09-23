@@ -53,28 +53,32 @@ void checkForCommands() {
         Serial.println(commands);
         
         if (commands != "no_commands") {
-          if (commands.indexOf("system_start") != -1 && estadoActual == APAGADO) {
+          if (commands.indexOf("start") != -1 && estadoActual == APAGADO) {
             estadoActual = PROCESANDO;
-            Serial.println("✅ Comando SYSTEM START ejecutado");
+            Serial.println("✅ Comando START ejecutado");
           } 
-          else if (commands.indexOf("system_stop") != -1 && estadoActual != APAGADO) {
+          else if (commands.indexOf("stop") != -1 && estadoActual != APAGADO) {
             //detenerSistema();
             estadoActual = DETENER;
-            Serial.println("✅ Comando SYSTEM STOP ejecutado");
+            Serial.println("✅ Comando STOP ejecutado");
           }
+          /*
           else if (commands.indexOf("system_emergency") != -1) {
             //activarEmergencia("EMERGENCIA: Comando remoto!");
             estadoActual = EMERGENCIA;
             Serial.println("✅ Comando EMERGENCY ejecutado");
           }
 
-          ///////////////////   CAMBIAR ESTO POR EL COMANDO MANUAL /////////////////////
           else if (commands.indexOf("system_reset") != -1 && estadoActual == EMERGENCIA) {
             //resetBtnCallback(NULL);
-            //estadoActual = MANUAL;
+            estadoActual = APAGADO;
             Serial.println("✅ Comando RESET ejecutado");
           }
-          //////////////////////////////////////////////////////////////////////////////
+          */
+          else if (commands.indexOf("manual") != -1 && estadoActual == EMERGENCIA) {
+            estadoActual = MANUAL
+            Serial.println("✅ Comando MANUAL ejecutado");
+          }
 
           else if (commands.indexOf("valv1_on") != -1) {
             if(estadoActual == MANUAL){

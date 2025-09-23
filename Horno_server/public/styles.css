@@ -241,6 +241,10 @@ input:checked+.slider:before {
   background: linear-gradient(135deg, #6c757d, #adb5bd);
 }
 
+.btn-manual {
+  background: linear-gradient(135deg, #6c757d, #adb5bd);
+}
+
 .btn-emergency {
   background: linear-gradient(135deg, #ffc107, #fd7e14);
 }
