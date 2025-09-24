@@ -53,29 +53,15 @@ void checkForCommands() {
         Serial.println(commands);
         
         if (commands != "no_commands") {
-          if (commands.indexOf("start") != -1 && (estadoActual == APAGADO || estadoActual == MANUAL)) {
+          if (commands.indexOf("start") != -1 && (estadoActual == APAGADO || estadoActual == MANUAL || estadoActual == DETENER)) {
             estadoActual = PROCESANDO;
             Serial.println("✅ Comando START ejecutado");
           } 
           else if (commands.indexOf("stop") != -1 && (estadoActual == PROCESANDO || estadoActual == MANUAL)) {
-            //detenerSistema();
             estadoActual = DETENER;
             Serial.println("✅ Comando STOP ejecutado");
           }
-          /*
-          else if (commands.indexOf("system_emergency") != -1) {
-            //activarEmergencia("EMERGENCIA: Comando remoto!");
-            estadoActual = EMERGENCIA;
-            Serial.println("✅ Comando EMERGENCY ejecutado");
-          }
-
-          else if (commands.indexOf("system_reset") != -1 && estadoActual == EMERGENCIA) {
-            //resetBtnCallback(NULL);
-            estadoActual = APAGADO;
-            Serial.println("✅ Comando RESET ejecutado");
-          }
-          */
-          else if (commands.indexOf("manual") != -1 && (estadoActual == PROCESANDO || estadoActual == APAGADO)) {
+          else if (commands.indexOf("manual") != -1 && (estadoActual == PROCESANDO || estadoActual == APAGADO || estadoActual == DETENER)) {
             estadoActual = MANUAL;
             Serial.println("✅ Comando MANUAL ejecutado");
           }
@@ -201,22 +187,12 @@ void sendSystemData() {
     jsonPayload += String(temperaturas[2], 1) + ",";
     jsonPayload += String(temperaturas[3], 1) + "]";
     jsonPayload += "&nivelTanque=" + String((int)nivelTanque);
-    //jsonPayload += "&niveles=[" + String(niveles[0]) + ",";
-    //jsonPayload += String(niveles[1]) + ",";
-    //jsonPayload += String(niveles[2]) + "]";
     jsonPayload += "&presion=" + String(presionActual, 1);
     jsonPayload += "&valvula1=" + String(digitalRead(VALVULA_1) ? "true" : "false");
     jsonPayload += "&valvula2=" + String(digitalRead(VALVULA_2) ? "true" : "false");
     jsonPayload += "&bomba1=" + String(digitalRead(BOMBA_1) ? "true" : "false");
     jsonPayload += "&bomba2=" + String(digitalRead(BOMBA_2) ? "true" : "false");
-
-    // CAMBIAR LOS ESTADOS EN EL SERVIDOR
     jsonPayload += "&estado=" + String(estadoActual);  
-
-
-    //jsonPayload += "&emergencia=" + String(emergencia ? "true" : "false");
-    //jsonPayload += "&rssi=" + String(WiFi.RSSI());
-    //jsonPayload += "&lastUpdate=" + String(millis());
     jsonPayload += "\"}";
 
     Serial.print("📦 JSON: ");
@@ -281,14 +257,14 @@ void testServerConnection() {
 }
 
 void handleServerCommunication() {
-  // Enviar datos cada 4 segundos
-  if (millis() - lastSendTime > 4000) {
+  // Enviar datos cada 10 segundos
+  if (millis() - lastSendTime > 10000) {
     lastSendTime = millis();
     sendSystemData();
   }
   
-  // Consultar comandos cada 2 segundos
-  if (millis() - lastCommandCheck > 2000) {
+  // Consultar comandos cada 5 segundos
+  if (millis() - lastCommandCheck > 5000) {
     lastCommandCheck = millis();
     checkForCommands();
   }

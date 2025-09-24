@@ -67,12 +67,12 @@ NexPicture bomba1State(0, 12, "bomba1State");
 NexPicture bomba2State(0, 13, "bomba2State");
 NexButton startBtn(0, 14, "startBtn");  // pagina, id, nombre
 NexButton stopBtn(0, 15, "stopBtn");    // pagina, id, nombre
-//NexButton resetBtn(0, 16, "resetBtn");  // pagina, id, nombre
+//NexButton manualBtn(0, 16, "manualBtn"); // pagina, id, nombre
 
 NexTouch* nex_listen_list[] = {
   &startBtn,
   &stopBtn,
-  //&resetBtn,
+  //&manualBtn,
   NULL
 };
 
@@ -98,5 +98,8 @@ void configurarPines() {
   digitalWrite(BOMBA_1, LOW);
   digitalWrite(BOMBA_2, LOW);
 
-  //Serial.println("✅ Pines configurados correctamente");
+  // Configurar botones 
+  pinMode(START_BTN, INPUT_PULLUP);
+  pinMode(STOP_BTN, INPUT);
+  pinMode(MANUAL_BTN, INPUT); 
 }

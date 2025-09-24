@@ -19,17 +19,6 @@ extern bool valvula_2_auto; // Estado automático de la válvula 2
 extern bool bomba_1_auto;   // Estado automático de la bomba 1
 extern bool bomba_2_auto;   // Estado automático de la bomba 2
 
-/*
-// Variables para manejo de pulsadores
-extern bool startPressed;
-extern bool stopPressed;
-extern bool manualPressed;
-
-// Guardar el último estado de cada botón
-extern bool lastStartState = HIGH;
-extern bool lastStopState  = HIGH;
-extern bool lastManualState = HIGH;
-*/
 
 // ================= FUNCIONES DE LECTURA DE SENSORES =================
 
@@ -146,10 +135,6 @@ void leerPresion() {
 }
 
 
-//Hay 3 contactos secos, se cierra un contacto (1 o 0 segun la logica implementada) por cada nivel detectado
-//En principio el tanque vacío tendría los 3 contactos abiertos
-//Cuando hay agua en el tanque solo 1 contacto se cierra, ya sea para nivel bajo, medio o lleno
-//Con base en el contacto que esté cerrado se establece el valor de la variable nivelTanque
 void leerNiveles() {
   // Leer los tres contactos secos (lógica negativa/positiva según cableado)
   bool s1 = digitalRead(NIVEL_1);  // contacto para nivel bajo
@@ -183,31 +168,35 @@ void leerNiveles() {
   //niveles[2] = nivelTanque;
 }
 
-
 void leerPulsadores() {
   // Lógica negativa: LOW cuando está presionado
   bool startButton  = (digitalRead(START_BTN)  == LOW);
   bool stopButton   = (digitalRead(STOP_BTN)   == LOW);
   bool manualButton = (digitalRead(MANUAL_BTN) == LOW);
 
-  // Flanco de HIGH -> LOW para cada botón
-  if (startButton && lastStartState == HIGH && !stopButton && !manualButton) {
-    estadoActual = PROCESANDO;
-    Serial.println("📌 Botón START presionado → Estado PROCESANDO");
-  }
-  else if (stopButton && lastStopState == HIGH && !startButton && !manualButton) {
-    estadoActual = DETENER;
-    Serial.println("📌 Botón STOP presionado → Estado DETENER");
-  }
-  else if (manualButton && lastManualState == HIGH && !startButton && !stopButton) {
-    estadoActual = MANUAL;
-    Serial.println("📌 Botón MANUAL presionado → Estado MANUAL");
-  }
-  // else: no hacer nada, se mantiene el estado actual
+  if(estadoActual != EMERGENCIA){ // En estado de emergencia no se puede cambiar el estado con los botones
+    
+    // Flanco de HIGH -> LOW para cada botón
+    if (startButton && lastStartState == HIGH && !stopButton && !manualButton) {
+      estadoActual = PROCESANDO;
+      Serial.println("📌 Botón START presionado");
+    }
+    else if (stopButton && lastStopState == HIGH && !startButton && !manualButton) {
+      estadoActual = DETENER;
+      Serial.println("📌 Botón STOP presionado");
+    }
+    else if (manualButton && lastManualState == HIGH && !startButton && !stopButton) {
+      estadoActual = MANUAL;
+      Serial.println("📌 Botón MANUAL presionado");
+    }
+    // else: no hacer nada, se mantiene el estado actual
 
-  // Actualizar últimas lecturas
-  lastStartState  = startButton;
-  lastStopState   = stopButton;
-  lastManualState = manualButton;
+    // Actualizar últimas lecturas
+    lastStartState  = startButton;
+    lastStopState   = stopButton;
+    lastManualState = manualButton;
+  }
+
+  
+  
 }
-

@@ -5,7 +5,7 @@
 
 // Pruebas por estado
 void testApagado();
-void testProcesando();
+void testProcesando(int caso);
 void testDetener(int caso);
 void testManual();
 void testEmergencia(int caso);

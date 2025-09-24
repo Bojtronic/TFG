@@ -40,13 +40,13 @@
 #define BOMBA_2   12  // Circulación redundante 
 
 // Pulsadores de control
-#define START_BTN   32
+#define START_BTN   14
 #define STOP_BTN    13 
 #define MANUAL_BTN  35   // GPIO35 -> SOLO ENTRADA
 
 // Pilotos (salidas seguras, sin pines de boot)
-#define PILOTO_MANUAL     14   // GPIO14 -> salida digital
-#define PILOTO_EMERGENCIA 26   // GPIO26 -> salida digital 
+//#define PILOTO_MANUAL     14   // GPIO14 -> salida digital
+//#define PILOTO_EMERGENCIA 26   // GPIO26 -> salida digital 
 //#define PILOTO_START      2   // GPIO2 -> tener cuidado, pin de boot, al arranque debe estar el LOW
 
 // Comunicación con HMI Nextion (UART2)
@@ -144,7 +144,7 @@ extern NexPicture bomba1State;
 extern NexPicture bomba2State;
 extern NexButton startBtn;
 extern NexButton stopBtn;
-//extern NexButton resetBtn;
+//extern NexButton manualBtn;
 extern NexTouch *nex_listen_list[];
 
 // ================= DECLARACIONES DE FUNCIONES =================
@@ -193,6 +193,6 @@ void handleServerCommunication();
 // Callbacks Nextion
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
-//void resetBtnCallback(void *ptr);
+//void manualBtnCallback(void *ptr);
 
 #endif

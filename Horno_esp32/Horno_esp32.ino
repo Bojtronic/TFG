@@ -41,6 +41,7 @@ void setup() {
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 }
 
+int numTest = 0;
 
 // ================= BUCLE PRINCIPAL =================
 void loop() {
@@ -51,22 +52,33 @@ void loop() {
   if (now - lastReadTime >= LECTURA_INTERVAL) {
     lastReadTime = now;
     
-    ejecutarPruebas();
+    
+    if(numTest < 4){
+      numTest++;
+    }
+    else{
+      numTest = 0;
+    }
+    testProcesando(numTest);
+    
+
+    //ejecutarPruebas();
     //leerSensores();
-    verificarSeguridad();
+    //verificarSeguridad();
     controlarSistema();
     
     //actualizarHMI();
     
-    leerPulsadores();
+    //leerPulsadores();
 
     // Manejo de comunicación con servidor
     handleServerCommunication(); 
 
-    //Serial.println("-------------- PROCESO --------------"); 
+    //Serial.println("("**************** PROCESO ****************"); 
   }
+  leerPulsadores();
   
-  //Serial.println("**************** LOOP ****************");
+  Serial.println("-------------- LOOP --------------");
   
   delay(100);
 }

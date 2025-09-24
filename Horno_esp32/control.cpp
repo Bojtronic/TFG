@@ -9,8 +9,6 @@ void controlarSistema() {
   switch (estadoActual) {
     case APAGADO:
       Serial.println("Estado APAGADO");
-      digitalWrite(PILOTO_MANUAL, LOW);
-      digitalWrite(PILOTO_EMERGENCIA, LOW);
       if(verificarCondicionesApagado()){
         apagarTodo();
       }
@@ -19,33 +17,23 @@ void controlarSistema() {
       }
       break;
     case DETENER:
-      Serial.println("Estado DETENER");
-      digitalWrite(PILOTO_MANUAL, LOW);
-      digitalWrite(PILOTO_EMERGENCIA, LOW);
+      Serial.println(">>>   Estado DETENER");
       detenerSistema();
       break;
     case PROCESANDO:
-      Serial.println("Estado PROCESANDO");
-      digitalWrite(PILOTO_MANUAL, LOW);
-      digitalWrite(PILOTO_EMERGENCIA, LOW);
+      Serial.println(">>>   Estado PROCESANDO");
       iniciarSistema();
       break;
     case EMERGENCIA:
-      Serial.println("Estado EMERGENCIA");
-      digitalWrite(PILOTO_MANUAL, LOW);
-      digitalWrite(PILOTO_EMERGENCIA, HIGH);
+      Serial.println(">>>   Estado EMERGENCIA");
       detenerSistema();
       break;
     case MANUAL:
-      Serial.println("Estado MANUAL");
-      digitalWrite(PILOTO_MANUAL, HIGH);
-      digitalWrite(PILOTO_EMERGENCIA, LOW);
+      Serial.println(">>>   Estado MANUAL");
       manual();
       break;
     default:
-      Serial.println("ESTADO DESCONOCIDO");
-      digitalWrite(PILOTO_MANUAL, LOW);
-      digitalWrite(PILOTO_EMERGENCIA, LOW);
+      Serial.println(">>>   ESTADO DESCONOCIDO");
       detenerSistema();
       break;
   }
@@ -53,7 +41,7 @@ void controlarSistema() {
 
 void iniciarSistema() {
   if (verificarCondicionesInicio()) {
-    
+    estadoActual = PROCESANDO;
     //mensajesHMI("Iniciando sistema");
     if ((temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO)) {
       if(nivelTanque < NIVEL_MITAD){
@@ -123,17 +111,7 @@ bool verificarCondicionesInicio() {
       return false;
     }
   }
-  
-  /*
-  // Verificar que no haya emergencias activas
-  if (emergencia) {
-    //mensajesHMI("No se puede iniciar: Emergencia");
-    Serial.println("No se puede iniciar: Emergencia");
-    //detenerSistema(); // considerar ejecutar el apagado seguro en este punto
-    return false;
-  }
-  */
-  
+    
   
   // Verificar presión de agua mínima para iniciar
   if (presionActual <= PRESION_MINIMA) {
