@@ -55,7 +55,7 @@
 
 
 // ================= PARÁMETROS DE CONFIGURACIÓN =================
-#define TEMP_AGUA_CALIENTE 60.0     // Temperatura objetivo agua caliente (°C)
+#define TEMP_AGUA_CALIENTE 60.0     // Temperatura objetivo de agua caliente para el usuario (°C) temperaturas[3]
 #define TEMP_MAX_TANQUE    70.0     // Temperatura máxima en tanque (°C)
 #define TEMP_MAX_HORNO     200.0    // Temperatura máxima en horno (°C)
 #define TEMP_MAX_CAMARA    150.0    // Temperatura máxima en cámara (°C)
@@ -68,7 +68,7 @@
 #define PRESION_MINIMA     1.0      // Presión para alerta (bar)
 
 #define INTERVALO_CAMBIO_BOMBA 3000 // 20 minutos 1200000 milisegundos
-#define LECTURA_INTERVAL 2000          // 2 segundos 2000 milisegundos
+#define LECTURA_INTERVAL 3000          // 2 segundos 2000 milisegundos
 
 // ================= CONFIGURACIÓN SERVIDOR =================
 extern const char* ssid;

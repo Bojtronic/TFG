@@ -134,19 +134,20 @@ bool verificarCondicionesInicio() {
   }
   */
   
+  
+  // Verificar presión de agua mínima para iniciar
+  if (presionActual <= PRESION_MINIMA) {
+    //mensajesHMI("No hay agua suficiente para iniciar");
+    Serial.println("No hay agua suficiente para iniciar");
+    //detenerSistema(); // considerar ejecutar el apagado seguro en este punto
+    return false;
+  }
+
   // Verificar nivel mínimo para iniciar
   if (nivelTanque <= NIVEL_VACIO) {
     //mensajesHMI("Nivel muy bajo para iniciar");
     Serial.println("Nivel muy bajo para iniciar");
     digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
-    return false;
-  }
-
-  // Verificar presión de agua mínima para iniciar
-  if (presionActual <= PRESION_MINIMA) {
-    //mensajesHMI("No hay agua suficiente para iniciar");
-    Serial.println("No hay agua suficiente para iniciar");
-    detenerSistema(); // considerar ejecutar el apagado seguro en este punto
     return false;
   }
   

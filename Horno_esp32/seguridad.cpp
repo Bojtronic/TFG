@@ -10,16 +10,12 @@ void apagarTodo() {
     digitalWrite(VALVULA_2, LOW);
     digitalWrite(BOMBA_1, LOW);
     digitalWrite(BOMBA_2, LOW);
-
-    //estadoActual = APAGADO;
-
-    Serial.println("Todos los actuadores apagados - Estado apagado");
 }
 
 // Verifica las condiciones de seguridad del sistema
 void verificarSeguridad() {
     // 1. No hay flujo de agua para llenar el tanque(no hay presión)
-    if (presionActual < PRESION_MINIMA) {
+    if ((presionActual < PRESION_MINIMA) && (estadoActual != APAGADO)) {
         //activarEmergencia("EMERGENCIA: Sin agua entrando!");
         if((nivelTanque <= NIVEL_VACIO) && (temperaturas[2] > TEMP_MIN_HORNO)){
             
@@ -73,6 +69,7 @@ void verificarSeguridad() {
             digitalWrite(BOMBA_2, LOW);
             Serial.println("Emergencia leve, Tanque muy caliente: el tanque no está lleno, pero el horno y la cámara están fríos");
         }
+        estadoActual = EMERGENCIA;
         return;
     }
 
@@ -127,11 +124,6 @@ void verificarSeguridad() {
     }
 }
 
-// Activa el modo de emergencia, apaga el sistema y notifica HMI
-// En realidad se deben tomar diferentes medidas de emergencia
-// Si el horno esta calentando debe haber agua circulando
-// si el tanque esta vacio se debe llenar el tanque
-// si no hay presion de agua a la entrada se debe apagar todo y no permitir salida de agua caliente para que siga circulando mientras el horno se enfria
 void activarEmergencia(const char* mensaje) {
     estadoActual = EMERGENCIA;
     emergencia = true;
