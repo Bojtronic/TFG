@@ -67,8 +67,8 @@
 //#define PRESION_UMBRAL     2.0      // Presión para alerta (bar)
 #define PRESION_MINIMA     1.0      // Presión para alerta (bar)
 
-#define INTERVALO_CAMBIO_BOMBA 3000 // 20 minutos 1200000 milisegundos
-#define LECTURA_INTERVAL 3000          // 2 segundos 2000 milisegundos
+#define INTERVALO_CAMBIO_BOMBA 1200000 // 20 minutos 1200000 milisegundos
+#define LECTURA_INTERVAL 1000        
 
 // ================= CONFIGURACIÓN SERVIDOR =================
 extern const char* ssid;

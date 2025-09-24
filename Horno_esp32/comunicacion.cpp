@@ -257,19 +257,29 @@ void testServerConnection() {
 }
 
 void handleServerCommunication() {
-  // Enviar datos cada 10 segundos
-  if (millis() - lastSendTime > 10000) {
-    lastSendTime = millis();
-    sendSystemData();
+  static unsigned long lastCommTime = 0;
+  static bool sendDataNext = true; // Alternar entre envío y recepción
+  const unsigned long COMM_INTERVAL = 3000; // 3 segundos
+
+  // Verificar si es tiempo de comunicación
+  if (millis() - lastCommTime >= COMM_INTERVAL) {
+    lastCommTime = millis();
+    
+    if (sendDataNext) {
+      // Ciclo 1: Enviar datos al servidor
+      sendSystemData();
+      Serial.println("📤 Datos enviados al servidor");
+    } else {
+      // Ciclo 2: Recibir comandos del servidor
+      checkForCommands();
+      Serial.println("📥 Comandos consultados del servidor");
+    }
+    
+    // Alternar para el próximo ciclo
+    sendDataNext = !sendDataNext;
   }
   
-  // Consultar comandos cada 5 segundos
-  if (millis() - lastCommandCheck > 5000) {
-    lastCommandCheck = millis();
-    checkForCommands();
-  }
-  
-  // Reconexión WiFi si es necesario
+  // Reconexión WiFi si es necesario (se mantiene igual)
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("⚠️  WiFi desconectado, reconectando...");
     connectToWiFi();
