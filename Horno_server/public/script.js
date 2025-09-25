@@ -14,6 +14,28 @@ const ESTADOS = {
 };
 
 
+const MENSAJES = {
+  0: 'SISTEMA APAGADO',
+  1: 'Horno y camara calientes, Nivel del tanque mas de la mitad',
+  2: 'Hay presion de agua, Horno y camara calientes, Nivel del tanque está entre vacio y mitad',
+  3: 'Horno y camara calientes, Nivel del tanque menor a la mitad',
+  4: 'Horno y camara calientes, Nivel del tanque mayor a la mitad',
+  5: 'Horno y camara calientes, Nivel del tanque lleno',
+  6: 'Horno y camara frios, Nivel del tanque menor a la mitad',
+  7: 'Horno y camara frios, Nivel del tanque mayor a la mitad',
+  8: 'GRAVE: No hay presion de agua, Horno y camara DEMASIADO calientes, Tanque vacio',
+  9: 'No hay presion de agua, Nivel de tanque vacio, Horno caliente',
+  10: 'No hay presion de agua, El tanque tiene algo de agua, Horno caliente',
+  11: 'Tanque de agua esta muy caliente y no esta lleno, Horno y camara calientes', 
+  12: 'Tanque de agua esta muy caliente y no esta lleno, Horno y camara frios', 
+  13: 'Horno caliente, El tanque no esta lleno',
+  14: 'Horno caliente, El tanque esta lleno',
+  15: 'Camara de humo caliente, El tanque no esta lleno',
+  16: 'Modo MANUAL activado',
+  17: 'DESCONOCIDO'
+};
+
+
 // Elementos de la interfaz
 const elements = {
   connectionStatus: document.getElementById('connection-status'),
@@ -168,26 +190,31 @@ async function sendCommand(command) {
       const data = await response.json();
       
       if (data.success || data.status === 'success') {
-        addLogEntry(`Comando enviado: ${command}`);
+        //addLogEntry(`Comando enviado: ${command}`);
+        showCommandMessage(command);
         return true;
       } else {
-        addLogEntry(`Error en servidor: ${data.message || 'Error desconocido'}`);
+        //addLogEntry(`Error en servidor: ${data.message || 'Error desconocido'}`);
+        showSystemMessage(17); // Mensaje de error
         return false;
       }
     } else {
       // Si no es JSON, puede ser una respuesta simple
       const text = await response.text();
       if (response.ok) {
-        addLogEntry(`Comando enviado: ${command}`);
+        //addLogEntry(`Comando enviado: ${command}`);
+        showCommandMessage(command);
         return true;
       } else {
-        addLogEntry(`Error en servidor: ${text}`);
+        //addLogEntry(`Error en servidor: ${text}`);
+        showSystemMessage(17); // Mensaje de error
         return false;
       }
     }
   } catch (error) {
     console.error('Error al enviar comando:', error);
-    addLogEntry('Error de conexión al enviar comando');
+    //addLogEntry('Error de conexión al enviar comando');
+    showSystemMessage(14); // Error de comunicación
     return false;
   }
 }
@@ -283,13 +310,10 @@ function updateSystemData(data) {
     elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
   }, 100);
   
-  // Actualizar estado del sistema (SOLO ESTADO ACTUAL Y ÚLTIMA ACTUALIZACIÓN)
-  /*
-  if (data.estado) {
-    elements.systemState.textContent = data.estado;
-    elements.systemState.className = `status-value ${getStatusClass(data.estado)}`;
+  if (data.mensaje !== undefined && data.mensaje !== null) {
+    showSystemMessage(data.mensaje);
   }
-  */
+  
   if (data.estado !== undefined) {
     const estadoTexto = ESTADOS[data.estado] || 'DESCONOCIDO';
     elements.systemState.textContent = estadoTexto;
@@ -342,3 +366,76 @@ function addLogEntry(message) {
     elements.messageLog.removeChild(elements.messageLog.lastChild);
   }
 }
+
+// Función para mostrar mensajes del sistema
+function showSystemMessage(messageCode) {
+    const messageText = MENSAJES[messageCode] || 'Mensaje desconocido';
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    
+    // Crear elemento de mensaje
+    const messageElement = document.createElement('div');
+    messageElement.className = 'log-entry';
+    
+    // Determinar clase CSS según el tipo de mensaje
+    let messageClass = 'log-info';
+    if (messageCode >= 8 && messageCode <= 15) { // Mensajes de emergencia
+        messageClass = 'log-emergency';
+    } else if (messageCode >= 3 && messageCode <= 7) { // Mensajes de proceso
+        messageClass = 'log-process';
+    } else if (messageCode >= 1 && messageCode <= 2) { // Mensajes de detención
+        messageClass = 'log-stop';
+    }
+    
+    messageElement.innerHTML = `
+        <span class="log-time">${timeString}</span>
+        <span class="${messageClass}">${messageText}</span>
+    `;
+    
+    // Agregar al inicio del log
+    elements.messageLog.prepend(messageElement);
+    
+    // Limitar a 50 mensajes máximo
+    if (elements.messageLog.children.length > 50) {
+        elements.messageLog.removeChild(elements.messageLog.lastChild);
+    }
+    
+    // Scroll automático al nuevo mensaje
+    elements.messageLog.scrollTop = 0;
+}
+
+// Función para mostrar mensajes de comandos
+function showCommandMessage(command) {
+    const commandMessages = {
+        'start': 'Comando START enviado - Iniciando proceso',
+        'stop': 'Comando STOP enviado - Deteniendo sistema',
+        'manual': 'Comando MANUAL enviado - Cambiando a modo manual',
+        'valv1_on': 'Válvula 1 activada manualmente',
+        'valv1_off': 'Válvula 1 desactivada manualmente',
+        'valv2_on': 'Válvula 2 activada manualmente',
+        'valv2_off': 'Válvula 2 desactivada manualmente',
+        'bomba1_on': 'Bomba 1 activada manualmente',
+        'bomba1_off': 'Bomba 1 desactivada manualmente',
+        'bomba2_on': 'Bomba 2 activada manualmente',
+        'bomba2_off': 'Bomba 2 desactivada manualmente'
+    };
+    
+    const messageText = commandMessages[command] || `Comando enviado: ${command}`;
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    
+    const messageElement = document.createElement('div');
+    messageElement.className = 'log-entry';
+    messageElement.innerHTML = `
+        <span class="log-time">${timeString}</span>
+        <span class="log-command">${messageText}</span>
+    `;
+    
+    elements.messageLog.prepend(messageElement);
+    
+    if (elements.messageLog.children.length > 50) {
+        elements.messageLog.removeChild(elements.messageLog.lastChild);
+    }
+}
+
+

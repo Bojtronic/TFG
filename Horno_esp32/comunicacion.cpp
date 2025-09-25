@@ -49,8 +49,8 @@ void checkForCommands() {
       
       if (httpCode == 200) {
         String commands = http.getString();
-        Serial.print("📨 Comandos recibidos: ");
-        Serial.println(commands);
+        //Serial.print("📨 Comandos recibidos: ");
+        //Serial.println(commands);
         
         if (commands != "no_commands") {
           if (commands.indexOf("start") != -1 && (estadoActual == APAGADO || estadoActual == MANUAL || estadoActual == DETENER)) {
@@ -192,11 +192,12 @@ void sendSystemData() {
     jsonPayload += "&valvula2=" + String(digitalRead(VALVULA_2) ? "true" : "false");
     jsonPayload += "&bomba1=" + String(digitalRead(BOMBA_1) ? "true" : "false");
     jsonPayload += "&bomba2=" + String(digitalRead(BOMBA_2) ? "true" : "false");
-    jsonPayload += "&estado=" + String(estadoActual);  
+    jsonPayload += "&estado=" + String(estadoActual);
+    jsonPayload += "&mensaje=" + String(mensajeActual);  
     jsonPayload += "\"}";
 
-    Serial.print("📦 JSON: ");
-    Serial.println(jsonPayload);
+    //Serial.print("📦 JSON: ");
+    //Serial.println(jsonPayload);
 
     int httpCode = http.POST(jsonPayload);
     Serial.print("📡 Respuesta HTTP: ");

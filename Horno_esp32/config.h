@@ -115,7 +115,30 @@ enum EstadoSistema {
   MANUAL
 };
 
+// Mensajes del sistema como numeros para enviar a la aplicación web
+enum MensajeSistema {
+  APAGADO_0,
+  DETENER_1,
+  DETENER_2,
+  PROCESANDO_1,
+  PROCESANDO_2,
+  PROCESANDO_3,
+  PROCESANDO_4,
+  PROCESANDO_5,
+  EMERGENCIA_1,
+  EMERGENCIA_2,
+  EMERGENCIA_3,
+  EMERGENCIA_4,
+  EMERGENCIA_5,
+  EMERGENCIA_6,
+  EMERGENCIA_7,
+  EMERGENCIA_8,
+  MANUAL_0,
+  DESCONOCIDO
+};
+
 extern EstadoSistema estadoActual;
+extern MensajeSistema mensajeActual;
 extern bool emergencia;
 extern bool bombaPrincipalActiva;
 extern unsigned long ultimoCambioBomba;

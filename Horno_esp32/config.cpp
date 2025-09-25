@@ -27,6 +27,7 @@ bool bomba_2_auto;   // Estado automático de la bomba 2
 
 // Estados del sistema
 EstadoSistema estadoActual = APAGADO;
+MensajeSistema mensajeActual = APAGADO_0;
 bool emergencia = false;
 bool bombaPrincipalActiva = true;
 unsigned long ultimoCambioBomba = 0;

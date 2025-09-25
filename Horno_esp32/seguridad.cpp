@@ -18,7 +18,8 @@ void verificarSeguridad() {
     if ((presionActual < PRESION_MINIMA) && (estadoActual != APAGADO)) {
         //activarEmergencia("EMERGENCIA: Sin agua entrando!");
         if((nivelTanque <= NIVEL_VACIO) && (temperaturas[2] > TEMP_MIN_HORNO)){
-            
+            mensajeActual = EMERGENCIA_2;
+
             digitalWrite(BOMBA_1, LOW);
             digitalWrite(BOMBA_2, LOW);
             digitalWrite(VALVULA_1, LOW);
@@ -28,7 +29,8 @@ void verificarSeguridad() {
             Serial.println("Emergencia severa no hay agua en la entrada ni en el tanque y el horno está caliente");
         }
         else if((nivelTanque > NIVEL_VACIO) && (temperaturas[2] > TEMP_MIN_HORNO)){
-            
+            mensajeActual = EMERGENCIA_3;
+
             digitalWrite(VALVULA_1, LOW);
             digitalWrite(VALVULA_2, LOW);
 
@@ -52,6 +54,8 @@ void verificarSeguridad() {
     if (temperaturas[0] >= TEMP_MAX_TANQUE) {
         //activarEmergencia("EMERGENCIA: Tanque muy caliente!");
         if((nivelTanque <= NIVEL_LLENO) && (temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO)){
+            mensajeActual = EMERGENCIA_4;
+            
             digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
             // Activar la bomba principal o redundante según alternancia
             if (bombaPrincipalActiva) {
@@ -64,6 +68,8 @@ void verificarSeguridad() {
             Serial.println("Emergencia leve, Tanque muy caliente: el tanque no está lleno, el horno está caliente y la cámara está caliente");
         }
         else if((nivelTanque <= NIVEL_LLENO) && (temperaturas[1] < TEMP_MIN_HORNO) && (temperaturas[2] < TEMP_MIN_HORNO)){
+            mensajeActual = EMERGENCIA_5;
+            
             digitalWrite(VALVULA_2, LOW); // No hace falta abrir la llave para llenar el tanque con agua fria porque el horno esta frio
             digitalWrite(BOMBA_1, LOW);
             digitalWrite(BOMBA_2, LOW);
@@ -77,6 +83,8 @@ void verificarSeguridad() {
     if (temperaturas[1] > TEMP_MAX_HORNO) {
         //activarEmergencia("EMERGENCIA: Horno muy caliente!");
         if((nivelTanque < NIVEL_LLENO)){
+            mensajeActual = EMERGENCIA_6;
+            
             digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
             // Activar la bomba principal o redundante según alternancia
             if (bombaPrincipalActiva) {
@@ -89,6 +97,8 @@ void verificarSeguridad() {
             Serial.println("Emergencia leve: Horno muy caliente y el tanque no está lleno");
         }
         else if ((nivelTanque >= NIVEL_LLENO)){
+            mensajeActual = EMERGENCIA_7;
+            
             digitalWrite(VALVULA_2, LOW); // No hace falta abrir la llave para llenar el tanque con agua fria porque el horno esta frio
             // Activar la bomba principal o redundante según alternancia
             if (bombaPrincipalActiva) {
@@ -108,6 +118,8 @@ void verificarSeguridad() {
     if (temperaturas[2] > TEMP_MAX_CAMARA) {
         //activarEmergencia("EMERGENCIA: Camara muy caliente!");
         if(nivelTanque <= NIVEL_LLENO){
+            mensajeActual = EMERGENCIA_8;
+            
             digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
             // Activar la bomba principal o redundante según alternancia
             if (bombaPrincipalActiva) {

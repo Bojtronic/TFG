@@ -9,6 +9,7 @@ let systemData = {
   bomba1: false,
   bomba2: false,
   estado: 0,
+  mensaje: 0,
   //emergencia: false,
   //bombaActiva: 'PRINCIPAL',
   lastUpdate: new Date().toISOString()

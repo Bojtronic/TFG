@@ -114,6 +114,7 @@ function handlePostMessage(req, res, clients) {
             const bomba1 = params.get('bomba1') === 'true';
             const bomba2 = params.get('bomba2') === 'true';
             const estado = parseInt(params.get('estado'));
+            const mensaje = parseInt(params.get('menasaje'));
             //const emergencia = params.get('emergencia') === 'true';
             //const bombaActiva = params.get('bombaActiva');
 
@@ -128,6 +129,7 @@ function handlePostMessage(req, res, clients) {
               bomba1,
               bomba2,
               estado,
+              mensaje,
               //emergencia,
               //bombaActiva,
               lastUpdate: new Date().toISOString()
