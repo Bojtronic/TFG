@@ -413,16 +413,19 @@ function mostrarMensajeEstado(mensajeCode) {
   const elementoMensaje = document.createElement('div');
   elementoMensaje.className = 'log-entry';
   
-  // Determinar clase según el tipo de mensaje
+  // Determinar clase según el tipo de mensaje - ACTUALIZADO
   let claseMensaje = 'mensaje-normal';
-  if (mensajeCode >= 8 && mensajeCode <= 10) { // Mensajes de emergencia GRAVE
+  
+  if (mensajeCode >= 8 && mensajeCode <= 15) { // EMERGENCIA_1 a EMERGENCIA_8
     claseMensaje = 'mensaje-emergencia-grave';
-  } else if (mensajeCode >= 11 && mensajeCode <= 15) { // Mensajes de advertencia
-    claseMensaje = 'mensaje-advertencia';
-  } else if (mensajeCode === 16) { // Mensaje manual
+  } else if (mensajeCode >= 3 && mensajeCode <= 7) { // PROCESANDO_1 a PROCESANDO_5
+    claseMensaje = 'mensaje-procesando';
+  } else if (mensajeCode === 16) { // MANUAL_0
     claseMensaje = 'mensaje-manual';
-  } else if (mensajeCode === 0) { // Apagado
+  } else if (mensajeCode === 0) { // APAGADO_0
     claseMensaje = 'mensaje-apagado';
+  } else if (mensajeCode === 1 || mensajeCode === 2) { // DETENER_1 y DETENER_2
+    claseMensaje = 'mensaje-advertencia'; 
   }
   
   elementoMensaje.innerHTML = `

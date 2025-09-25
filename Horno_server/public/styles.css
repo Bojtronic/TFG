@@ -268,63 +268,80 @@ input:checked+.slider:before {
 
 /* Estilos específicos para mensajes de estado */
 .log-entry {
-    padding: 10px 15px;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 .log-entry:hover {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 .log-time {
-    color: #7f8c8d;
-    font-size: 12px;
-    margin-right: 15px;
-    font-family: monospace;
+  color: #7f8c8d;
+  font-size: 12px;
+  margin-right: 15px;
+  font-family: monospace;
 }
 
 /* Estilos específicos para mensajes de estado */
 .mensaje-normal {
-    color: #2c3e50;
+  color: #2c3e50;
 }
 
 .mensaje-apagado {
-    color: #7f8c8d;
-    font-style: italic;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.mensaje-procesando {
+  color: #27ae60;
+  font-weight: 600;
+  background-color: #e8f5e9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #27ae60;
 }
 
 .mensaje-manual {
-    color: #3498db;
-    font-weight: 600;
+  color: #3498db;
+  font-weight: 600;
 }
 
 .mensaje-advertencia {
-    color: #e67e22;
-    font-weight: 600;
-    background-color: #fff4e6;
-    padding: 4px 8px;
-    border-radius: 4px;
-    border-left: 3px solid #e67e22;
+  color: #e67e22;
+  font-weight: 600;
+  background-color: #fff4e6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #e67e22;
 }
 
 .mensaje-emergencia-grave {
-    color: #e74c3c;
-    font-weight: 700;
-    background-color: #ffebee;
-    padding: 6px 10px;
-    border-radius: 4px;
-    border-left: 4px solid #e74c3c;
-    animation: pulse-alert 2s infinite;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+  color: #e74c3c;
+  font-weight: 700;
+  background-color: #ffebee;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border-left: 4px solid #e74c3c;
+  animation: pulse-alert 2s infinite;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 @keyframes pulse-alert {
-    0% { background-color: #ffebee; }
-    50% { background-color: #ffcdd2; }
-    100% { background-color: #ffebee; }
+  0% {
+    background-color: #ffebee;
+  }
+
+  50% {
+    background-color: #ffcdd2;
+  }
+
+  100% {
+    background-color: #ffebee;
+  }
 }
 
 .connection-status {
@@ -371,7 +388,8 @@ input:checked+.slider:before {
 
 @media (max-width: 1024px) {
   .dashboard {
-    grid-template-columns: 1fr; /* Una columna en tablets */
+    grid-template-columns: 1fr;
+    /* Una columna en tablets */
   }
 }
 
@@ -391,16 +409,26 @@ input:checked+.slider:before {
   .logo {
     max-width: 150px;
   }
-  
+
   .logo-container {
     margin: 15px 0;
   }
 
   .mensaje-emergencia-grave {
-        padding: 8px 10px;
-        font-size: 0.9rem;
-        border-left-width: 3px;
-    }
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    border-left-width: 3px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    min-height: auto;
+  }
+
+  .log-entry {
+    padding: 8px 10px;
+    /* Reduce el padding del contenedor principal */
+    line-height: 1.4;
+    /* Mejor interlineado general */
+  }
 }
 
 @media (max-width: 480px) {
