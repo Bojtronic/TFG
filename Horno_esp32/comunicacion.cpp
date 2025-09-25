@@ -206,8 +206,8 @@ void sendSystemData() {
     if (httpCode == 200) {
       String response = http.getString();
       Serial.println("✅ El servidor recibió los datos \n");
-      //Serial.print("✅ Respuesta: ");
-      //Serial.println(response);
+      Serial.print("✅ Respuesta: ");
+      Serial.println(response);
     } else {
       Serial.print("❌ Error: ");
       Serial.println(http.errorToString(httpCode));

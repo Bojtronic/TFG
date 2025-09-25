@@ -339,6 +339,8 @@ function updateSystemData(data) {
     elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
   }, 100);
 
+  console.log('Mensaje de estado recibido:', data.mensaje);
+  
   if (data.mensaje !== undefined && data.mensaje !== null) {
     mostrarMensajeEstado(data.mensaje);
   }
