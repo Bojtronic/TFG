@@ -285,27 +285,44 @@ input:checked+.slider:before {
     font-family: monospace;
 }
 
+/* Estilos específicos para mensajes de estado */
 .mensaje-normal {
     color: #2c3e50;
 }
 
-.mensaje-proceso {
-    color: #27ae60;
+.mensaje-apagado {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.mensaje-manual {
+    color: #3498db;
     font-weight: 600;
 }
 
-.mensaje-detencion {
+.mensaje-advertencia {
     color: #e67e22;
     font-weight: 600;
+    background-color: #fff4e6;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 3px solid #e67e22;
 }
 
-.mensaje-emergencia {
+.mensaje-emergencia-grave {
     color: #e74c3c;
     font-weight: 700;
     background-color: #ffebee;
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 4px;
-    border-left: 3px solid #e74c3c;
+    border-left: 4px solid #e74c3c;
+    animation: pulse-alert 2s infinite;
+}
+
+@keyframes pulse-alert {
+    0% { background-color: #ffebee; }
+    50% { background-color: #ffcdd2; }
+    100% { background-color: #ffebee; }
 }
 
 .connection-status {

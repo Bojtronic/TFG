@@ -13,9 +13,6 @@ const ESTADOS = {
   4: 'MANUAL'
 };
 
-// Variable para guardar el último mensaje mostrado (evitar duplicados)
-let ultimoMensajeMostrado = null;
-
 const MENSAJES = {
   0: 'SISTEMA APAGADO',
   1: 'Horno y camara calientes, Nivel del tanque mas de la mitad',
@@ -36,6 +33,9 @@ const MENSAJES = {
   16: 'Modo MANUAL activado',
   17: 'DESCONOCIDO'
 };
+
+// Variable para guardar el último mensaje mostrado (evitar duplicados)
+let ultimoMensajeMostrado = null;
 
 
 // Elementos de la interfaz
@@ -340,7 +340,6 @@ function updateSystemData(data) {
   }, 100);
 
   if (data.mensaje !== undefined && data.mensaje !== null) {
-    //showSystemMessage(data.mensaje);
     mostrarMensajeEstado(data.mensaje);
   }
 
@@ -397,76 +396,6 @@ function addLogEntry(message) {
   }
 }
 
-// Función para mostrar mensajes del sistema
-function showSystemMessage(messageCode) {
-  const messageText = MENSAJES[messageCode] || 'Mensaje desconocido';
-  const now = new Date();
-  const timeString = now.toLocaleTimeString();
-
-  // Crear elemento de mensaje
-  const messageElement = document.createElement('div');
-  messageElement.className = 'log-entry';
-
-  // Determinar clase CSS según el tipo de mensaje
-  let messageClass = 'log-info';
-  if (messageCode >= 8 && messageCode <= 15) { // Mensajes de emergencia
-    messageClass = 'log-emergency';
-  } else if (messageCode >= 3 && messageCode <= 7) { // Mensajes de proceso
-    messageClass = 'log-process';
-  } else if (messageCode >= 1 && messageCode <= 2) { // Mensajes de detención
-    messageClass = 'log-stop';
-  }
-
-  messageElement.innerHTML = `
-        <span class="log-time">${timeString}</span>
-        <span class="${messageClass}">${messageText}</span>
-    `;
-
-  // Agregar al inicio del log
-  elements.messageLog.prepend(messageElement);
-
-  // Limitar a 50 mensajes máximo
-  if (elements.messageLog.children.length > 50) {
-    elements.messageLog.removeChild(elements.messageLog.lastChild);
-  }
-
-  // Scroll automático al nuevo mensaje
-  elements.messageLog.scrollTop = 0;
-}
-
-// Función para mostrar mensajes de comandos
-function showCommandMessage(command) {
-  const commandMessages = {
-    'start': 'Comando START enviado - Iniciando proceso',
-    'stop': 'Comando STOP enviado - Deteniendo sistema',
-    'manual': 'Comando MANUAL enviado - Cambiando a modo manual',
-    'valv1_on': 'Válvula 1 activada manualmente',
-    'valv1_off': 'Válvula 1 desactivada manualmente',
-    'valv2_on': 'Válvula 2 activada manualmente',
-    'valv2_off': 'Válvula 2 desactivada manualmente',
-    'bomba1_on': 'Bomba 1 activada manualmente',
-    'bomba1_off': 'Bomba 1 desactivada manualmente',
-    'bomba2_on': 'Bomba 2 activada manualmente',
-    'bomba2_off': 'Bomba 2 desactivada manualmente'
-  };
-
-  const messageText = commandMessages[command] || `Comando enviado: ${command}`;
-  const now = new Date();
-  const timeString = now.toLocaleTimeString();
-
-  const messageElement = document.createElement('div');
-  messageElement.className = 'log-entry';
-  messageElement.innerHTML = `
-        <span class="log-time">${timeString}</span>
-        <span class="log-command">${messageText}</span>
-    `;
-
-  elements.messageLog.prepend(messageElement);
-
-  if (elements.messageLog.children.length > 50) {
-    elements.messageLog.removeChild(elements.messageLog.lastChild);
-  }
-}
 
 // Función específica para mensajes de estado del sistema
 function mostrarMensajeEstado(mensajeCode) {
@@ -474,42 +403,42 @@ function mostrarMensajeEstado(mensajeCode) {
   if (mensajeCode === ultimoMensajeMostrado) {
     return;
   }
-
-  const textoMensaje = MENSAJES_ESTADO[mensajeCode] || 'Estado desconocido';
+  
+  const textoMensaje = MENSAJES[mensajeCode] || 'Estado desconocido';
   const ahora = new Date();
   const horaString = ahora.toLocaleTimeString();
-
+  
   // Crear elemento del mensaje
   const elementoMensaje = document.createElement('div');
   elementoMensaje.className = 'log-entry';
-
+  
   // Determinar clase según el tipo de mensaje
   let claseMensaje = 'mensaje-normal';
-  if (mensajeCode >= 8 && mensajeCode <= 15) {
-    claseMensaje = 'mensaje-emergencia';
-  } else if (mensajeCode >= 3 && mensajeCode <= 7) {
-    claseMensaje = 'mensaje-proceso';
-  } else if (mensajeCode >= 1 && mensajeCode <= 2) {
-    claseMensaje = 'mensaje-detencion';
+  if (mensajeCode >= 8 && mensajeCode <= 10) { // Mensajes de emergencia GRAVE
+    claseMensaje = 'mensaje-emergencia-grave';
+  } else if (mensajeCode >= 11 && mensajeCode <= 15) { // Mensajes de advertencia
+    claseMensaje = 'mensaje-advertencia';
+  } else if (mensajeCode === 16) { // Mensaje manual
+    claseMensaje = 'mensaje-manual';
+  } else if (mensajeCode === 0) { // Apagado
+    claseMensaje = 'mensaje-apagado';
   }
-
+  
   elementoMensaje.innerHTML = `
-        <span class="log-time">${horaString}</span>
-        <span class="${claseMensaje}">${textoMensaje}</span>
-    `;
-
+    <span class="log-time">${horaString}</span>
+    <span class="${claseMensaje}">${textoMensaje}</span>
+  `;
+  
   // Agregar al inicio del log de mensajes
   elements.messageLog.prepend(elementoMensaje);
-
+  
   // Limitar a 20 mensajes máximo
   if (elements.messageLog.children.length > 20) {
     elements.messageLog.removeChild(elements.messageLog.lastChild);
   }
-
+  
   // Actualizar último mensaje mostrado
   ultimoMensajeMostrado = mensajeCode;
-
+  
   console.log(`Mensaje de estado mostrado: ${mensajeCode} - ${textoMensaje}`);
 }
-
-
