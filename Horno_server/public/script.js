@@ -13,6 +13,8 @@ const ESTADOS = {
   4: 'MANUAL'
 };
 
+// Variable para guardar el último mensaje mostrado (evitar duplicados)
+let ultimoMensajeMostrado = null;
 
 const MENSAJES = {
   0: 'SISTEMA APAGADO',
@@ -26,8 +28,8 @@ const MENSAJES = {
   8: 'GRAVE: No hay presion de agua, Horno y camara DEMASIADO calientes, Tanque vacio',
   9: 'No hay presion de agua, Nivel de tanque vacio, Horno caliente',
   10: 'No hay presion de agua, El tanque tiene algo de agua, Horno caliente',
-  11: 'Tanque de agua esta muy caliente y no esta lleno, Horno y camara calientes', 
-  12: 'Tanque de agua esta muy caliente y no esta lleno, Horno y camara frios', 
+  11: 'Tanque de agua esta muy caliente y no esta lleno, Horno y camara calientes',
+  12: 'Tanque de agua esta muy caliente y no esta lleno, Horno y camara frios',
   13: 'Horno caliente, El tanque no esta lleno',
   14: 'Horno caliente, El tanque esta lleno',
   15: 'Camara de humo caliente, El tanque no esta lleno',
@@ -41,40 +43,40 @@ const elements = {
   connectionStatus: document.getElementById('connection-status'),
   brokerStatus: document.getElementById('broker-status'),
   messageLog: document.getElementById('message-log'),
-  
+
   // Temperaturas
   tempTanque: document.getElementById('temp-tanque'),
   tempHorno: document.getElementById('temp-horno'),
   tempCamara: document.getElementById('temp-camara'),
   tempSalida: document.getElementById('temp-salida'),
-  
+
   // Niveles y presión
   nivelTanque: document.getElementById('nivel-tanque'),
   //nivelVacio: document.getElementById('nivel-vacio'),
   //nivelMitad: document.getElementById('nivel-mitad'),
   //nivelLleno: document.getElementById('nivel-lleno'),
   presion: document.getElementById('presion'),
-  
+
   // Estados de actuadores
   valv1State: document.getElementById('valv1-state'),
   valv2State: document.getElementById('valv2-state'),
   bomba1State: document.getElementById('bomba1-state'),
   bomba2State: document.getElementById('bomba2-state'),
-  
+
   // Switches de control
   valv1Switch: document.getElementById('valv1-switch'),
   valv2Switch: document.getElementById('valv2-switch'),
   bomba1Switch: document.getElementById('bomba1-switch'),
   bomba2Switch: document.getElementById('bomba2-switch'),
-  
+
   // Estado del sistema (SOLO LOS QUE QUEDAN)
   systemState: document.getElementById('system-state'),
   lastUpdate: document.getElementById('last-update')
-  
+
 };
 
 // Inicialización
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   setupEventListeners();
   initializeSSE();
   loadSystemData();
@@ -85,18 +87,18 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeSSE() {
   try {
     appState.eventSource = new EventSource('/events');
-    
-    appState.eventSource.onopen = function() {
+
+    appState.eventSource.onopen = function () {
       console.log('✅ Conexión SSE establecida');
       appState.connected = true;
       updateConnectionStatus(true);
       addLogEntry('Conexión con el servidor establecida');
     };
-    
-    appState.eventSource.onmessage = function(event) {
+
+    appState.eventSource.onmessage = function (event) {
       try {
         const data = JSON.parse(event.data);
-        
+
         if (data.type === 'systemData') {
           updateSystemData(data.data);
         }
@@ -104,12 +106,12 @@ function initializeSSE() {
         console.log('Mensaje recibido:', event.data);
       }
     };
-    
-    appState.eventSource.onerror = function(error) {
+
+    appState.eventSource.onerror = function (error) {
       console.error('Error en SSE:', error);
       appState.connected = false;
       updateConnectionStatus(false);
-      
+
       // Intentar reconectar después de 5 segundos
       setTimeout(() => {
         if (!appState.connected) {
@@ -144,7 +146,7 @@ async function loadSystemData() {
   try {
     const response = await fetch('/api/system-data');
     const data = await response.json();
-    
+
     if (data.success) {
       updateSystemData(data.data);
     }
@@ -161,7 +163,7 @@ function setupEventListeners() {
   elements.valv2Switch.addEventListener('change', () => toggleValve(2));
   elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
   elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
-  
+
   // Listeners para botones
   document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
   document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
@@ -171,6 +173,7 @@ function setupEventListeners() {
 }
 
 // Enviar comando al servidor
+/*
 async function sendCommand(command) {
   try {
     const response = await fetch('/api/message', {
@@ -218,12 +221,38 @@ async function sendCommand(command) {
     return false;
   }
 }
+*/
+
+async function sendCommand(command) {
+  try {
+    const response = await fetch('/api/message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        topic: 'esp32/control',
+        message: command
+      })
+    });
+
+    // Solo enviar el comando, NO mostrar log
+    console.log(`Comando enviado: ${command}`);
+    return true;
+
+  } catch (error) {
+    console.error('Error al enviar comando:', error);
+    return false;
+  }
+}
+
+
 
 // Alternar válvula
 function toggleValve(valveNumber) {
   const isChecked = document.getElementById(`valv${valveNumber}-switch`).checked;
   const command = isChecked ? `valv${valveNumber}_on` : `valv${valveNumber}_off`;
-  
+
   sendCommand(command);
   updateValveState(valveNumber, isChecked);
 }
@@ -232,7 +261,7 @@ function toggleValve(valveNumber) {
 function toggleBomba(bombaNumber) {
   const isChecked = document.getElementById(`bomba${bombaNumber}-switch`).checked;
   const command = isChecked ? `bomba${bombaNumber}_on` : `bomba${bombaNumber}_off`;
-  
+
   sendCommand(command);
   updateBombaState(bombaNumber, isChecked);
 }
@@ -254,7 +283,7 @@ function updateBombaState(bombaNumber, state) {
 // Actualizar datos del sistema en la interfaz
 function updateSystemData(data) {
   console.log('Actualizando datos del sistema:', data);
-  
+
   // Actualizar temperaturas
   if (data.temperaturas && Array.isArray(data.temperaturas)) {
     elements.tempTanque.querySelector('.sensor-value').textContent = `${data.temperaturas[0]} °C`;
@@ -262,7 +291,7 @@ function updateSystemData(data) {
     elements.tempCamara.querySelector('.sensor-value').textContent = `${data.temperaturas[2]} °C`;
     elements.tempSalida.querySelector('.sensor-value').textContent = `${data.temperaturas[3]} °C`;
   }
-  
+
   // Actualizar niveles
   if (data.nivelTanque !== undefined) {
     elements.nivelTanque.querySelector('.sensor-value').textContent = `${data.nivelTanque} %`;
@@ -270,38 +299,38 @@ function updateSystemData(data) {
     //elements.nivelMitad.querySelector('.sensor-value').textContent = `${data.niveles[1]} %`;
     //elements.nivelLleno.querySelector('.sensor-value').textContent = `${data.niveles[2]} %`;
   }
-  
+
   // Actualizar presión
   if (data.presion !== undefined) {
     elements.presion.querySelector('.sensor-value').textContent = `${data.presion} bar`;
   }
-  
+
   // Actualizar estados de actuadores (QUITAR event listeners temporalmente para evitar bucles)
   elements.valv1Switch.removeEventListener('change', () => toggleValve(1));
   elements.valv2Switch.removeEventListener('change', () => toggleValve(2));
   elements.bomba1Switch.removeEventListener('change', () => toggleBomba(1));
   elements.bomba2Switch.removeEventListener('change', () => toggleBomba(2));
-  
+
   if (data.valvula1 !== undefined) {
     elements.valv1Switch.checked = data.valvula1;
     updateValveState(1, data.valvula1);
   }
-  
+
   if (data.valvula2 !== undefined) {
     elements.valv2Switch.checked = data.valvula2;
     updateValveState(2, data.valvula2);
   }
-  
+
   if (data.bomba1 !== undefined) {
     elements.bomba1Switch.checked = data.bomba1;
     updateBombaState(1, data.bomba1);
   }
-  
+
   if (data.bomba2 !== undefined) {
     elements.bomba2Switch.checked = data.bomba2;
     updateBombaState(2, data.bomba2);
   }
-  
+
   // RESTAURAR event listeners
   setTimeout(() => {
     elements.valv1Switch.addEventListener('change', () => toggleValve(1));
@@ -309,24 +338,25 @@ function updateSystemData(data) {
     elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
     elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
   }, 100);
-  
+
   if (data.mensaje !== undefined && data.mensaje !== null) {
-    showSystemMessage(data.mensaje);
+    //showSystemMessage(data.mensaje);
+    mostrarMensajeEstado(data.mensaje);
   }
-  
+
   if (data.estado !== undefined) {
     const estadoTexto = ESTADOS[data.estado] || 'DESCONOCIDO';
     elements.systemState.textContent = estadoTexto;
     elements.systemState.className = `status-value ${getStatusClass(data.estado)}`;
   }
 
-  
+
   // NOTA: Se han eliminado las referencias a emergency-state y active-pump
-  
+
   if (data.lastUpdate) {
     elements.lastUpdate.textContent = formatDateTime(data.lastUpdate);
   }
-  
+
   // Guardar datos en el estado de la aplicación
   appState.systemData = { ...appState.systemData, ...data };
 }
@@ -354,13 +384,13 @@ function formatDateTime(dateString) {
 function addLogEntry(message) {
   const now = new Date();
   const timeString = now.toLocaleTimeString();
-  
+
   const logEntry = document.createElement('div');
   logEntry.className = 'log-entry';
   logEntry.innerHTML = `<span class="log-time">${timeString}</span> ${message}`;
-  
+
   elements.messageLog.prepend(logEntry);
-  
+
   // Limitar el número de entradas en el log
   if (elements.messageLog.children.length > 100) {
     elements.messageLog.removeChild(elements.messageLog.lastChild);
@@ -369,73 +399,117 @@ function addLogEntry(message) {
 
 // Función para mostrar mensajes del sistema
 function showSystemMessage(messageCode) {
-    const messageText = MENSAJES[messageCode] || 'Mensaje desconocido';
-    const now = new Date();
-    const timeString = now.toLocaleTimeString();
-    
-    // Crear elemento de mensaje
-    const messageElement = document.createElement('div');
-    messageElement.className = 'log-entry';
-    
-    // Determinar clase CSS según el tipo de mensaje
-    let messageClass = 'log-info';
-    if (messageCode >= 8 && messageCode <= 15) { // Mensajes de emergencia
-        messageClass = 'log-emergency';
-    } else if (messageCode >= 3 && messageCode <= 7) { // Mensajes de proceso
-        messageClass = 'log-process';
-    } else if (messageCode >= 1 && messageCode <= 2) { // Mensajes de detención
-        messageClass = 'log-stop';
-    }
-    
-    messageElement.innerHTML = `
+  const messageText = MENSAJES[messageCode] || 'Mensaje desconocido';
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+
+  // Crear elemento de mensaje
+  const messageElement = document.createElement('div');
+  messageElement.className = 'log-entry';
+
+  // Determinar clase CSS según el tipo de mensaje
+  let messageClass = 'log-info';
+  if (messageCode >= 8 && messageCode <= 15) { // Mensajes de emergencia
+    messageClass = 'log-emergency';
+  } else if (messageCode >= 3 && messageCode <= 7) { // Mensajes de proceso
+    messageClass = 'log-process';
+  } else if (messageCode >= 1 && messageCode <= 2) { // Mensajes de detención
+    messageClass = 'log-stop';
+  }
+
+  messageElement.innerHTML = `
         <span class="log-time">${timeString}</span>
         <span class="${messageClass}">${messageText}</span>
     `;
-    
-    // Agregar al inicio del log
-    elements.messageLog.prepend(messageElement);
-    
-    // Limitar a 50 mensajes máximo
-    if (elements.messageLog.children.length > 50) {
-        elements.messageLog.removeChild(elements.messageLog.lastChild);
-    }
-    
-    // Scroll automático al nuevo mensaje
-    elements.messageLog.scrollTop = 0;
+
+  // Agregar al inicio del log
+  elements.messageLog.prepend(messageElement);
+
+  // Limitar a 50 mensajes máximo
+  if (elements.messageLog.children.length > 50) {
+    elements.messageLog.removeChild(elements.messageLog.lastChild);
+  }
+
+  // Scroll automático al nuevo mensaje
+  elements.messageLog.scrollTop = 0;
 }
 
 // Función para mostrar mensajes de comandos
 function showCommandMessage(command) {
-    const commandMessages = {
-        'start': 'Comando START enviado - Iniciando proceso',
-        'stop': 'Comando STOP enviado - Deteniendo sistema',
-        'manual': 'Comando MANUAL enviado - Cambiando a modo manual',
-        'valv1_on': 'Válvula 1 activada manualmente',
-        'valv1_off': 'Válvula 1 desactivada manualmente',
-        'valv2_on': 'Válvula 2 activada manualmente',
-        'valv2_off': 'Válvula 2 desactivada manualmente',
-        'bomba1_on': 'Bomba 1 activada manualmente',
-        'bomba1_off': 'Bomba 1 desactivada manualmente',
-        'bomba2_on': 'Bomba 2 activada manualmente',
-        'bomba2_off': 'Bomba 2 desactivada manualmente'
-    };
-    
-    const messageText = commandMessages[command] || `Comando enviado: ${command}`;
-    const now = new Date();
-    const timeString = now.toLocaleTimeString();
-    
-    const messageElement = document.createElement('div');
-    messageElement.className = 'log-entry';
-    messageElement.innerHTML = `
+  const commandMessages = {
+    'start': 'Comando START enviado - Iniciando proceso',
+    'stop': 'Comando STOP enviado - Deteniendo sistema',
+    'manual': 'Comando MANUAL enviado - Cambiando a modo manual',
+    'valv1_on': 'Válvula 1 activada manualmente',
+    'valv1_off': 'Válvula 1 desactivada manualmente',
+    'valv2_on': 'Válvula 2 activada manualmente',
+    'valv2_off': 'Válvula 2 desactivada manualmente',
+    'bomba1_on': 'Bomba 1 activada manualmente',
+    'bomba1_off': 'Bomba 1 desactivada manualmente',
+    'bomba2_on': 'Bomba 2 activada manualmente',
+    'bomba2_off': 'Bomba 2 desactivada manualmente'
+  };
+
+  const messageText = commandMessages[command] || `Comando enviado: ${command}`;
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+
+  const messageElement = document.createElement('div');
+  messageElement.className = 'log-entry';
+  messageElement.innerHTML = `
         <span class="log-time">${timeString}</span>
         <span class="log-command">${messageText}</span>
     `;
-    
-    elements.messageLog.prepend(messageElement);
-    
-    if (elements.messageLog.children.length > 50) {
-        elements.messageLog.removeChild(elements.messageLog.lastChild);
-    }
+
+  elements.messageLog.prepend(messageElement);
+
+  if (elements.messageLog.children.length > 50) {
+    elements.messageLog.removeChild(elements.messageLog.lastChild);
+  }
+}
+
+// Función específica para mensajes de estado del sistema
+function mostrarMensajeEstado(mensajeCode) {
+  // Evitar mostrar el mismo mensaje repetidamente
+  if (mensajeCode === ultimoMensajeMostrado) {
+    return;
+  }
+
+  const textoMensaje = MENSAJES_ESTADO[mensajeCode] || 'Estado desconocido';
+  const ahora = new Date();
+  const horaString = ahora.toLocaleTimeString();
+
+  // Crear elemento del mensaje
+  const elementoMensaje = document.createElement('div');
+  elementoMensaje.className = 'log-entry';
+
+  // Determinar clase según el tipo de mensaje
+  let claseMensaje = 'mensaje-normal';
+  if (mensajeCode >= 8 && mensajeCode <= 15) {
+    claseMensaje = 'mensaje-emergencia';
+  } else if (mensajeCode >= 3 && mensajeCode <= 7) {
+    claseMensaje = 'mensaje-proceso';
+  } else if (mensajeCode >= 1 && mensajeCode <= 2) {
+    claseMensaje = 'mensaje-detencion';
+  }
+
+  elementoMensaje.innerHTML = `
+        <span class="log-time">${horaString}</span>
+        <span class="${claseMensaje}">${textoMensaje}</span>
+    `;
+
+  // Agregar al inicio del log de mensajes
+  elements.messageLog.prepend(elementoMensaje);
+
+  // Limitar a 20 mensajes máximo
+  if (elements.messageLog.children.length > 20) {
+    elements.messageLog.removeChild(elements.messageLog.lastChild);
+  }
+
+  // Actualizar último mensaje mostrado
+  ultimoMensajeMostrado = mensajeCode;
+
+  console.log(`Mensaje de estado mostrado: ${mensajeCode} - ${textoMensaje}`);
 }
 
 

@@ -62,12 +62,11 @@ void loop() {
       numTest = 0;
     }
     testProcesando(numTest);
-    
-
-    //ejecutarPruebas();
     */
 
-    leerSensores();
+    ejecutarPruebas();
+
+    //leerSensores();
     verificarSeguridad();
     controlarSistema();
     
