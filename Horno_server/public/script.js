@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setupEventListeners();
   initializeSSE();
   loadSystemData();
+  disableActuatorControls(true);
   addLogEntry('Sistema inicializado. Conectando al servidor...');
 });
 
@@ -168,12 +169,16 @@ function setupEventListeners() {
   document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
   document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
   document.getElementById('btn-manual').addEventListener('click', () => sendCommand('manual'));
-  //document.getElementById('btn-reset').addEventListener('click', () => sendCommand('reset'));
-  //document.getElementById('btn-emergency').addEventListener('click', () => sendCommand('emergency'));
+}
+
+function disableActuatorControls(disabled) {
+  elements.valv1Switch.disabled = disabled;
+  elements.valv2Switch.disabled = disabled;
+  elements.bomba1Switch.disabled = disabled;
+  elements.bomba2Switch.disabled = disabled;
 }
 
 // Enviar comando al servidor
-/*
 async function sendCommand(command) {
   try {
     const response = await fetch('/api/message', {
@@ -193,58 +198,30 @@ async function sendCommand(command) {
       const data = await response.json();
       
       if (data.success || data.status === 'success') {
-        //addLogEntry(`Comando enviado: ${command}`);
-        showCommandMessage(command);
+        addLogEntry(`Comando enviado: ${command}`);
         return true;
       } else {
-        //addLogEntry(`Error en servidor: ${data.message || 'Error desconocido'}`);
-        showSystemMessage(17); // Mensaje de error
+        addLogEntry(`Error en servidor: ${data.message || 'Error desconocido'}`);
         return false;
       }
     } else {
       // Si no es JSON, puede ser una respuesta simple
       const text = await response.text();
       if (response.ok) {
-        //addLogEntry(`Comando enviado: ${command}`);
-        showCommandMessage(command);
+        addLogEntry(`Comando enviado: ${command}`);
         return true;
       } else {
-        //addLogEntry(`Error en servidor: ${text}`);
-        showSystemMessage(17); // Mensaje de error
+        addLogEntry(`Error en servidor: ${text}`);
         return false;
       }
     }
   } catch (error) {
     console.error('Error al enviar comando:', error);
-    //addLogEntry('Error de conexión al enviar comando');
-    showSystemMessage(14); // Error de comunicación
+    addLogEntry('Error de conexión al enviar comando');
     return false;
   }
 }
-*/
 
-async function sendCommand(command) {
-  try {
-    const response = await fetch('/api/message', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        topic: 'esp32/control',
-        message: command
-      })
-    });
-
-    // Solo enviar el comando, NO mostrar log
-    console.log(`Comando enviado: ${command}`);
-    return true;
-
-  } catch (error) {
-    console.error('Error al enviar comando:', error);
-    return false;
-  }
-}
 
 
 
@@ -348,6 +325,7 @@ function updateSystemData(data) {
     const estadoTexto = ESTADOS[data.estado] || 'DESCONOCIDO';
     elements.systemState.textContent = estadoTexto;
     elements.systemState.className = `status-value ${getStatusClass(data.estado)}`;
+    disableActuatorControls(data.estado !== 4);
   }
 
 
