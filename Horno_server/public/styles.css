@@ -137,6 +137,11 @@ body {
   height: 0;
 }
 
+.switch input:disabled ~ .slider {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -289,7 +294,6 @@ input:checked+.slider:before {
   font-family: monospace;
 }
 
-/* Estilos específicos para mensajes de estado */
 .mensaje-normal {
   color: #2c3e50;
 }
@@ -421,6 +425,15 @@ input:checked+.slider:before {
 
 #btn-send-all:hover:not(:disabled) {
   background-color: #3b8f04; 
+  background: rgb(255, 255, 255);
+  color: black;
+  transform: translateY(-2px);
+}
+
+#btn-send-all:active:not(:disabled) {
+  background-color: #3b8f04; 
+  background: rgb(0, 0, 0);
+  color: white;
   transform: translateY(-2px);
 }
 
@@ -428,6 +441,9 @@ input:checked+.slider:before {
   background-color: #aaa;
   cursor: not-allowed;
 }
+
+
+
 
 @media (max-width: 1024px) {
   .dashboard {

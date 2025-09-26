@@ -255,9 +255,9 @@ function disableActuatorControls(disabled) {
 async function sendAllPendingCommands() {
     for (const key in pendingSwitchStates) {
         const cmd = pendingSwitchStates[key];
-        if (cmd !== null) {  // solo revisa null
+        if (cmd !== null) {   // se envía tanto ON como OFF
             await sendCommand(cmd);
-            pendingSwitchStates[key] = null;
+            pendingSwitchStates[key] = null; // limpiar después de enviar
         }
     }
 
@@ -266,6 +266,7 @@ async function sendAllPendingCommands() {
         pendingMode = null;
     }
 }
+
 
 
 
