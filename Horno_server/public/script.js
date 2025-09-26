@@ -232,17 +232,11 @@ function setupEventListeners() {
 
 
   // Listeners para botones
-  document.getElementById('btn-start').addEventListener('click', () => {
-    pendingMode = 'start';
-  });
+  document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
+  document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
+  document.getElementById('btn-manual').addEventListener('click', () => sendCommand('manual'));
 
-  document.getElementById('btn-stop').addEventListener('click', () => {
-    pendingMode = 'stop';
-  });
-
-  document.getElementById('btn-manual').addEventListener('click', () => {
-    pendingMode = 'manual';
-  });
+  document.getElementById('btn-send-all').addEventListener('click', sendAllPendingCommands);
 
 }
 
@@ -252,9 +246,28 @@ function disableActuatorControls(disabled) {
   elements.bomba1Switch.disabled = disabled;
   elements.bomba2Switch.disabled = disabled;
 
+  document.getElementById('btn-send-all').disabled = disabled;
+  
   // Inicia o detiene parpadeo según estado MANUAL
   startWarningBlink(!disabled);
 }
+
+async function sendAllPendingCommands() {
+  // Enviar switches pendientes
+  for (const key in pendingSwitchStates) {
+    if (pendingSwitchStates[key]) {
+      await sendCommand(pendingSwitchStates[key]);
+      pendingSwitchStates[key] = null; // limpiar después de enviar
+    }
+  }
+
+  // Enviar modo pendiente
+  if (pendingMode) {
+    await sendCommand(pendingMode);
+    pendingMode = null; // limpiar después de enviar
+  }
+}
+
 
 // Enviar comando al servidor
 async function sendCommand(command) {

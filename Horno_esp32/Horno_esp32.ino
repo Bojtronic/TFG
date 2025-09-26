@@ -41,7 +41,7 @@ void setup() {
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 }
 
-//int numTest = 0;
+int numTest = 0;
 
 // ================= BUCLE PRINCIPAL =================
 void loop() {
@@ -54,7 +54,7 @@ void loop() {
   if (now - lastReadTime >= LECTURA_INTERVAL) {
     lastReadTime = now;
     
-    /*
+    
     if(numTest < 4){
       numTest++;
     }
@@ -62,9 +62,9 @@ void loop() {
       numTest = 0;
     }
     testProcesando(numTest);
-    */
+    
 
-    ejecutarPruebas();
+    //ejecutarPruebas();
 
     //leerSensores();
     verificarSeguridad();
