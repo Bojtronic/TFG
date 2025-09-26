@@ -386,18 +386,22 @@ input:checked+.slider:before {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+.control-header {
+  display: flex;
+  justify-content: flex-end; 
+  margin-bottom: 4px;     
+}
+
 .warning-inline {
   font-weight: bold;
-  font-size: 0.3em;
-  margin-left: 10px;
-  color: rgb(19, 61, 8); /* verde por defecto */
+  font-size: 0.8em;
+  color: rgb(19, 61, 8);
   transition: color 0.5s;
 }
 
 .warning-inline i {
   margin-right: 4px;
 }
-
 
 @media (max-width: 1024px) {
   .dashboard {
