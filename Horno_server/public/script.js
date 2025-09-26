@@ -39,6 +39,22 @@ let ultimoMensajeMostrado = null;
 
 let warningInterval = null;
 
+let lastSentSwitchStates = {
+  valv1: false,
+  valv2: false,
+  bomba1: false,
+  bomba2: false
+};
+
+let pendingSwitchStates = {
+  valv1: null,
+  valv2: null,
+  bomba1: null,
+  bomba2: null
+};
+let pendingMode = null;
+
+
 
 // Elementos de la interfaz
 const elements = {
@@ -54,9 +70,6 @@ const elements = {
 
   // Niveles y presión
   nivelTanque: document.getElementById('nivel-tanque'),
-  //nivelVacio: document.getElementById('nivel-vacio'),
-  //nivelMitad: document.getElementById('nivel-mitad'),
-  //nivelLleno: document.getElementById('nivel-lleno'),
   presion: document.getElementById('presion'),
 
   // Estados de actuadores
@@ -86,10 +99,35 @@ document.addEventListener('DOMContentLoaded', function () {
   addLogEntry('Sistema inicializado. Conectando al servidor...');
 });
 
-function onValve1Change() { toggleValve(1); }
-function onValve2Change() { toggleValve(2); }
-function onBomba1Change() { toggleBomba(1); }
-function onBomba2Change() { toggleBomba(2); }
+function onValve1Change() {
+  const cmd = 'valv1_' + (elements.valv1Switch.checked ? 'on' : 'off');
+  pendingSwitchStates.valv1 = cmd; // pendiente
+}
+function onValve2Change() {
+  const cmd = 'valv2_' + (elements.valv2Switch.checked ? 'on' : 'off');
+  pendingSwitchStates.valv2 = cmd; // pendiente
+}
+function onBomba1Change() {
+  const cmd = 'bomba1_' + (elements.bomba1Switch.checked ? 'on' : 'off');
+  pendingSwitchStates.bomba1 = cmd; // pendiente
+}
+function onBomba2Change() {
+  const cmd = 'bomba2_' + (elements.bomba2Switch.checked ? 'on' : 'off');
+  pendingSwitchStates.bomba2 = cmd; // pendiente
+}
+
+
+function updateSwitchesFromESP32(newStates) {
+  for (const key in newStates) {
+    // solo actualizar si cambia respecto al último enviado
+    if (newStates[key] !== lastSentSwitchStates[key]) {
+      lastSentSwitchStates[key] = newStates[key];
+      // actualizar UI
+      const el = document.getElementById(`${key}-switch`);
+      el.checked = newStates[key];
+    }
+  }
+}
 
 
 function startWarningBlink(active) {
@@ -194,9 +232,18 @@ function setupEventListeners() {
 
 
   // Listeners para botones
-  document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
-  document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
-  document.getElementById('btn-manual').addEventListener('click', () => sendCommand('manual'));
+  document.getElementById('btn-start').addEventListener('click', () => {
+    pendingMode = 'start';
+  });
+
+  document.getElementById('btn-stop').addEventListener('click', () => {
+    pendingMode = 'stop';
+  });
+
+  document.getElementById('btn-manual').addEventListener('click', () => {
+    pendingMode = 'manual';
+  });
+
 }
 
 function disableActuatorControls(disabled) {
@@ -222,12 +269,12 @@ async function sendCommand(command) {
         message: command
       })
     });
-    
+
     // Verificar si la respuesta es JSON válido
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       const data = await response.json();
-      
+
       if (data.success || data.status === 'success') {
         addLogEntry(`Comando enviado: ${command}`);
         return true;
@@ -303,9 +350,6 @@ function updateSystemData(data) {
   // Actualizar niveles
   if (data.nivelTanque !== undefined) {
     elements.nivelTanque.querySelector('.sensor-value').textContent = `${data.nivelTanque} %`;
-    //elements.nivelVacio.querySelector('.sensor-value').textContent = `${data.niveles[0]} %`;
-    //elements.nivelMitad.querySelector('.sensor-value').textContent = `${data.niveles[1]} %`;
-    //elements.nivelLleno.querySelector('.sensor-value').textContent = `${data.niveles[2]} %`;
   }
 
   // Actualizar presión
@@ -349,7 +393,7 @@ function updateSystemData(data) {
   }, 100);
 
 
-  
+
   if (data.mensaje !== undefined && data.mensaje !== null) {
     mostrarMensajeEstado(data.mensaje);
   }
@@ -362,7 +406,6 @@ function updateSystemData(data) {
   }
 
 
-  // NOTA: Se han eliminado las referencias a emergency-state y active-pump
 
   if (data.lastUpdate) {
     elements.lastUpdate.textContent = formatDateTime(data.lastUpdate);
@@ -415,18 +458,18 @@ function mostrarMensajeEstado(mensajeCode) {
   if (mensajeCode === ultimoMensajeMostrado) {
     return;
   }
-  
+
   const textoMensaje = MENSAJES[mensajeCode] || 'Estado desconocido';
   const ahora = new Date();
   const horaString = ahora.toLocaleTimeString();
-  
+
   // Crear elemento del mensaje
   const elementoMensaje = document.createElement('div');
   elementoMensaje.className = 'log-entry';
-  
+
   // Determinar clase según el tipo de mensaje - ACTUALIZADO
   let claseMensaje = 'mensaje-normal';
-  
+
   if (mensajeCode >= 8 && mensajeCode <= 15) { // EMERGENCIA_1 a EMERGENCIA_8
     claseMensaje = 'mensaje-emergencia-grave';
   } else if (mensajeCode >= 3 && mensajeCode <= 7) { // PROCESANDO_1 a PROCESANDO_5
@@ -436,24 +479,24 @@ function mostrarMensajeEstado(mensajeCode) {
   } else if (mensajeCode === 0) { // APAGADO_0
     claseMensaje = 'mensaje-apagado';
   } else if (mensajeCode === 1 || mensajeCode === 2) { // DETENER_1 y DETENER_2
-    claseMensaje = 'mensaje-advertencia'; 
+    claseMensaje = 'mensaje-advertencia';
   }
-  
+
   elementoMensaje.innerHTML = `
     <span class="log-time">${horaString}</span>
     <span class="${claseMensaje}">${textoMensaje}</span>
   `;
-  
+
   // Agregar al inicio del log de mensajes
   elements.messageLog.prepend(elementoMensaje);
-  
+
   // Limitar a 20 mensajes máximo
   if (elements.messageLog.children.length > 20) {
     elements.messageLog.removeChild(elements.messageLog.lastChild);
   }
-  
+
   // Actualizar último mensaje mostrado
   ultimoMensajeMostrado = mensajeCode;
-  
+
   console.log(`Mensaje de estado mostrado: ${mensajeCode} - ${textoMensaje}`);
 }

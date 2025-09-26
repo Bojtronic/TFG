@@ -1,6 +1,12 @@
 const { URLSearchParams } = require('url');
 const { systemData, updateSystemData, broadcastSystemData } = require('../data/systemData');
 
+let lastSentSwitchStates = {
+  valv1: false,
+  valv2: false,
+  bomba1: false,
+  bomba2: false
+};
 
 let pendingSwitchStates = {
   valv1: null,
@@ -61,21 +67,33 @@ function handleEsp32Commands(req, res) {
 
   const commands = [];
 
-  // Agregar switches (si tienen algo pendiente)
-  for (const key in pendingSwitchStates) {
-    if (pendingSwitchStates[key]) {
-      commands.push(pendingSwitchStates[key]);
-      pendingSwitchStates[key] = null; // limpiar
+  const isManual = systemData.estado === 4; // 4 = MANUAL
+
+  // Solo procesar switches en modo MANUAL
+  if (isManual) {
+    for (const key in pendingSwitchStates) {
+      if (pendingSwitchStates[key]) {
+        const switchState = pendingSwitchStates[key].endsWith('_on'); // true si "_on", false si "_off"
+
+        // Comparar con último estado enviado
+        if (switchState !== lastSentSwitchStates[key]) {
+          commands.push(pendingSwitchStates[key]);       // enviar comando solo si cambió
+          lastSentSwitchStates[key] = switchState;      // actualizar último enviado
+        }
+
+        pendingSwitchStates[key] = null;                // limpiar pendiente
+      }
     }
   }
 
-  // Agregar modo (si existe)
+  // Agregar comando de modo si existe (start, stop, manual)
   if (pendingMode) {
     commands.push(pendingMode);
-    pendingMode = null; // limpiar
+    pendingMode = null; // limpiar pendiente
   }
 
   res.setHeader('Content-Type', 'application/json');
+
   if (commands.length > 0) {
     console.log(`📤 Enviando comandos a ESP32: ${commands.join(',')}`);
     res.end(JSON.stringify({
@@ -92,6 +110,7 @@ function handleEsp32Commands(req, res) {
     }));
   }
 }
+
 
 
 // Función para manejar datos del sistema
