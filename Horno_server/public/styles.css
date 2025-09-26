@@ -394,7 +394,7 @@ input:checked+.slider:before {
 
 .warning-inline {
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 0.7em;
   color: rgb(19, 61, 8);
   transition: color 0.5s;
 }
