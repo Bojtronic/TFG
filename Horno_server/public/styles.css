@@ -386,6 +386,19 @@ input:checked+.slider:before {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+.warning-inline {
+  font-weight: bold;
+  font-size: 0.3em;
+  margin-left: 10px;
+  color: rgb(19, 61, 8); /* verde por defecto */
+  transition: color 0.5s;
+}
+
+.warning-inline i {
+  margin-right: 4px;
+}
+
+
 @media (max-width: 1024px) {
   .dashboard {
     grid-template-columns: 1fr;
@@ -418,7 +431,7 @@ input:checked+.slider:before {
     padding: 10px 12px;
     font-size: 0.9rem;
     border-left-width: 3px;
-    line-height: 1.7;
+    line-height: 2.0;
     margin-bottom: 8px;
     min-height: auto;
   }

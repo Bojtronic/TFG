@@ -37,6 +37,8 @@ const MENSAJES = {
 // Variable para guardar el último mensaje mostrado (evitar duplicados)
 let ultimoMensajeMostrado = null;
 
+let warningInterval = null;
+
 
 // Elementos de la interfaz
 const elements = {
@@ -83,6 +85,31 @@ document.addEventListener('DOMContentLoaded', function () {
   disableActuatorControls(true);
   addLogEntry('Sistema inicializado. Conectando al servidor...');
 });
+
+function onValve1Change() { toggleValve(1); }
+function onValve2Change() { toggleValve(2); }
+function onBomba1Change() { toggleBomba(1); }
+function onBomba2Change() { toggleBomba(2); }
+
+
+function startWarningBlink(active) {
+  const warningEl = document.getElementById('manual-warning');
+
+  // Detener cualquier parpadeo previo
+  if (warningInterval) {
+    clearInterval(warningInterval);
+    warningInterval = null;
+    warningEl.style.color = 'rgb(19, 61, 8)'; // verde por defecto
+  }
+
+  if (active) {
+    let isRed = true;
+    warningInterval = setInterval(() => {
+      warningEl.style.color = isRed ? 'blue' : 'red';
+      isRed = !isRed;
+    }, 500); // cambia cada 500ms
+  }
+}
 
 // Configurar EventSource para SSE
 function initializeSSE() {
@@ -160,10 +187,11 @@ async function loadSystemData() {
 // Configurar event listeners
 function setupEventListeners() {
   // Listeners para switches
-  elements.valv1Switch.addEventListener('change', () => toggleValve(1));
-  elements.valv2Switch.addEventListener('change', () => toggleValve(2));
-  elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
-  elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
+  elements.valv1Switch.addEventListener('change', onValve1Change);
+  elements.valv2Switch.addEventListener('change', onValve2Change);
+  elements.bomba1Switch.addEventListener('change', onBomba1Change);
+  elements.bomba2Switch.addEventListener('change', onBomba2Change);
+
 
   // Listeners para botones
   document.getElementById('btn-start').addEventListener('click', () => sendCommand('start'));
@@ -176,6 +204,9 @@ function disableActuatorControls(disabled) {
   elements.valv2Switch.disabled = disabled;
   elements.bomba1Switch.disabled = disabled;
   elements.bomba2Switch.disabled = disabled;
+
+  // Inicia o detiene parpadeo según estado MANUAL
+  startWarningBlink(!disabled);
 }
 
 // Enviar comando al servidor
@@ -283,10 +314,11 @@ function updateSystemData(data) {
   }
 
   // Actualizar estados de actuadores (QUITAR event listeners temporalmente para evitar bucles)
-  elements.valv1Switch.removeEventListener('change', () => toggleValve(1));
-  elements.valv2Switch.removeEventListener('change', () => toggleValve(2));
-  elements.bomba1Switch.removeEventListener('change', () => toggleBomba(1));
-  elements.bomba2Switch.removeEventListener('change', () => toggleBomba(2));
+  elements.valv1Switch.removeEventListener('change', onValve1Change);
+  elements.valv2Switch.removeEventListener('change', onValve2Change);
+  elements.bomba1Switch.removeEventListener('change', onBomba1Change);
+  elements.bomba2Switch.removeEventListener('change', onBomba2Change);
+
 
   if (data.valvula1 !== undefined) {
     elements.valv1Switch.checked = data.valvula1;
@@ -310,11 +342,12 @@ function updateSystemData(data) {
 
   // RESTAURAR event listeners
   setTimeout(() => {
-    elements.valv1Switch.addEventListener('change', () => toggleValve(1));
-    elements.valv2Switch.addEventListener('change', () => toggleValve(2));
-    elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
-    elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
+    elements.valv1Switch.addEventListener('change', onValve1Change);
+    elements.valv2Switch.addEventListener('change', onValve2Change);
+    elements.bomba1Switch.addEventListener('change', onBomba1Change);
+    elements.bomba2Switch.addEventListener('change', onBomba2Change);
   }, 100);
+
 
   
   if (data.mensaje !== undefined && data.mensaje !== null) {
