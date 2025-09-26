@@ -136,16 +136,25 @@ function handlePostMessage(req, res, clients) {
       if (data.topic && data.message) {
         // Procesar mensajes de control
         if (data.topic === 'esp32/control') {
+          // ✅ CORRECCIÓN: SOLO PROCESAR MÚLTIPLES COMANDOS, ELIMINAR CÓDIGO DUPLICADO
+          const commands = data.message.split(',').map(cmd => cmd.trim());
           const validCommands = [
             'start', 'stop', 'manual',
             'valv1_on', 'valv1_off', 'valv2_on', 'valv2_off',
             'bomba1_on', 'bomba1_off', 'bomba2_on', 'bomba2_off'
           ];
 
-          if (validCommands.includes(data.message)) {
-            queueCommand(data.message);
-            console.log(`💾 Comando encolado: ${data.message}`);
-          }
+          let commandsEnqueued = 0;
+          
+          commands.forEach(command => {
+            if (validCommands.includes(command)) {
+              queueCommand(command);
+              commandsEnqueued++;
+              console.log(`💾 Comando encolado: ${command}`);
+            }
+          });
+
+          console.log(`📊 Total de comandos encolados: ${commandsEnqueued}`);
         }
         // Procesar datos del sistema
         else if (data.topic === 'horno/data') {
@@ -163,7 +172,6 @@ function handlePostMessage(req, res, clients) {
             const bomba2 = params.get('bomba2') === 'true';
             const estado = parseInt(params.get('estado'));
             const mensaje = parseInt(params.get('mensaje'));
-            
 
             // Actualizar datos del sistema
             const systemUpdate = {
@@ -178,7 +186,6 @@ function handlePostMessage(req, res, clients) {
               mensaje,
               lastUpdate: new Date().toISOString()
             };
-
 
             updateSystemData(systemUpdate);
             broadcastSystemData(clients);

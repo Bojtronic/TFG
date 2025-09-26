@@ -423,29 +423,29 @@ function updateSystemData(data) {
 
 
   if (data.valvula1 !== undefined) {
-    //elements.valv1Switch.checked = data.valvula1;
-    //updateValveState(1, data.valvula1);
+    elements.valv1Switch.checked = data.valvula1;
+    updateValveState(1, data.valvula1);
     pendingSwitchStates.valv1 = null; 
     lastSentSwitchStates.valv1 = data.valvula1;
   }
 
   if (data.valvula2 !== undefined) {
-    //elements.valv2Switch.checked = data.valvula2;
-    //updateValveState(2, data.valvula2);
+    elements.valv2Switch.checked = data.valvula2;
+    updateValveState(2, data.valvula2);
     pendingSwitchStates.valv2 = null;
     lastSentSwitchStates.valv2 = data.valvula2;
   }
 
   if (data.bomba1 !== undefined) {
-    //elements.bomba1Switch.checked = data.bomba1;
-    //updateBombaState(1, data.bomba1);
+    elements.bomba1Switch.checked = data.bomba1;
+    updateBombaState(1, data.bomba1);
     pendingSwitchStates.bomba1 = null;
     lastSentSwitchStates.bomba1 = data.bomba1;
   }
 
   if (data.bomba2 !== undefined) {
-    //elements.bomba2Switch.checked = data.bomba2;
-    //updateBombaState(2, data.bomba2);
+    elements.bomba2Switch.checked = data.bomba2;
+    updateBombaState(2, data.bomba2);
     pendingSwitchStates.bomba2 = null;
     lastSentSwitchStates.bomba2 = data.bomba2;
   }
