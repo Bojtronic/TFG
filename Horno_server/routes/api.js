@@ -66,30 +66,29 @@ function handleEsp32Commands(req, res) {
   console.log(`📡 Comandos solicitados por: ${req.socket.remoteAddress}`);
 
   const commands = [];
-
   const isManual = systemData.estado === 4; // 4 = MANUAL
 
-  // Solo procesar switches en modo MANUAL
   if (isManual) {
     for (const key in pendingSwitchStates) {
-      if (pendingSwitchStates[key]) {
-        const switchState = pendingSwitchStates[key].endsWith('_on'); // true si "_on", false si "_off"
+      const cmd = pendingSwitchStates[key];
+      if (cmd !== null) {  // aseguramos que sea "on" o "off"
+        const switchState = cmd.endsWith('_on'); // true si "_on", false si "_off"
 
-        // Comparar con último estado enviado
+        // Solo enviar si cambió respecto al último enviado
         if (switchState !== lastSentSwitchStates[key]) {
-          commands.push(pendingSwitchStates[key]);       // enviar comando solo si cambió
-          lastSentSwitchStates[key] = switchState;      // actualizar último enviado
+          commands.push(cmd);
+          lastSentSwitchStates[key] = switchState; // actualizar último enviado
         }
 
-        pendingSwitchStates[key] = null;                // limpiar pendiente
+        // limpiar pendiente siempre después de procesar
+        pendingSwitchStates[key] = null;
       }
     }
   }
 
-  // Agregar comando de modo si existe (start, stop, manual)
   if (pendingMode) {
     commands.push(pendingMode);
-    pendingMode = null; // limpiar pendiente
+    pendingMode = null;
   }
 
   res.setHeader('Content-Type', 'application/json');
@@ -110,7 +109,6 @@ function handleEsp32Commands(req, res) {
     }));
   }
 }
-
 
 
 // Función para manejar datos del sistema
