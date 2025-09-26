@@ -247,26 +247,26 @@ function disableActuatorControls(disabled) {
   elements.bomba2Switch.disabled = disabled;
 
   document.getElementById('btn-send-all').disabled = disabled;
-  
+
   // Inicia o detiene parpadeo según estado MANUAL
   startWarningBlink(!disabled);
 }
 
 async function sendAllPendingCommands() {
-  // Enviar switches pendientes
-  for (const key in pendingSwitchStates) {
-    if (pendingSwitchStates[key]) {
-      await sendCommand(pendingSwitchStates[key]);
-      pendingSwitchStates[key] = null; // limpiar después de enviar
+    for (const key in pendingSwitchStates) {
+        const cmd = pendingSwitchStates[key];
+        if (cmd !== null) {  // solo revisa null
+            await sendCommand(cmd);
+            pendingSwitchStates[key] = null;
+        }
     }
-  }
 
-  // Enviar modo pendiente
-  if (pendingMode) {
-    await sendCommand(pendingMode);
-    pendingMode = null; // limpiar después de enviar
-  }
+    if (pendingMode) {
+        await sendCommand(pendingMode);
+        pendingMode = null;
+    }
 }
+
 
 
 // Enviar comando al servidor
@@ -403,7 +403,7 @@ function updateSystemData(data) {
     elements.valv2Switch.addEventListener('change', onValve2Change);
     elements.bomba1Switch.addEventListener('change', onBomba1Change);
     elements.bomba2Switch.addEventListener('change', onBomba2Change);
-  }, 100);
+  }, 10);
 
 
 
