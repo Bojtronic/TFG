@@ -233,8 +233,19 @@ input:checked+.slider:before {
 }
 
 .btn:hover {
+  background-color: white;
+  background: white;
+  color: black;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  background-color: black;
+  background: black;
+  color: white;
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-start {
@@ -245,17 +256,10 @@ input:checked+.slider:before {
   background: linear-gradient(135deg, #dc3545, #fd7e14);
 }
 
-.btn-reset {
-  background: linear-gradient(135deg, #6c757d, #adb5bd);
-}
-
 .btn-manual {
   background: linear-gradient(135deg, #6c757d, #adb5bd);
 }
 
-.btn-emergency {
-  background: linear-gradient(135deg, #ffc107, #fd7e14);
-}
 
 .message-log {
   max-height: 200px;
