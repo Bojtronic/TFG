@@ -253,17 +253,61 @@ function disableActuatorControls(disabled) {
 }
 
 async function sendAllPendingCommands() {
+    console.log('🔄 Enviando todos los comandos pendientes...');
+    
+    // Crear array de comandos a enviar
+    const commandsToSend = [];
+    
+    // Recoger todos los comandos pendientes de switches
     for (const key in pendingSwitchStates) {
         const cmd = pendingSwitchStates[key];
-        if (cmd !== null) {   // se envía tanto ON como OFF
-            await sendCommand(cmd);
-            pendingSwitchStates[key] = null; // limpiar después de enviar
+        if (cmd !== null) {
+            commandsToSend.push(cmd);
+            console.log(`📤 Comando pendiente encontrado: ${cmd} para ${key}`);
         }
     }
-
+    
+    // Recoger comando de modo si existe
     if (pendingMode) {
-        await sendCommand(pendingMode);
-        pendingMode = null;
+        commandsToSend.push(pendingMode);
+        console.log(`📤 Modo pendiente encontrado: ${pendingMode}`);
+    }
+    
+    // Enviar todos los comandos en una sola solicitud
+    if (commandsToSend.length > 0) {
+        try {
+            const response = await fetch('/api/message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    topic: 'esp32/control',
+                    message: commandsToSend.join(',') // Enviar como "valv1_on,valv2_off,bomba1_on"
+                })
+            });
+            
+            if (response.ok) {
+                console.log('✅ Todos los comandos enviados exitosamente:', commandsToSend);
+                
+                // LIMPIAR LAS COLAS DESPUÉS DE ENVIAR EXITOSAMENTE
+                for (const key in pendingSwitchStates) {
+                    pendingSwitchStates[key] = null;
+                }
+                pendingMode = null;
+                
+                addLogEntry(`Comandos enviados: ${commandsToSend.join(', ')}`);
+            } else {
+                console.error('❌ Error al enviar comandos:', response.status);
+                addLogEntry('Error al enviar comandos al servidor');
+            }
+        } catch (error) {
+            console.error('❌ Error de conexión:', error);
+            addLogEntry('Error de conexión al enviar comandos');
+        }
+    } else {
+        console.log('📭 No hay comandos pendientes para enviar');
+        addLogEntry('No hay comandos pendientes para enviar');
     }
 }
 
@@ -379,23 +423,31 @@ function updateSystemData(data) {
 
 
   if (data.valvula1 !== undefined) {
-    elements.valv1Switch.checked = data.valvula1;
-    updateValveState(1, data.valvula1);
+    //elements.valv1Switch.checked = data.valvula1;
+    //updateValveState(1, data.valvula1);
+    pendingSwitchStates.valv1 = null; 
+    lastSentSwitchStates.valv1 = data.valvula1;
   }
 
   if (data.valvula2 !== undefined) {
-    elements.valv2Switch.checked = data.valvula2;
-    updateValveState(2, data.valvula2);
+    //elements.valv2Switch.checked = data.valvula2;
+    //updateValveState(2, data.valvula2);
+    pendingSwitchStates.valv2 = null;
+    lastSentSwitchStates.valv2 = data.valvula2;
   }
 
   if (data.bomba1 !== undefined) {
-    elements.bomba1Switch.checked = data.bomba1;
-    updateBombaState(1, data.bomba1);
+    //elements.bomba1Switch.checked = data.bomba1;
+    //updateBombaState(1, data.bomba1);
+    pendingSwitchStates.bomba1 = null;
+    lastSentSwitchStates.bomba1 = data.bomba1;
   }
 
   if (data.bomba2 !== undefined) {
-    elements.bomba2Switch.checked = data.bomba2;
-    updateBombaState(2, data.bomba2);
+    //elements.bomba2Switch.checked = data.bomba2;
+    //updateBombaState(2, data.bomba2);
+    pendingSwitchStates.bomba2 = null;
+    lastSentSwitchStates.bomba2 = data.bomba2;
   }
 
   // RESTAURAR event listeners
