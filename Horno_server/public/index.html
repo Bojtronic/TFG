@@ -82,6 +82,31 @@
           </span>
         </div>
 
+        <div class="control-header">
+          <span class="warning-inline" id="manual-warning">
+            Considerar que hay transmision de datos cada 8 segundos
+          </span>
+        </div>
+
+
+        <div class="control-header">
+          <span class="warning-inline" id="manual-warning">
+            Despues de activar/desactivar un actuador, esperar 8 segundos para volver a cambiar su estado o cambiar otro switch
+          </span>
+        </div>
+
+        <div class="control-header">
+          <span class="warning-inline" id="manual-warning">
+            Si ha cambiado un switch, ignorar los cambios que se den durante esos 8 segundos, debido a que se estan recibiendo datos del ESP32
+          </span>
+        </div>
+
+        <div class="control-header">
+          <span class="warning-inline" id="manual-warning">
+            En ocasiones puede coincidir el envio del comando con la recepcion de datos, por lo que posiblemente debe enviar de nuevo el comando
+          </span>
+        </div>
+        
         <div class="control-panel">
           <div class="control-item">
             <div class="control-info">
