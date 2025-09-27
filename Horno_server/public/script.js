@@ -225,10 +225,15 @@ async function loadSystemData() {
 // Configurar event listeners
 function setupEventListeners() {
   // Listeners para switches
-  elements.valv1Switch.addEventListener('change', onValve1Change);
-  elements.valv2Switch.addEventListener('change', onValve2Change);
-  elements.bomba1Switch.addEventListener('change', onBomba1Change);
-  elements.bomba2Switch.addEventListener('change', onBomba2Change);
+  elements.valv1Switch.addEventListener('change', () => toggleValve(1));
+  elements.valv2Switch.addEventListener('change', () => toggleValve(2));
+  elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
+  elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
+
+  //elements.valv1Switch.addEventListener('change', onValve1Change);
+  //elements.valv2Switch.addEventListener('change', onValve2Change);
+  //elements.bomba1Switch.addEventListener('change', onBomba1Change);
+  //elements.bomba2Switch.addEventListener('change', onBomba2Change);
 
 
   // Listeners para botones
@@ -416,46 +421,55 @@ function updateSystemData(data) {
   }
 
   // Actualizar estados de actuadores (QUITAR event listeners temporalmente para evitar bucles)
-  elements.valv1Switch.removeEventListener('change', onValve1Change);
-  elements.valv2Switch.removeEventListener('change', onValve2Change);
-  elements.bomba1Switch.removeEventListener('change', onBomba1Change);
-  elements.bomba2Switch.removeEventListener('change', onBomba2Change);
+  elements.valv1Switch.removeEventListener('change', () => toggleValve(1));
+  elements.valv2Switch.removeEventListener('change', () => toggleValve(2));
+  elements.bomba1Switch.removeEventListener('change', () => toggleBomba(1));
+  elements.bomba2Switch.removeEventListener('change', () => toggleBomba(2));
+
+  //elements.valv1Switch.removeEventListener('change', onValve1Change);
+  //elements.valv2Switch.removeEventListener('change', onValve2Change);
+  //elements.bomba1Switch.removeEventListener('change', onBomba1Change);
+  //elements.bomba2Switch.removeEventListener('change', onBomba2Change);
 
 
   if (data.valvula1 !== undefined) {
     elements.valv1Switch.checked = data.valvula1;
     updateValveState(1, data.valvula1);
-    pendingSwitchStates.valv1 = null; 
-    lastSentSwitchStates.valv1 = data.valvula1;
+    //pendingSwitchStates.valv1 = null; 
+    //lastSentSwitchStates.valv1 = data.valvula1;
   }
 
   if (data.valvula2 !== undefined) {
     elements.valv2Switch.checked = data.valvula2;
     updateValveState(2, data.valvula2);
-    pendingSwitchStates.valv2 = null;
-    lastSentSwitchStates.valv2 = data.valvula2;
+    //pendingSwitchStates.valv2 = null;
+    //lastSentSwitchStates.valv2 = data.valvula2;
   }
 
   if (data.bomba1 !== undefined) {
     elements.bomba1Switch.checked = data.bomba1;
     updateBombaState(1, data.bomba1);
-    pendingSwitchStates.bomba1 = null;
-    lastSentSwitchStates.bomba1 = data.bomba1;
+    //pendingSwitchStates.bomba1 = null;
+    //lastSentSwitchStates.bomba1 = data.bomba1;
   }
 
   if (data.bomba2 !== undefined) {
     elements.bomba2Switch.checked = data.bomba2;
     updateBombaState(2, data.bomba2);
-    pendingSwitchStates.bomba2 = null;
-    lastSentSwitchStates.bomba2 = data.bomba2;
+    //pendingSwitchStates.bomba2 = null;
+    //lastSentSwitchStates.bomba2 = data.bomba2;
   }
 
   // RESTAURAR event listeners
   setTimeout(() => {
-    elements.valv1Switch.addEventListener('change', onValve1Change);
-    elements.valv2Switch.addEventListener('change', onValve2Change);
-    elements.bomba1Switch.addEventListener('change', onBomba1Change);
-    elements.bomba2Switch.addEventListener('change', onBomba2Change);
+    elements.valv1Switch.addEventListener('change', () => toggleValve(1));
+    elements.valv2Switch.addEventListener('change', () => toggleValve(2));
+    elements.bomba1Switch.addEventListener('change', () => toggleBomba(1));
+    elements.bomba2Switch.addEventListener('change', () => toggleBomba(2));
+    //elements.valv1Switch.addEventListener('change', onValve1Change);
+    //elements.valv2Switch.addEventListener('change', onValve2Change);
+    //elements.bomba1Switch.addEventListener('change', onBomba1Change);
+    //elements.bomba2Switch.addEventListener('change', onBomba2Change);
   }, 10);
 
 

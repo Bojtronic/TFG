@@ -136,25 +136,18 @@ function handlePostMessage(req, res, clients) {
       if (data.topic && data.message) {
         // Procesar mensajes de control
         if (data.topic === 'esp32/control') {
-          // ✅ CORRECCIÓN: SOLO PROCESAR MÚLTIPLES COMANDOS, ELIMINAR CÓDIGO DUPLICADO
-          const commands = data.message.split(',').map(cmd => cmd.trim());
           const validCommands = [
-            'start', 'stop', 'manual',
+            'start', 'stop', 'manual', 'emergency',
             'valv1_on', 'valv1_off', 'valv2_on', 'valv2_off',
             'bomba1_on', 'bomba1_off', 'bomba2_on', 'bomba2_off'
           ];
 
-          let commandsEnqueued = 0;
-          
-          commands.forEach(command => {
-            if (validCommands.includes(command)) {
-              queueCommand(command);
-              commandsEnqueued++;
-              console.log(`💾 Comando encolado: ${command}`);
+          if (validCommands.includes(data.message)) {
+            if (pendingCommands.length < MAX_PENDING_COMMANDS) {
+              pendingCommands.push(data.message);
+              console.log(`💾 Comando almacenado: ${data.message}`);
             }
-          });
-
-          console.log(`📊 Total de comandos encolados: ${commandsEnqueued}`);
+          }
         }
         // Procesar datos del sistema
         else if (data.topic === 'horno/data') {
@@ -165,6 +158,7 @@ function handlePostMessage(req, res, clients) {
             // Extraer y convertir datos
             const temperaturas = params.get('temperaturas').match(/[\d.]+/g).map(Number);
             const nivelTanque = parseInt(params.get('nivelTanque'));
+            //const niveles = params.get('niveles').match(/[\d.]+/g).map(Number);
             const presion = parseFloat(params.get('presion'));
             const valvula1 = params.get('valvula1') === 'true';
             const valvula2 = params.get('valvula2') === 'true';
@@ -172,11 +166,14 @@ function handlePostMessage(req, res, clients) {
             const bomba2 = params.get('bomba2') === 'true';
             const estado = parseInt(params.get('estado'));
             const mensaje = parseInt(params.get('mensaje'));
+            //const emergencia = params.get('emergencia') === 'true';
+            //const bombaActiva = params.get('bombaActiva');
 
             // Actualizar datos del sistema
             const systemUpdate = {
               temperaturas,
               nivelTanque,
+              //niveles,
               presion,
               valvula1,
               valvula2,
@@ -184,8 +181,11 @@ function handlePostMessage(req, res, clients) {
               bomba2,
               estado,
               mensaje,
+              //emergencia,
+              //bombaActiva,
               lastUpdate: new Date().toISOString()
             };
+
 
             updateSystemData(systemUpdate);
             broadcastSystemData(clients);
@@ -203,7 +203,8 @@ function handlePostMessage(req, res, clients) {
           status: 'success',
           message: 'Mensaje recibido',
           topic: data.topic,
-          received: data.message
+          received: data.message,
+          pendingCommands: pendingCommands.length
         }));
 
       } else {
@@ -228,6 +229,7 @@ function handlePostMessage(req, res, clients) {
     }
   });
 }
+
 
 // Función para manejar SSE
 function handleSSE(req, res, clients) {
