@@ -142,11 +142,10 @@ function handlePostMessage(req, res, clients) {
             'bomba1_on', 'bomba1_off', 'bomba2_on', 'bomba2_off'
           ];
 
+          // ✅ CORRECCIÓN: Usar queueCommand en lugar de pendingCommands
           if (validCommands.includes(data.message)) {
-            if (pendingCommands.length < MAX_PENDING_COMMANDS) {
-              pendingCommands.push(data.message);
-              console.log(`💾 Comando almacenado: ${data.message}`);
-            }
+            queueCommand(data.message);
+            console.log(`💾 Comando encolado: ${data.message}`);
           }
         }
         // Procesar datos del sistema
@@ -158,7 +157,6 @@ function handlePostMessage(req, res, clients) {
             // Extraer y convertir datos
             const temperaturas = params.get('temperaturas').match(/[\d.]+/g).map(Number);
             const nivelTanque = parseInt(params.get('nivelTanque'));
-            //const niveles = params.get('niveles').match(/[\d.]+/g).map(Number);
             const presion = parseFloat(params.get('presion'));
             const valvula1 = params.get('valvula1') === 'true';
             const valvula2 = params.get('valvula2') === 'true';
@@ -166,14 +164,11 @@ function handlePostMessage(req, res, clients) {
             const bomba2 = params.get('bomba2') === 'true';
             const estado = parseInt(params.get('estado'));
             const mensaje = parseInt(params.get('mensaje'));
-            //const emergencia = params.get('emergencia') === 'true';
-            //const bombaActiva = params.get('bombaActiva');
 
             // Actualizar datos del sistema
             const systemUpdate = {
               temperaturas,
               nivelTanque,
-              //niveles,
               presion,
               valvula1,
               valvula2,
@@ -181,11 +176,8 @@ function handlePostMessage(req, res, clients) {
               bomba2,
               estado,
               mensaje,
-              //emergencia,
-              //bombaActiva,
               lastUpdate: new Date().toISOString()
             };
-
 
             updateSystemData(systemUpdate);
             broadcastSystemData(clients);
@@ -199,12 +191,12 @@ function handlePostMessage(req, res, clients) {
           'Access-Control-Allow-Origin': '*'
         });
 
+        // ✅ CORRECCIÓN: Eliminar pendingCommands de la respuesta
         res.end(JSON.stringify({
           status: 'success',
           message: 'Mensaje recibido',
           topic: data.topic,
-          received: data.message,
-          pendingCommands: pendingCommands.length
+          received: data.message
         }));
 
       } else {
