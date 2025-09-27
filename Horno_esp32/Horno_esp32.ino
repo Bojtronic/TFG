@@ -81,7 +81,7 @@ void loop() {
   }
   
   
-  Serial.println("-------------- LOOP --------------");
+  //Serial.println("-------------- LOOP --------------");
   
   delay(10);
 }
