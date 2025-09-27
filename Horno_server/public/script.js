@@ -241,7 +241,7 @@ function setupEventListeners() {
   document.getElementById('btn-stop').addEventListener('click', () => sendCommand('stop'));
   document.getElementById('btn-manual').addEventListener('click', () => sendCommand('manual'));
 
-  document.getElementById('btn-send-all').addEventListener('click', sendAllPendingCommands);
+  //document.getElementById('btn-send-all').addEventListener('click', sendAllPendingCommands);
 
 }
 
@@ -251,7 +251,7 @@ function disableActuatorControls(disabled) {
   elements.bomba1Switch.disabled = disabled;
   elements.bomba2Switch.disabled = disabled;
 
-  document.getElementById('btn-send-all').disabled = disabled;
+  //document.getElementById('btn-send-all').disabled = disabled;
 
   // Inicia o detiene parpadeo según estado MANUAL
   startWarningBlink(!disabled);
