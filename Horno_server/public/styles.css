@@ -397,7 +397,8 @@ input:checked+.slider:before {
 .control-header {
   display: flex;
   justify-content: flex-end; 
-  margin-bottom: 4px;     
+  margin-bottom: 4px; 
+  margin-top: 20px;    
 }
 
 .warning-inline {

@@ -76,18 +76,20 @@
         <h2>
           <i class="fas fa-cogs"></i> Control de Actuadores
         </h2>
-        <div class="control-header">
-          <span class="warning-inline" id="manual-warning">
-            <i class="fas fa-exclamation-triangle"></i> Configurables solo en estado MANUAL
+        
+
+        <div>
+          <span class="warning-inline" id="text-warning">
+            Considerar que hay transmision de datos cada 8 segundos y se pueden hacer cambios desde la HMI.
+            Despues de activar/desactivar un actuador, esperar 8 segundos para volver a cambiar su estado o cambiar otro switch.
+            Si ha cambiado un switch, ignorar los cambios que se den durante esos 8 segundos, debido a que se estan recibiendo datos del ESP32.
+            En ocasiones puede coincidir el envio del comando con la recepcion de datos, por lo que posiblemente debe enviar de nuevo el comando.
           </span>
         </div>
 
         <div class="control-header">
-          <span class="warning-inline" id="text-warning">
-            Considerar que hay transmision de datos cada 8 segundos y se pueden hacer cambios desde la HMI
-            Despues de activar/desactivar un actuador, esperar 8 segundos para volver a cambiar su estado o cambiar otro switch
-            Si ha cambiado un switch, ignorar los cambios que se den durante esos 8 segundos, debido a que se estan recibiendo datos del ESP32
-            En ocasiones puede coincidir el envio del comando con la recepcion de datos, por lo que posiblemente debe enviar de nuevo el comando
+          <span class="warning-inline" id="manual-warning">
+            <i class="fas fa-exclamation-triangle"></i> Configurables solo en estado MANUAL
           </span>
         </div>
         
