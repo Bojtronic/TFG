@@ -147,13 +147,14 @@ void leerNiveles() {
   // - Solo alto cerrado -> 100%
   // (Si llegara más de uno cerrado, tomamos el mayor nivel válido)
 
+  //esta para logica negativa en el que 0 es cerrado y 1 abierto
   if (s1 && s2 && s3) {
     nivelTanque = 0;      // Vacío
   } else if (!s1 && s2 && s3) {
     nivelTanque = 30;     // Bajo
-  } else if (s1 && !s2 && s3) {
+  } else if (!s1 && !s2 && s3) {
     nivelTanque = 60;     // Medio
-  } else if (s1 && s2 && !s3) {
+  } else if (!s1 && !s2 && !s3) {
     nivelTanque = 100;    // Lleno
   } else {
     // Caso inconsistente (más de un contacto cerrado) toma el nivel mas bajo por seguridad
