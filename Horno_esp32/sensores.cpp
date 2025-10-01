@@ -157,10 +157,8 @@ void leerNiveles() {
   } else if (!s1 && !s2 && !s3) {
     nivelTanque = 100;    // Lleno
   } else {
-    // Caso inconsistente (más de un contacto cerrado) toma el nivel mas bajo por seguridad
-    if (!s1) nivelTanque = 0;
-    else if (!s2) nivelTanque = 60;
-    else if (!s3) nivelTanque = 100;
+    // Caso inconsistente 
+    nivelTanque = 0;
   }
 
 
