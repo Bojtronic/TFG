@@ -6,6 +6,5 @@
 // Control de seguridad
 void apagarTodo();
 void verificarSeguridad();
-void activarEmergencia(const char* mensaje);
 
 #endif

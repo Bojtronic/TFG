@@ -42,12 +42,7 @@
 // Pulsadores de control
 #define START_BTN   14
 #define STOP_BTN    13 
-#define MANUAL_BTN  35   // GPIO35 -> SOLO ENTRADA
-
-// Pilotos (salidas seguras, sin pines de boot)
-//#define PILOTO_MANUAL     14   // GPIO14 -> salida digital
-//#define PILOTO_EMERGENCIA 26   // GPIO26 -> salida digital 
-//#define PILOTO_START      2   // GPIO2 -> tener cuidado, pin de boot, al arranque debe estar el LOW
+#define MANUAL_BTN  35   
 
 // Comunicación con HMI Nextion (UART2)
 #define NEXTION_RX 16
@@ -188,17 +183,18 @@ void controlarSistema();
 void iniciarSistema();
 void detenerSistema();
 bool verificarCondicionesInicio();
-void controlarLlenado();
-void controlarCalentamiento();
-void controlarCirculacion();
-void controlarEntregaAgua();
+bool verificarCondicionesApagado();
+//void controlarLlenado();
+//void controlarCalentamiento();
+//void controlarCirculacion();
+//void controlarEntregaAgua();
 void activarCirculacion();
 void alternarBombas();
+void manual();
 
 // Seguridad
 void apagarTodo();
 void verificarSeguridad();
-void activarEmergencia(const char* mensaje);
 
 // HMI
 void actualizarHMI();
@@ -210,12 +206,11 @@ void actualizarEstadoSistemaHMI();
 void connectToWiFi();
 void checkForCommands();
 void sendSystemData();
-void testServerConnection();
 void handleServerCommunication();
 
 // Callbacks Nextion
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
-//void manualBtnCallback(void *ptr);
+void manualBtnCallback(void *ptr);
 
 #endif

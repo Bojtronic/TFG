@@ -11,7 +11,7 @@ void detenerSistema();
 bool verificarCondicionesApagado();
 
 // Control de actuadores
-//void activarCirculacion();
+void activarCirculacion();
 void alternarBombas();
 void manual();
 

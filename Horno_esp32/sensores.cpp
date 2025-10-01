@@ -160,11 +160,6 @@ void leerNiveles() {
     // Caso inconsistente 
     nivelTanque = 0;
   }
-
-
-  //niveles[0] = nivelTanque; 
-  //niveles[1] = nivelTanque;
-  //niveles[2] = nivelTanque;
 }
 
 void leerPulsadores() {

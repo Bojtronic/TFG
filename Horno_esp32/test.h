@@ -3,6 +3,9 @@
 
 #include "config.h"
 
+// Prueba de conexion
+void testServerConnection();
+
 // Pruebas por estado
 void testApagado();
 void testProcesando(int caso);

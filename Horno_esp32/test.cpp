@@ -1,5 +1,42 @@
 #include "test.h"
 
+// ================= PRUEBA DE CONEXION =================
+
+void testServerConnection() {
+  if (WiFi.status() != WL_CONNECTED) return;
+  
+  WiFiClientSecure client;
+  HTTPClient http;
+  
+  client.setInsecure();
+  client.setTimeout(15000);
+  
+  Serial.println("🧪 Probando conexión con el servidor...");
+  
+  if (http.begin(client, commandsURL)) {
+    http.setTimeout(15000);
+    
+    int httpCode = http.GET();
+    Serial.print("📡 Código HTTP de prueba: ");
+    Serial.println(httpCode);
+    
+    if (httpCode == 200) {
+      String response = http.getString();
+      Serial.print("✅ Conexión exitosa. Respuesta: ");
+      Serial.println(response);
+      mensajesHMI("Servidor conectado");
+    } else {
+      Serial.print("❌ Error en la prueba: ");
+      Serial.println(http.errorToString(httpCode));
+      mensajesHMI("Error servidor");
+    }
+    
+    http.end();
+  } else {
+    Serial.println("❌ No se pudo conectar para prueba");
+  }
+}
+
 // ================= PRUEBAS POR ESTADO =================
 
 // Estado: APAGADO → todo frío y sin actividad

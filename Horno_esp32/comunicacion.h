@@ -19,7 +19,6 @@ extern int messageCount;
 void connectToWiFi();
 void checkForCommands();
 void sendSystemData();
-void testServerConnection();
 void handleServerCommunication();
 
 #endif
