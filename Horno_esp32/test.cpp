@@ -24,11 +24,9 @@ void testServerConnection() {
       String response = http.getString();
       Serial.print("✅ Conexión exitosa. Respuesta: ");
       Serial.println(response);
-      mensajesHMI("Servidor conectado");
     } else {
       Serial.print("❌ Error en la prueba: ");
       Serial.println(http.errorToString(httpCode));
-      mensajesHMI("Error servidor");
     }
     
     http.end();

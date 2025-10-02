@@ -16,7 +16,7 @@ void apagarTodo() {
 void verificarSeguridad() {
     // 1. No hay flujo de agua para llenar el tanque(no hay presión)
     if ((presionActual < PRESION_MINIMA) && (estadoActual != APAGADO)) {
-        f((nivelTanque <= NIVEL_VACIO) && (temperaturas[2] > TEMP_MIN_HORNO)){
+        if((nivelTanque <= NIVEL_VACIO) && (temperaturas[2] > TEMP_MIN_HORNO)){
             mensajeActual = EMERGENCIA_2;
 
             digitalWrite(BOMBA_1, LOW);

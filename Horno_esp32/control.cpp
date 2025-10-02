@@ -151,6 +151,14 @@ void detenerSistema(){
     apagarTodo();
     estadoActual = APAGADO;
   }
+  else if((presionActual < PRESION_MINIMA) && (temperaturas[1] >= (TEMP_MIN_HORNO*2)) && (temperaturas[2] >= (TEMP_MIN_HORNO*2)) && (nivelTanque <= NIVEL_VACIO)){
+    digitalWrite(BOMBA_1, LOW);
+    digitalWrite(BOMBA_2, LOW);
+    digitalWrite(VALVULA_1, LOW);
+    digitalWrite(VALVULA_2, LOW); // Considerar abrir la llave para que llegue un poco de agua fria al tanque si es que hay un poco de agua
+    estadoActual = EMERGENCIA;
+    mensajeActual = EMERGENCIA_1;
+  }  
   else if((temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO) && (nivelTanque > NIVEL_MITAD)){
     digitalWrite(VALVULA_1, LOW);
     digitalWrite(VALVULA_2, LOW);
@@ -165,14 +173,6 @@ void detenerSistema(){
     estadoActual = DETENER;
     mensajeActual = DETENER_2;
   }
-  else if((presionActual < PRESION_MINIMA) && (temperaturas[1] >= (TEMP_MIN_HORNO*2)) && (temperaturas[2] >= (TEMP_MIN_HORNO*2)) && (nivelTanque <= NIVEL_VACIO)){
-    digitalWrite(BOMBA_1, LOW);
-    digitalWrite(BOMBA_2, LOW);
-    digitalWrite(VALVULA_1, LOW);
-    digitalWrite(VALVULA_2, HIGH); // Abrir la llave para que llegue un poco de agua fria al tanque si es que hay un poco de agua
-    estadoActual = EMERGENCIA;
-    mensajeActual = EMERGENCIA_1;
-  }  
 }
 
 // ================= FUNCIONES DE CONTROL DE ACTUADORES =================
