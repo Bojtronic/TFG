@@ -1,6 +1,6 @@
 #include "sensores.h"
 #include "config.h"
-#include "hmi.h"
+//#include "hmi.h"
 #include <Adafruit_MAX31855.h>
 
 // Variables globales definidas en 
@@ -37,22 +37,20 @@ void inicializarTermocuplas() {
   bool t3_ok = thermocouple3.begin();
   bool t4_ok = thermocouple4.begin();
 
-  // Mensajes en Serial (para depuración detallada)
+  // Mensajes para depuración
   if (!t1_ok) Serial.println("ERROR Termocupla 1 (Tanque)"); else Serial.println("Termocupla 1 (Tanque) OK");
   if (!t2_ok) Serial.println("ERROR Termocupla 2 (Horno)"); else Serial.println("Termocupla 2 (Horno) OK");
   if (!t3_ok) Serial.println("ERROR Termocupla 3 (Camara)"); else Serial.println("Termocupla 3 (Camara) OK");
   if (!t4_ok) Serial.println("ERROR Termocupla 4 (Salida)"); else Serial.println("Termocupla 4 (Salida) OK");
 
-  // Construir mensaje resumen para el HMI - CORREGIDO
+  // Construir mensaje resumen
   String resumen = "Termocuplas - " + 
                    String("Tanque:") + String(t1_ok ? "OK" : "ERR") +
                    String(" Horno:") + String(t2_ok ? "OK" : "ERR") +
                    String(" Camara:") + String(t3_ok ? "OK" : "ERR") +
                    String(" Salida:") + String(t4_ok ? "OK" : "ERR");
 
-  // Mostrar resumen en Serial y en la HMI
   Serial.println("Resumen termocuplas -> " + resumen);
-  //mensajesHMI(resumen);
 }
 
 bool verificarSensoresTemperatura() {
@@ -79,9 +77,8 @@ double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
   if (isnan(tempC)) {
     Serial.print("Error lectura termocupla ");
     Serial.println(numero);
-    // mostrar mensaje en HMI y enviar informacion al server
 
-    // Revisar detalles del error
+    // Detalles del error
     uint8_t fault = sensor.readError();
     if (fault & MAX31855_FAULT_OPEN)       Serial.println("FALLA: Termocupla abierta o no conectada.");
     if (fault & MAX31855_FAULT_SHORT_GND)  Serial.println("FALLA: Termocupla en corto a GND.");

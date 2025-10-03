@@ -81,7 +81,7 @@ extern Adafruit_MAX31855 thermocouple4; // salida
 // Variables de sensores
 extern double temperaturas[4];
 extern int nivelTanque;
-extern int niveles[3];
+//extern int niveles[3];
 extern float presionActual;
 
 // Variables para el control automático
@@ -147,22 +147,20 @@ extern int messageCount;
 // HMI Nextion
 extern HardwareSerial nextionSerial;
 extern NexPage mainPage;
-extern NexText temp1Text; // tanque
-extern NexText temp2Text; // horno
-extern NexText temp3Text; // camara
-extern NexText temp4Text; // salida
-extern NexText nivel1Text;
-extern NexText nivel2Text;
-extern NexText nivel3Text;
-extern NexText presionText;
-extern NexText estadoText;
-extern NexPicture valvula1State;
-extern NexPicture valvula2State;
-extern NexPicture bomba1State;
-extern NexPicture bomba2State;
+extern NexNumber temp1Tanque;
+extern NexNumber temp2Horno;
+extern NexNumber temp3Camara;
+extern NexNumber temp4Salida;
+extern NexNumber nivel;
+extern NexNumber presion;
+extern NexText estado;
+extern NexText valvula1Salida;
+extern NexText valvula2Entrada;
+extern NexText bomba1;
+extern NexText bomba2;
 extern NexButton startBtn;
 extern NexButton stopBtn;
-//extern NexButton manualBtn;
+extern NexButton manualBtn;
 extern NexTouch *nex_listen_list[];
 
 // ================= DECLARACIONES DE FUNCIONES =================
@@ -184,10 +182,6 @@ void iniciarSistema();
 void detenerSistema();
 bool verificarCondicionesInicio();
 bool verificarCondicionesApagado();
-//void controlarLlenado();
-//void controlarCalentamiento();
-//void controlarCirculacion();
-//void controlarEntregaAgua();
 void activarCirculacion();
 void alternarBombas();
 void manual();
@@ -197,10 +191,14 @@ void apagarTodo();
 void verificarSeguridad();
 
 // HMI
-void actualizarHMI();
-void actualizarTextoHMI(NexText &componente, double valor, const char* unidad);
-void actualizarEstadoComponente(NexPicture &componente, bool estado);
 void actualizarEstadoSistemaHMI();
+void actualizarTemperaturas();
+void actualizarNivel();
+void actualizarPresion();
+void actualizarActuadores();
+void startBtnCallback(void *ptr);
+void stopBtnCallback(void *ptr);
+void manualBtnCallback(void *ptr);
 
 // Comunicación
 void connectToWiFi();

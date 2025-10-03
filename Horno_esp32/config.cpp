@@ -52,20 +52,18 @@ int messageCount = 0;
 HardwareSerial nextionSerial(2);
 
 // Componentes Nextion
-NexPage mainPage(0, 0, "mainPage");
-NexText temp1Text(0, 1, "temp1");  // Temp tanque
-NexText temp2Text(0, 2, "temp2");  // Temp horno
-NexText temp3Text(0, 3, "temp3");  // Temp cámara
-NexText temp4Text(0, 4, "temp4");  // Temp salida
-NexText nivel1Text(0, 5, "nivel1");
-NexText nivel2Text(0, 6, "nivel2");
-NexText nivel3Text(0, 7, "nivel3");
-NexText presionText(0, 8, "presion");
-NexText estadoText(0, 9, "estado");
-NexPicture valvula1State(0, 10, "valv1State");
-NexPicture valvula2State(0, 11, "valv2State");
-NexPicture bomba1State(0, 12, "bomba1State");
-NexPicture bomba2State(0, 13, "bomba2State");
+NexPage mainPage(0, 0, "page0");
+NexNumber temp1Tanque(0, 19, "x0");  // Temp tanque
+NexNumber temp2Horno(0, 20, "x1");  // Temp horno
+NexNumber temp3Camara(0, 21, "x2");  // Temp cámara
+NexNumber temp4Salida(0, 22, "x3");  // Temp salida
+NexNumber presion(0, 23, "x4");
+NexNumber nivel(0, 24, "n0");
+NexText estado(0, 15, "t14");
+NexText valvula1Salida(0, 10, "valv1State");
+NexText valvula2Entrada(0, 11, "valv2State");
+NexText bomba1(0, 12, "bomba1State");
+NexText bomba2(0, 13, "bomba2State");
 NexButton startBtn(0, 14, "startBtn");  // pagina, id, nombre
 NexButton stopBtn(0, 15, "stopBtn");    // pagina, id, nombre
 NexButton manualBtn(0, 16, "manualBtn"); // pagina, id, nombre
@@ -73,7 +71,7 @@ NexButton manualBtn(0, 16, "manualBtn"); // pagina, id, nombre
 NexTouch* nex_listen_list[] = {
   &startBtn,
   &stopBtn,
-  //&manualBtn,
+  &manualBtn,
   NULL
 };
 

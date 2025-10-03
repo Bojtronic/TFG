@@ -1,6 +1,6 @@
 #include "config.h"
 #include "control.h"
-#include "hmi.h"
+//#include "hmi.h"
 
 // ================= FUNCIONES DE CONTROL PRINCIPAL =================
 
@@ -45,7 +45,7 @@ void controlarSistema() {
 void iniciarSistema() {
   if (verificarCondicionesInicio()) {
     estadoActual = PROCESANDO;
-    //mensajesHMI("Iniciando sistema");
+    
     if ((temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO)) {
       if(nivelTanque < NIVEL_MITAD){
         mensajeActual = PROCESANDO_1;
@@ -113,7 +113,7 @@ bool verificarCondicionesInicio() {
 
   for (int i = 0; i < 4; i++) {
     if (temperaturas[i] <= -999.0) {
-      //mensajesHMI("Error: Verificar sensores temp");
+      
       Serial.println("Error: Verificar sensores temp");
       return false;
     }
@@ -128,7 +128,7 @@ bool verificarCondicionesInicio() {
   
   // Verificar presión de agua mínima para iniciar
   if (presionActual <= PRESION_MINIMA) {
-    //mensajesHMI("No hay agua suficiente para iniciar");
+    
     Serial.println("No hay agua suficiente para iniciar");
     //detenerSistema(); // considerar ejecutar el apagado seguro en este punto
     return false;
@@ -136,7 +136,7 @@ bool verificarCondicionesInicio() {
 
   // Verificar nivel mínimo para iniciar
   if (nivelTanque <= NIVEL_VACIO) {
-    //mensajesHMI("Nivel muy bajo para iniciar");
+    
     Serial.println("Nivel muy bajo para iniciar");
     digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
     return false;

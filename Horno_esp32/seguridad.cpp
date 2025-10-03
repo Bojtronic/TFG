@@ -1,6 +1,6 @@
 #include "seguridad.h"
 #include "config.h"
-#include "hmi.h"
+//#include "hmi.h"
 
 // ================= FUNCIONES DE SEGURIDAD =================
 

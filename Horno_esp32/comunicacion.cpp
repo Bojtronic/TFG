@@ -1,6 +1,6 @@
 #include "comunicacion.h"
 #include "config.h"
-#include "hmi.h"
+//#include "hmi.h"
 
 void connectToWiFi() {
   Serial.print("Conectando a WiFi");
@@ -17,10 +17,8 @@ void connectToWiFi() {
     Serial.println("\n✅ WiFi conectado");
     Serial.print("📶 RSSI: ");
     Serial.println(WiFi.RSSI());
-    //mensajesHMI("WiFi conectado");
   } else {
     Serial.println("\n❌ Error: No se pudo conectar a WiFi");
-    //mensajesHMI("Error WiFi");
   }
 }
 

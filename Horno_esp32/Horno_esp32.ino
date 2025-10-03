@@ -70,10 +70,6 @@ void loop() {
     verificarSeguridad();
     controlarSistema();
     
-    //actualizarHMI();
-    
-    //leerPulsadores();
-
     // Manejo de comunicación con servidor
     handleServerCommunication(); 
 
