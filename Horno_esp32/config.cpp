@@ -77,6 +77,10 @@ NexTouch* nex_listen_list[] = {
   &startBtn,
   &stopBtn,
   &manualBtn,
+  &valvula1Btn,
+  &valvula2Btn,
+  &bomba1Btn,
+  &bomba2Btn,
   NULL
 };
 

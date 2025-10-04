@@ -1,4 +1,5 @@
 #include "test.h"
+#include "hmi.h"
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <WiFiClientSecure.h>
@@ -302,53 +303,9 @@ void ejecutarPruebas() {
       break;
   }
 
-  // Mostrar información cada 3 segundos
-  static unsigned long ultimoLog = 0;
-  if (millis() - ultimoLog > 3000) {
-    ultimoLog = millis();
-    
-    Serial.print("📊 [");
-    switch (estadoPrincipal) {
-      case 0: Serial.print("APAGADO"); break;
-      case 1: Serial.print("PROCESANDO"); break;
-      case 2: Serial.print("DETENER"); break;
-      case 3: Serial.print("EMERGENCIA"); break;
-      case 4: Serial.print("MANUAL"); break;
-    }
-    Serial.print(" - Subprueba ");
-    Serial.print(subprueba + 1);
-    Serial.print("/");
-    switch (estadoPrincipal) {
-      case 0: Serial.print("1"); break;
-      case 1: Serial.print("4"); break;
-      case 2: Serial.print("3"); break;
-      case 3: Serial.print("5"); break;
-      case 4: Serial.print("1"); break;
-    }
-    Serial.println("]");
-    
-    Serial.print("🌡️  Temp Tanque: "); Serial.print(temperaturas[0]); Serial.print("°C");
-    Serial.print(" | Horno: "); Serial.print(temperaturas[1]); Serial.print("°C");
-    Serial.print(" | Cámara: "); Serial.print(temperaturas[2]); Serial.print("°C");
-    Serial.print(" | Agua: "); Serial.print(temperaturas[3]); Serial.println("°C");
-    
-    Serial.print("💧 Nivel: "); Serial.print(nivelTanque); Serial.print("%");
-    Serial.print(" | Presión: "); Serial.print(presionActual); Serial.println(" bar");
-    
-    // Mostrar estado de actuadores cada 6 segundos
-    static unsigned long ultimoLogActuadores = 0;
-    if (millis() - ultimoLogActuadores > 6000) {
-      ultimoLogActuadores = millis();
-      
-      Serial.print("⚙️  Actuadores - V1:");
-      Serial.print(digitalRead(VALVULA_1) ? "ON " : "OFF ");
-      Serial.print("V2:");
-      Serial.print(digitalRead(VALVULA_2) ? "ON " : "OFF ");
-      Serial.print("B1:");
-      Serial.print(digitalRead(BOMBA_1) ? "ON " : "OFF ");
-      Serial.print("B2:");
-      Serial.print(digitalRead(BOMBA_2) ? "ON " : "OFF ");
-      Serial.println("---");
-    }
-  }
+  actualizarActuadores();
+  actualizarPresion();
+  actualizarNivel();
+  actualizarTemperaturas();
+  
 }

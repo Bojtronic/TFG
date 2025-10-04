@@ -52,7 +52,6 @@ void actualizarPresion() {
   presion.setValue((int)(presionActual * 10));  
 }
 
-
 void actualizarActuadores() {
   // Actualizamos textos según estado ON/OFF
   valvula1Salida.setText(digitalRead(VALVULA_1) ? "ON" : "OFF");

@@ -15,20 +15,20 @@ void setup() {
   nexInit();
   inicializarTermocuplas();
   
-  // Configurar callbacks de Nextion
-  //startBtn.attachPush(startBtnCallback, &startBtn);
-  //stopBtn.attachPush(stopBtnCallback, &stopBtn);
-  //resetBtn.attachPush(resetBtnCallback, &resetBtn);
-  
-  //apagarTodo();
+  startBtn.attachPush(startBtnCallback, &startBtn);
+  stopBtn.attachPush(stopBtnCallback, &stopBtn);
+  manualBtn.attachPush(manualBtnCallback, &manualBtn);
+
+  valvula1Btn.attachPush(valvula1BtnCallback, &valvula1Btn);
+  valvula2Btn.attachPush(valvula2BtnCallback, &valvula2Btn);
+  bomba1Btn.attachPush(bomba1BtnCallback, &bomba1Btn);
+  bomba2Btn.attachPush(bomba2BtnCallback, &bomba2Btn);
+
+
   
   // Conectar a WiFi
   connectToWiFi();
-  /*
-  if (WiFi.status() == WL_CONNECTED) {
-    testServerConnection();
-  }
-  */
+  
   
   
   //actualizarEstadoSistemaHMI(); // esto se podria reemplazar con la funcion mensajesHMI(ESTADO) pero depende del layout en el hmi
