@@ -1105,7 +1105,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Los conectores a la salida de los amplificadores operacionales son \npara colocar resistencias que limitarán la corriente de base (Ib)\nde cada transistor, con base en simulaciones, se sugiere resistencia de\n7.5 Kilo ohmios para señales que oscilen entre 0-10 voltios y 1.2 Kilo ohmios\npara señales que oscilen entre 0-5 voltios\n\nLos conectores que están entre los emisores y GND son para colocar\nresistencias que limitarán la corriente de colector (Ic) de cada transistor, con base\nen simulaciones se sugiere de 39 ohmios\n\n"
+	(text "En J0_1 los pines 1, 2 y 3 son para +15V, -15V y GND respectivamente \nEn J9_1 los pines 3 y 2 son +3.3V y 0V respectivamente\n\nLos conectores a la salida de los amplificadores operacionales son \npara colocar resistencias que limitarán la corriente de base (Ib)\nde cada transistor, con base en simulaciones, se sugiere resistencia de\n7.5 Kilo ohmios para señales que oscilen entre 0-10 voltios y 1.2 Kilo ohmios\npara señales que oscilen entre 0-5 voltios\n\nLos conectores que están entre los emisores y GND son para colocar\nresistencias que limitarán la corriente de colector (Ic) de cada transistor, con base\nen simulaciones se sugiere de 39 ohmios\n\n"
 		(exclude_from_sim no)
 		(at 87.63 174.752 0)
 		(effects

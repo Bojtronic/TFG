@@ -1553,9 +1553,9 @@
 		)
 		(uuid "b0966758-144c-4d71-b5c2-7086b27c9e3e")
 	)
-	(text "Notas: \n* El conector J0 son las entradas de 5Vdc, 12Vdc o 24Vdc dependiendo de la resistencia seleccionada y J9 las salidas del módulo. \n* Entre los conectores llamados \"JA-B\" se conecta la resistencia seleccionada, dependiendo de la tensión de entrada. \n* Valores exactos de las resistencias para las siguientes entradas: 5Vdc(90ohm 1/8W), 12Vdc(440ohm 1/4W), 24Vdc(1040ohm 1/2W). \n* Lo anterior se calculó con las siguientes características: tensión umbral LED Verde = 2Vdc, tensión umbral led optoacoplador = 1.2Vdc, corriente 20mA. \n\n\n*Pin 1 de J0_1 se conecta el 0V de los 5Vdc, 12Vdc o 24Vdc; el resto son entradas (5Vdc, 12Vdc o 24Vdc). \n*Pin 3 de J9_1 se conectan los 3.3V, en el pin 2 de J9_1 se conectan los 0V de esa fuente, el resto son salidas"
+	(text "* En los conectores J0_1, J0_2, J0_3 son las entradas (color rojo) de 5Vdc, 12Vdc o 24Vdc dependiendo de la resistencia seleccionada y J9 las salidas del módulo. \n* Entre los conectores llamados \"JA-B\" se conecta la resistencia seleccionada, dependiendo de la tensión de entrada. \n* Valores de las resistencias para  una corriente de 20mA: 5Vdc(250ohm 1/4W), 12Vdc(600ohm 1/2W), 24Vdc(1200ohm 1W). \n\n*Pin 1 de J0_1 se conecta el 0V de los 5Vdc, 12Vdc o 24Vdc; el resto son entradas (5Vdc, 12Vdc o 24Vdc). \n*Pin 3 de J9_1 se conectan los 3.3V, en el pin 2 de J9_1 se conectan los 0V de esa fuente (3.3V), el resto son salidas\n\nLas salidas tienen resistencias de pull down"
 		(exclude_from_sim no)
-		(at 97.028 179.324 0)
+		(at 95.25 178.816 0)
 		(effects
 			(font
 				(size 1.27 1.27)

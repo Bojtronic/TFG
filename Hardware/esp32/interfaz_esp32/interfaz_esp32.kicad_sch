@@ -4,6 +4,11 @@
 	(generator_version "9.0")
 	(uuid "d28b2180-42da-4ffb-a12e-9cb05376a63f")
 	(paper "A4")
+	(title_block
+		(title "PCB para el ESP32 LILY GO T DISPLAY")
+		(date "2025-10-04")
+		(company "Digicontrol")
+	)
 	(lib_symbols
 		(symbol "Connector:Screw_Terminal_01x03"
 			(pin_names
@@ -1531,6 +1536,28 @@
 			)
 			(embedded_fonts no)
 		)
+	)
+	(text "PCB para el ESP32 LILY GO T DISPLAY"
+		(exclude_from_sim no)
+		(at 227.838 173.736 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+				(thickness 0.4064)
+				(bold yes)
+			)
+		)
+		(uuid "30e89cdb-faae-47f2-bef3-29c1c1775bfb")
+	)
+	(text "La placa del proyecto tiene una separación entre pines de 2.54 mm\nLa separación entre las filas de pines es de 22.86 mm (0.9 pulgadas)\nOtras placas basadas en ESP32 tinen una distancia de 25.4 mm entre ambas filas (1 pulgada)\n\nLa parte superior es para el ESP32 y la parte inferior para el modulo de compensación de las termocuplas\n\nLos capacitores son para desacople, se utilizan para estabilizar los 3.3V del chip, pueden ser de 10 nF o 100 nF\n"
+		(exclude_from_sim no)
+		(at 93.726 181.61 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "722c5fc9-332f-4215-a575-c3b9bd480ca7")
 	)
 	(junction
 		(at 105.41 39.37)
