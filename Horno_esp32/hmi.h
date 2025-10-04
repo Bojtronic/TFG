@@ -1,8 +1,6 @@
 #ifndef HMI_H
 #define HMI_H
 
-#include "config.h"
-
 void actualizarEstadoSistemaHMI();
 void actualizarTemperaturas();
 void actualizarNivel();
@@ -11,5 +9,9 @@ void actualizarActuadores();
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
 void manualBtnCallback(void *ptr);
+void valvula1BtnCallback(void *ptr);
+void valvula2BtnCallback(void *ptr);
+void bomba1BtnCallback(void *ptr); 
+void bomba2BtnCallback(void *ptr);
 
 #endif

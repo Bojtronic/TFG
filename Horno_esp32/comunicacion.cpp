@@ -1,5 +1,9 @@
-#include "comunicacion.h"
 #include "config.h"
+#include "comunicacion.h"
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <WiFiClientSecure.h>
+
 //#include "hmi.h"
 
 void connectToWiFi() {

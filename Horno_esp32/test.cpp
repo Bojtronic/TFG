@@ -1,4 +1,7 @@
 #include "test.h"
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <WiFiClientSecure.h>
 
 // ================= PRUEBA DE CONEXION =================
 

@@ -1,12 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <WiFiClientSecure.h>
-#include <SPI.h>
-#include "Adafruit_MAX31855.h"
-#include <Nextion.h>
+#include <Adafruit_MAX31855.h> 
+#include <Nextion.h>  
 
 // ================= CONFIGURACIÓN DE PINES =================
 // Termocuplas (MAX31855) - 4 sensores de temperatura
@@ -55,11 +51,9 @@
 #define TEMP_MAX_HORNO     200.0    // Temperatura máxima en horno (°C)
 #define TEMP_MAX_CAMARA    150.0    // Temperatura máxima en cámara (°C)
 #define TEMP_MIN_HORNO     35.0     // Temperatura minima en horno (°C)
-//#define PRESION_MAXIMA     7.0      // Presión máxima permitida (bar)
 #define NIVEL_LLENO        80       // % para considerar tanque lleno
 #define NIVEL_MITAD        40       // % para considerar tanque a la mitad
 #define NIVEL_VACIO        10       // % para considerar tanque vacío
-//#define PRESION_UMBRAL     2.0      // Presión para alerta (bar)
 #define PRESION_MINIMA     1.0      // Presión para alerta (bar)
 
 #define INTERVALO_CAMBIO_BOMBA 1200000 // 20 minutos 1200000 milisegundos
@@ -81,7 +75,6 @@ extern Adafruit_MAX31855 thermocouple4; // salida
 // Variables de sensores
 extern double temperaturas[4];
 extern int nivelTanque;
-//extern int niveles[3];
 extern float presionActual;
 
 // Variables para el control automático
@@ -161,7 +154,26 @@ extern NexText bomba2;
 extern NexButton startBtn;
 extern NexButton stopBtn;
 extern NexButton manualBtn;
+
+// Botones on/off
+extern NexButton valvula1Btn; // id 34, name b3
+extern NexButton valvula2Btn; // id 35, name b4
+extern NexButton bomba1Btn;   // id 36, name b5
+extern NexButton bomba2Btn;   // id 37, name b6
+
 extern NexTouch *nex_listen_list[];
+
+//boton on/off valvula 1
+//id 34, name b3
+
+//boton on/off valvula 2
+//id 35, name b4
+
+//boton on/off bomba 1
+//id 36, name b5
+
+//boton on/off bomba 2
+//id 37, name b6
 
 // ================= DECLARACIONES DE FUNCIONES =================
 // Configuración
@@ -199,6 +211,11 @@ void actualizarActuadores();
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
 void manualBtnCallback(void *ptr);
+
+void valvula1BtnCallback(void *ptr);
+void valvula2BtnCallback(void *ptr);
+void bomba1BtnCallback(void *ptr); 
+void bomba2BtnCallback(void *ptr);
 
 // Comunicación
 void connectToWiFi();

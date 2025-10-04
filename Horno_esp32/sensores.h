@@ -1,7 +1,7 @@
 #ifndef SENSORES_H
 #define SENSORES_H
 
-#include "config.h"
+#include <Adafruit_MAX31855.h>
 
 // Inicialización
 void inicializarTermocuplas();

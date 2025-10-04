@@ -1,4 +1,5 @@
 #include "config.h"
+#include <SPI.h>
 
 // ================= CONFIGURACIÓN SERVIDOR =================
 const char* ssid = "DIGICONTROL";
@@ -16,7 +17,6 @@ Adafruit_MAX31855 thermocouple4(MAX_CLK, MAX_CS4, MAX_MISO);
 // Variables de sensores
 double temperaturas[4] = { 0, 0, 0, 0 };
 int nivelTanque = 0;
-int niveles[3] = { 0, 0, 0 };
 float presionActual = 0.0;
 
 // Variables para el control automático
@@ -60,13 +60,18 @@ NexNumber temp4Salida(0, 22, "x3");  // Temp salida
 NexNumber presion(0, 23, "x4");
 NexNumber nivel(0, 24, "n0");
 NexText estado(0, 15, "t14");
-NexText valvula1Salida(0, 10, "valv1State");
-NexText valvula2Entrada(0, 11, "valv2State");
-NexText bomba1(0, 12, "bomba1State");
-NexText bomba2(0, 13, "bomba2State");
-NexButton startBtn(0, 14, "startBtn");  // pagina, id, nombre
-NexButton stopBtn(0, 15, "stopBtn");    // pagina, id, nombre
-NexButton manualBtn(0, 16, "manualBtn"); // pagina, id, nombre
+NexText valvula1Salida(0, 30, "t20");
+NexText valvula2Entrada(0, 31, "t21");
+NexText bomba1(0, 32, "t22");
+NexText bomba2(0, 33, "t23");
+NexButton startBtn(0, 16, "b0");  // pagina, id, nombre
+NexButton stopBtn(0, 17, "b1");    // pagina, id, nombre
+NexButton manualBtn(0, 18, "b2"); // pagina, id, nombre
+
+NexButton valvula1Btn(0, 34, "b3");
+NexButton valvula2Btn(0, 35, "b4");
+NexButton bomba1Btn(0, 36, "b5");
+NexButton bomba2Btn(0, 37, "b6");
 
 NexTouch* nex_listen_list[] = {
   &startBtn,

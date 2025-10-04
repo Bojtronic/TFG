@@ -1,7 +1,6 @@
 #include "sensores.h"
 #include "config.h"
-//#include "hmi.h"
-#include <Adafruit_MAX31855.h>
+#include "hmi.h"
 
 // Variables globales definidas en 
 extern Adafruit_MAX31855 thermocouple1;
@@ -68,6 +67,8 @@ void leerTemperaturas() {
   temperaturas[1] = leerTermocupla(thermocouple2, 2); // horno
   temperaturas[2] = leerTermocupla(thermocouple3, 3); // camara
   temperaturas[3] = leerTermocupla(thermocouple4, 4); // salida
+
+  actualizarTemperaturas(); // Actualizar en HMI
 }
 
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
@@ -129,6 +130,8 @@ void leerPresion() {
   
   // Evitar valores negativos por ruido
   presionActual = max(0.0f, presionActual);
+
+  actualizarPresion(); // Actualizar en HMI
 }
 
 
@@ -157,6 +160,8 @@ void leerNiveles() {
     // Caso inconsistente 
     nivelTanque = 0;
   }
+
+  actualizarNivel(); // Actualizar en HMI
 }
 
 void leerPulsadores() {

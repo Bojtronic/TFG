@@ -43,7 +43,7 @@ void actualizarTemperaturas() {
 
 
 void actualizarNivel() {
-  nivel.setValue((int)(niveles[0]));  
+  nivel.setValue((int)(nivelTanque));  
 }
 
 
@@ -88,3 +88,42 @@ void manualBtnCallback(void *ptr) {
   }
 }
 
+// Válvula 1 ON/OFF
+void valvula1BtnCallback(void *ptr) {
+  Serial.println("💧 Botón VÁLVULA 1 presionado en HMI");
+  
+  if (estadoActual == MANUAL) {
+    valvula_1_auto = !valvula_1_auto;  // Alternar estado
+    digitalWrite(VALVULA_1, valvula_1_auto ? HIGH : LOW);
+  }
+}
+
+// Válvula 2 ON/OFF
+void valvula2BtnCallback(void *ptr) {
+  Serial.println("💧 Botón VÁLVULA 2 presionado en HMI");
+  
+  if (estadoActual == MANUAL) {
+    valvula_2_auto = !valvula_2_auto;
+    digitalWrite(VALVULA_2, valvula_2_auto ? HIGH : LOW);
+  }
+}
+
+// Bomba 1 ON/OFF
+void bomba1BtnCallback(void *ptr) {
+  Serial.println("💦 Botón BOMBA 1 presionado en HMI");
+  
+  if (estadoActual == MANUAL) {
+    bomba_1_auto = !bomba_1_auto;
+    digitalWrite(BOMBA_1, bomba_1_auto ? HIGH : LOW);
+  }
+}
+
+// Bomba 2 ON/OFF
+void bomba2BtnCallback(void *ptr) {
+  Serial.println("💦 Botón BOMBA 2 presionado en HMI");
+  
+  if (estadoActual == MANUAL) {
+    bomba_2_auto = !bomba_2_auto;
+    digitalWrite(BOMBA_2, bomba_2_auto ? HIGH : LOW);
+  }
+}
