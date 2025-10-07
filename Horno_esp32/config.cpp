@@ -33,6 +33,19 @@ bool bombaPrincipalActiva = true;
 unsigned long ultimoCambioBomba = 0;
 unsigned long lastReadTime = 0;
 
+unsigned long TempTanqueTime = 0;
+unsigned long TempHornoTime = 0;
+unsigned long TempCamaraTime = 0;
+unsigned long TempSalidaTime = 0;
+unsigned long Bomba1Time = 0;
+unsigned long Bomba2Time = 0;
+unsigned long Valv1Time = 0;
+unsigned long Valv2Time = 0;
+unsigned long NivelTime = 0;
+unsigned long PresionTime = 0;
+unsigned long EstadoTime = 0;
+
+
 // Variables para manejo de pulsadores
 bool startPressed;
 bool stopPressed;

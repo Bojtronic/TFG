@@ -2,10 +2,16 @@
 #define HMI_H
 
 void actualizarEstadoSistemaHMI();
-void actualizarTemperaturas();
+void actualizarTemperaturaTanque();
+void actualizarTemperaturaHorno();
+void actualizarTemperaturaCamara();
+void actualizarTemperaturaSalida();
 void actualizarNivel();
 void actualizarPresion();
-void actualizarActuadores();
+void actualizarBomba1();
+void actualizarBomba2();
+void actualizarValvula1();
+void actualizarValvula2();
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
 void manualBtnCallback(void *ptr);

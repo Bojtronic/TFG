@@ -33,17 +33,29 @@ void actualizarEstadoSistemaHMI() {
 }
 
 
-void actualizarTemperaturas() {
+void actualizarTemperaturaTanque() {
   char buffer[6];
   
   snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[0]);
   temp1Tanque.setText(buffer);
+}
+
+void actualizarTemperaturaHorno() {
+  char buffer[6];
   
   snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[1]);
   temp2Horno.setText(buffer);
+}
+
+void actualizarTemperaturaCamara() {
+  char buffer[6];
   
   snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[2]); 
   temp3Camara.setText(buffer);
+}
+
+void actualizarTemperaturaSalida() {
+  char buffer[6];
   
   snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[3]);
   temp4Salida.setText(buffer);
@@ -63,12 +75,20 @@ void actualizarPresion() {
   presion.setText(buffer);
 }
 
-void actualizarActuadores() {
-  // Actualizamos textos según estado ON/OFF
-  valvula1Salida.setText(digitalRead(VALVULA_1) ? "ON" : "OFF");
-  valvula2Entrada.setText(digitalRead(VALVULA_2) ? "ON" : "OFF");
+void actualizarBomba1() {
   bomba1.setText(digitalRead(BOMBA_1) ? "ON" : "OFF");
+}
+
+void actualizarBomba2() {
   bomba2.setText(digitalRead(BOMBA_2) ? "ON" : "OFF");
+}
+
+void actualizarValvula1() {
+  valvula1Salida.setText(digitalRead(VALVULA_1) ? "ON" : "OFF");
+}
+
+void actualizarValvula2() {
+  valvula2Entrada.setText(digitalRead(VALVULA_2) ? "ON" : "OFF");
 }
 
 

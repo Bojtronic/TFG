@@ -29,10 +29,8 @@ void setup() {
   bomba2Btn.attachPush(bomba2BtnCallback, &bomba2Btn);
   
 
-  
-
   // Conectar a WiFi
-  //connectToWiFi();
+  connectToWiFi();
   
   
   estadoActual = APAGADO;
@@ -44,7 +42,7 @@ void setup() {
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 }
 
-int numTest = 0;
+//int numTest = 0;
 
 
 // ================= BUCLE PRINCIPAL =================
@@ -61,7 +59,7 @@ void loop() {
   if (now - lastReadTime >= LECTURA_INTERVAL) {
     lastReadTime = now;
     
-    
+    /*
     if(numTest < 4){
       numTest++;
     }
@@ -69,31 +67,82 @@ void loop() {
       numTest = 0;
     }
     testProcesando(numTest);
-    
+    */
     
 
-    //ejecutarPruebas();
+    ejecutarPruebas();
 
     //leerSensores();
     verificarSeguridad();
     controlarSistema();
     
     // Manejo de comunicación con servidor
-    //handleServerCommunication(); 
+    handleServerCommunication(); 
 
-    actualizarEstadoSistemaHMI();
-    actualizarTemperaturas();
-    actualizarNivel();
-    actualizarPresion();
-    actualizarActuadores();
+    
 
     //Serial.println("("**************** PROCESO ****************"); 
   }
+
+
+  if (now - Bomba1Time >= ESCRITURA_BOMBA1_INTERVAL) {
+    Bomba1Time = now;
+    actualizarBomba1();  
+  }
+
+  if (now - Bomba2Time >= ESCRITURA_BOMBA2_INTERVAL) {
+    Bomba2Time = now;
+    actualizarBomba2();  
+  }
+
+  if (now - Valv1Time >= ESCRITURA_VALV1_INTERVAL) {
+    Valv1Time = now;
+    actualizarValvula1();  
+  }
+
+  if (now - Valv2Time >= ESCRITURA_VALV2_INTERVAL) {
+    Valv2Time = now;
+    actualizarValvula2();  
+  }
+
+  if (now - EstadoTime >= ESCRITURA_ESTADO_INTERVAL) {
+    EstadoTime = now;
+    actualizarEstadoSistemaHMI();
+  }
+
+  if (now - NivelTime >= ESCRITURA_NIVEL_INTERVAL) {
+    NivelTime = now;
+    actualizarNivel();  
+  }
+
+  if (now - PresionTime >= ESCRITURA_PRESION_INTERVAL) {
+    PresionTime = now;
+    actualizarPresion();  
+  }
+
+  if (now - TempTanqueTime >= ESCRITURA_TEMPTANQUE_INTERVAL) {
+    TempTanqueTime = now;
+    actualizarTemperaturaTanque();  
+  }
+
+  if (now - TempHornoTime >= ESCRITURA_TEMPHORNO_INTERVAL) {
+    TempHornoTime = now;
+    actualizarTemperaturaHorno();
   
+  }
+
+  if (now - TempCamaraTime >= ESCRITURA_TEMPCAMARA_INTERVAL) {
+    TempCamaraTime = now;
+    actualizarTemperaturaCamara();  
+  }
+
+  if (now - TempSalidaTime >= ESCRITURA_TEMPSALIDA_INTERVAL) {
+    TempSalidaTime = now;
+    actualizarTemperaturaSalida();  
+  }
+
   
   //Serial.println("-------------- LOOP --------------");
-  
-  
   
   delay(10);
   

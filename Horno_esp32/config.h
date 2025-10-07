@@ -57,7 +57,20 @@
 #define PRESION_MINIMA     1.0      // Presión para alerta (bar)
 
 #define INTERVALO_CAMBIO_BOMBA 1200000 // 20 minutos 1200000 milisegundos
-#define LECTURA_INTERVAL 1000        
+#define LECTURA_INTERVAL 1000
+
+#define ESCRITURA_BOMBA1_INTERVAL 2000 
+#define ESCRITURA_BOMBA2_INTERVAL 2200 
+#define ESCRITURA_VALV1_INTERVAL 2400 
+#define ESCRITURA_VALV2_INTERVAL 2600 
+#define ESCRITURA_ESTADO_INTERVAL 2800 
+#define ESCRITURA_TEMPTANQUE_INTERVAL 3300  
+#define ESCRITURA_TEMPHORNO_INTERVAL 3600   
+#define ESCRITURA_TEMPCAMARA_INTERVAL 3900 
+#define ESCRITURA_TEMPSALIDA_INTERVAL 4100 
+#define ESCRITURA_NIVEL_INTERVAL 4400 
+#define ESCRITURA_PRESION_INTERVAL 4700 
+
 
 // ================= CONFIGURACIÓN SERVIDOR =================
 extern const char* ssid;
@@ -132,6 +145,20 @@ extern bool bombaPrincipalActiva;
 extern unsigned long ultimoCambioBomba;
 extern unsigned long lastReadTime;
 
+extern unsigned long TempTanqueTime;
+extern unsigned long TempHornoTime;
+extern unsigned long TempCamaraTime;
+extern unsigned long TempSalidaTime;
+extern unsigned long Bomba1Time;
+extern unsigned long Bomba2Time;
+extern unsigned long Valv1Time;
+extern unsigned long Valv2Time;
+extern unsigned long NivelTime;
+extern unsigned long PresionTime;
+extern unsigned long EstadoTime;
+
+
+
 // Variables comunicación
 extern unsigned long lastSendTime;
 extern unsigned long lastCommandCheck;
@@ -193,10 +220,16 @@ void verificarSeguridad();
 
 // HMI
 void actualizarEstadoSistemaHMI();
-void actualizarTemperaturas();
+void actualizarTemperaturaTanque();
+void actualizarTemperaturaHorno();
+void actualizarTemperaturaCamara();
+void actualizarTemperaturaSalida();
 void actualizarNivel();
 void actualizarPresion();
-void actualizarActuadores();
+void actualizarBomba1();
+void actualizarBomba2();
+void actualizarValvula1();
+void actualizarValvula2();
 void startBtnCallback(void *ptr);
 void stopBtnCallback(void *ptr);
 void manualBtnCallback(void *ptr);
