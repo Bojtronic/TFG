@@ -34,11 +34,10 @@ void actualizarEstadoSistemaHMI() {
 
 
 void actualizarTemperaturas() {
-  // Nextion Numbers: configurar en el editor con 2 decimales
-  temp1Tanque.setValue((int)(temperaturas[0] * 100));
-  temp2Horno.setValue((int)(temperaturas[1] * 100));
-  temp3Camara.setValue((int)(temperaturas[2] * 100));
-  temp4Salida.setValue((int)(temperaturas[3] * 100));
+  temp1Tanque.setValue((int)(temperaturas[0]));
+  temp2Horno.setValue((int)(temperaturas[1]));
+  temp3Camara.setValue((int)(temperaturas[2]));
+  temp4Salida.setValue((int)(temperaturas[3]));
 }
 
 
@@ -48,8 +47,7 @@ void actualizarNivel() {
 
 
 void actualizarPresion() {
-  // Presión como NexNumber con 1 decimal
-  presion.setValue((int)(presionActual * 10));  
+  presion.setValue((int)(presionActual));  
 }
 
 void actualizarActuadores() {

@@ -303,9 +303,11 @@ void ejecutarPruebas() {
       break;
   }
 
+  /*
   actualizarActuadores();
   actualizarPresion();
   actualizarNivel();
   actualizarTemperaturas();
+  */
   
 }

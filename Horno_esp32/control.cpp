@@ -1,6 +1,6 @@
 #include "config.h"
 #include "control.h"
-#include "hmi.h"
+//#include "hmi.h"
 
 // ================= FUNCIONES DE CONTROL PRINCIPAL =================
 
@@ -40,7 +40,6 @@ void controlarSistema() {
       detenerSistema();
       break;
   }
-  actualizarActuadores(); // Actualizar en HMI
 }
 
 void iniciarSistema() {

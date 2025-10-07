@@ -6,10 +6,13 @@
 #include "comunicacion.h"
 #include "test.h"
 
+
 // ================= CONFIGURACIÓN INICIAL =================
 void setup() {
   Serial.begin(115200);
-  nextionSerial.begin(9600, SERIAL_8N1, NEXTION_TX, NEXTION_RX);
+  delay(1500);
+
+  nextionSerial.begin(9600, SERIAL_8N1, NEXTION_RX, NEXTION_TX);
   
   configurarPines();
   nexInit();
@@ -27,8 +30,7 @@ void setup() {
 
   
   // Conectar a WiFi
-  connectToWiFi();
-  
+  //connectToWiFi();
   
   
   //actualizarEstadoSistemaHMI(); // esto se podria reemplazar con la funcion mensajesHMI(ESTADO) pero depende del layout en el hmi
@@ -42,6 +44,7 @@ void setup() {
 }
 
 //int numTest = 0;
+
 
 // ================= BUCLE PRINCIPAL =================
 void loop() {
@@ -63,15 +66,41 @@ void loop() {
     }
     testProcesando(numTest);
     */
+    
 
-    //ejecutarPruebas();
+    ejecutarPruebas();
 
-    leerSensores();
+    //leerSensores();
     verificarSeguridad();
     controlarSistema();
     
     // Manejo de comunicación con servidor
-    handleServerCommunication(); 
+    //handleServerCommunication(); 
+
+    
+    actualizarEstadoSistemaHMI();
+    actualizarTemperaturas();
+    actualizarNivel();
+    actualizarPresion();
+    actualizarActuadores();
+
+    Serial.print("Temp tanque: ");
+    Serial.println(temperaturas[0]);
+
+    Serial.print("Temp horno: ");
+    Serial.println(temperaturas[1]);
+
+    Serial.print("Temp camara: ");
+    Serial.println(temperaturas[2]);
+
+    Serial.print("Temp salida: ");
+    Serial.println(temperaturas[3]);
+
+    Serial.print("Nivel tanque: ");
+    Serial.println(nivelTanque);
+
+    Serial.print("Presion: ");
+    Serial.println(presionActual);
 
     //Serial.println("("**************** PROCESO ****************"); 
   }
@@ -81,3 +110,5 @@ void loop() {
   
   delay(10);
 }
+
+
