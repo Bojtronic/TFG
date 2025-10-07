@@ -19,7 +19,7 @@ void actualizarEstadoSistemaHMI() {
       estadoStr = "PROCESANDO";
       break;
     case EMERGENCIA:
-      estadoStr = "EMERGENCIA!";
+      estadoStr = "EMERGENCIA";
       break;
     case MANUAL:
       estadoStr = "MANUAL";
@@ -34,20 +34,33 @@ void actualizarEstadoSistemaHMI() {
 
 
 void actualizarTemperaturas() {
-  temp1Tanque.setValue((int)(temperaturas[0]));
-  temp2Horno.setValue((int)(temperaturas[1]));
-  temp3Camara.setValue((int)(temperaturas[2]));
-  temp4Salida.setValue((int)(temperaturas[3]));
+  char buffer[6];
+  
+  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[0]);
+  temp1Tanque.setText(buffer);
+  
+  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[1]);
+  temp2Horno.setText(buffer);
+  
+  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[2]); 
+  temp3Camara.setText(buffer);
+  
+  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[3]);
+  temp4Salida.setText(buffer);
 }
 
 
 void actualizarNivel() {
-  nivel.setValue((int)(nivelTanque));  
+  char buffer[6];
+  snprintf(buffer, sizeof(buffer), "%d", nivelTanque);
+  nivel.setText(buffer);
 }
 
 
 void actualizarPresion() {
-  presion.setValue((int)(presionActual));  
+  char buffer[6];
+  snprintf(buffer, sizeof(buffer), "%.1f", presionActual);
+  presion.setText(buffer);
 }
 
 void actualizarActuadores() {

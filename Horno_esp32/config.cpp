@@ -53,27 +53,27 @@ HardwareSerial nextionSerial(2);
 
 // Componentes Nextion
 NexPage mainPage = NexPage(0, 0, "page0");
-NexNumber temp1Tanque = NexNumber(0, 19, "x0");  // Temp tanque
-NexNumber temp2Horno = NexNumber(0, 20, "x1");  // Temp horno
-NexNumber temp3Camara = NexNumber(0, 21, "x2");  // Temp cámara
-NexNumber temp4Salida = NexNumber(0, 22, "x3");  // Temp salida
-NexNumber presion = NexNumber(0, 23, "x4");
-NexNumber nivel = NexNumber(0, 24, "n0");
+NexText temp1Tanque = NexText(0, 32, "t24");  // Temp tanque
+NexText temp2Horno = NexText(0, 33, "t25");  // Temp horno
+NexText temp3Camara = NexText(0, 34, "t26");  // Temp cámara
+NexText temp4Salida = NexText(0, 35, "t27");  // Temp salida
+NexText presion = NexText(0, 37, "t29");
+NexText nivel = NexText(0, 36, "t28");
 NexText estado = NexText(0, 15, "t14");
-NexText valvula1Salida = NexText(0, 30, "t20");
-NexText valvula2Entrada = NexText(0, 31, "t21");
-NexText bomba1 = NexText(0, 32, "t22");
-NexText bomba2 = NexText(0, 33, "t23");
+NexText valvula1Salida = NexText(0, 24, "t20");
+NexText valvula2Entrada = NexText(0, 25, "t21");
+NexText bomba1 = NexText(0, 26, "t22");
+NexText bomba2 = NexText(0, 27, "t23");
+
 NexButton startBtn = NexButton(0, 16, "b0");  // pagina, id, nombre
 NexButton stopBtn = NexButton(0, 17, "b1");    // pagina, id, nombre
 NexButton manualBtn = NexButton(0, 18, "b2"); // pagina, id, nombre
+NexButton valvula1Btn = NexButton(0, 28, "b3");
+NexButton valvula2Btn = NexButton(0, 29, "b4");
+NexButton bomba1Btn = NexButton(0, 30, "b5");
+NexButton bomba2Btn = NexButton(0, 31, "b6");
 
-NexButton valvula1Btn = NexButton(0, 34, "b3");
-NexButton valvula2Btn = NexButton(0, 35, "b4");
-NexButton bomba1Btn = NexButton(0, 36, "b5");
-NexButton bomba2Btn = NexButton(0, 37, "b6");
-
-NexTouch* nex_listen_list[] = {
+NexTouch *nex_listen_list[] = {
   &startBtn,
   &stopBtn,
   &manualBtn,
@@ -107,7 +107,7 @@ void configurarPines() {
   digitalWrite(BOMBA_2, LOW);
 
   // Configurar botones 
-  pinMode(START_BTN, INPUT_PULLUP);
+  pinMode(START_BTN, INPUT);
   pinMode(STOP_BTN, INPUT);
   pinMode(MANUAL_BTN, INPUT); 
 }

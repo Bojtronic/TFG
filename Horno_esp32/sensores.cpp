@@ -1,6 +1,5 @@
 #include "sensores.h"
 #include "config.h"
-//#include "hmi.h"
 
 // Variables globales definidas en 
 extern Adafruit_MAX31855 thermocouple1;

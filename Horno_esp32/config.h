@@ -140,12 +140,12 @@ extern int messageCount;
 // HMI Nextion
 extern HardwareSerial nextionSerial;
 extern NexPage mainPage;
-extern NexNumber temp1Tanque;
-extern NexNumber temp2Horno;
-extern NexNumber temp3Camara;
-extern NexNumber temp4Salida;
-extern NexNumber nivel;
-extern NexNumber presion;
+extern NexText temp1Tanque;
+extern NexText temp2Horno;
+extern NexText temp3Camara;
+extern NexText temp4Salida;
+extern NexText nivel;
+extern NexText presion;
 extern NexText estado;
 extern NexText valvula1Salida;
 extern NexText valvula2Entrada;
@@ -163,17 +163,6 @@ extern NexButton bomba2Btn;   // id 37, name b6
 
 extern NexTouch *nex_listen_list[];
 
-//boton on/off valvula 1
-//id 34, name b3
-
-//boton on/off valvula 2
-//id 35, name b4
-
-//boton on/off bomba 1
-//id 36, name b5
-
-//boton on/off bomba 2
-//id 37, name b6
 
 // ================= DECLARACIONES DE FUNCIONES =================
 // Configuración
@@ -222,10 +211,5 @@ void connectToWiFi();
 void checkForCommands();
 void sendSystemData();
 void handleServerCommunication();
-
-// Callbacks Nextion
-void startBtnCallback(void *ptr);
-void stopBtnCallback(void *ptr);
-void manualBtnCallback(void *ptr);
 
 #endif
