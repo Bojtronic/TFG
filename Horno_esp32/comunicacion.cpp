@@ -8,28 +8,38 @@
 
 void connectToWiFi()
 {
-  Serial.print("Conectando a WiFi");
-  WiFi.begin(ssid, password);
+  static unsigned long lastAttemptTime = 0;
+  const unsigned long ATTEMPT_INTERVAL = 200; // ms entre intentos
+  const int MAX_ATTEMPTS = 20;
+  static int attempts = 0;
 
-  int attempts = 0;
-  while (WiFi.status() != WL_CONNECTED && attempts < 20)
-  {
-    delay(500);
-    Serial.print(".");
-    attempts++;
-  }
+  // Iniciar conexión solo si no está conectado
+  if (WiFi.status() != WL_CONNECTED) {
+    if (attempts == 0) {
+      Serial.print("Conectando a WiFi");
+      WiFi.begin(ssid, password);
+    }
 
-  if (WiFi.status() == WL_CONNECTED)
-  {
-    Serial.println("\n✅ WiFi conectado");
-    Serial.print("📶 RSSI: ");
-    Serial.println(WiFi.RSSI());
-  }
-  else
-  {
-    Serial.println("\n❌ Error: No se pudo conectar a WiFi");
+    unsigned long now = millis();
+    if (now - lastAttemptTime >= ATTEMPT_INTERVAL) {
+      lastAttemptTime = now;
+      Serial.print(".");
+      attempts++;
+
+      if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("\n✅ WiFi conectado");
+        Serial.print("📶 RSSI: ");
+        Serial.println(WiFi.RSSI());
+        attempts = 0; // resetear para la próxima desconexión
+      }
+      else if (attempts >= MAX_ATTEMPTS) {
+        Serial.println("\n❌ No se pudo conectar a WiFi");
+        attempts = 0; // resetear para intentar después
+      }
+    }
   }
 }
+
 
 void checkForCommands()
 {
