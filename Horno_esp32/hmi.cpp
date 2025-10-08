@@ -5,154 +5,244 @@
 
 // ================= FUNCIONES DE ACTUALIZACIÓN =================
 
-void actualizarEstadoSistemaHMI() {
-  const char* estadoStr;
+void actualizarEstadoSistemaHMI()
+{
+  static char lastEstado[10] = "";
+  const char *estadoStr;
 
-  switch (estadoActual) {
-    case APAGADO:
-      estadoStr = "APAGADO";
-      break;
-    case DETENER:
-      estadoStr = "DETENER";
-      break;
-    case PROCESANDO:
-      estadoStr = "PROCESANDO";
-      break;
-    case EMERGENCIA:
-      estadoStr = "EMERGENCIA";
-      break;
-    case MANUAL:
-      estadoStr = "MANUAL";
-      break;
-    default:
-      estadoStr = "DESCONOCIDO";
-      break;
+  switch (estadoActual)
+  {
+  case APAGADO:
+    estadoStr = "APAGADO";
+    break;
+  case DETENER:
+    estadoStr = "DETENER";
+    break;
+  case PROCESANDO:
+    estadoStr = "PROCESANDO";
+    break;
+  case EMERGENCIA:
+    estadoStr = "EMERGENCIA";
+    break;
+  case MANUAL:
+    estadoStr = "MANUAL";
+    break;
+  default:
+    estadoStr = "DESCONOCIDO";
+    break;
   }
 
-  estado.setText(estadoStr);  
+  if (strcmp(lastEstado, estadoStr) != 0)
+  {
+    estado.setText(estadoStr);
+    strcpy(lastEstado, estadoStr);
+  }
 }
 
-
-void actualizarTemperaturaTanque() {
-  char buffer[6];
-  
-  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[0]);
-  temp1Tanque.setText(buffer);
+void actualizarTemperaturaTanque()
+{
+  static float lastTanqueTemp = -2000;
+  if (temperaturas[0] != lastTanqueTemp)
+  {
+    char buffer[6];
+    snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[0]);
+    temp1Tanque.setText(buffer);
+    lastTanqueTemp = temperaturas[0];
+  }
 }
 
-void actualizarTemperaturaHorno() {
-  char buffer[6];
-  
-  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[1]);
-  temp2Horno.setText(buffer);
+void actualizarTemperaturaHorno()
+{
+  static float lastHornoTemp = -2000;
+  if (temperaturas[1] != lastHornoTemp)
+  {
+    char buffer[6];
+    snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[1]);
+    temp2Horno.setText(buffer);
+    lastHornoTemp = temperaturas[1];
+  }
 }
 
-void actualizarTemperaturaCamara() {
-  char buffer[6];
-  
-  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[2]); 
-  temp3Camara.setText(buffer);
+void actualizarTemperaturaCamara()
+{
+  static float lastCamaraTemp = -2000;
+  if (temperaturas[2] != lastCamaraTemp)
+  {
+    char buffer[6];
+    snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[2]);
+    temp3Camara.setText(buffer);
+    lastCamaraTemp = temperaturas[2];
+  }
 }
 
-void actualizarTemperaturaSalida() {
-  char buffer[6];
-  
-  snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[3]);
-  temp4Salida.setText(buffer);
+void actualizarTemperaturaSalida()
+{
+  static float lastSalidaTemp = -2000;
+  if (temperaturas[3] != lastSalidaTemp)
+  {
+    char buffer[6];
+    snprintf(buffer, sizeof(buffer), "%.2f", temperaturas[3]);
+    temp4Salida.setText(buffer);
+    lastSalidaTemp = temperaturas[3];
+  }
 }
 
-
-void actualizarNivel() {
-  char buffer[6];
-  snprintf(buffer, sizeof(buffer), "%d", nivelTanque);
-  nivel.setText(buffer);
+void actualizarNivel()
+{
+  static int lastNivel = -1;
+  if (nivelTanque != lastNivel)
+  {
+    char buffer[6];
+    snprintf(buffer, sizeof(buffer), "%d", nivelTanque);
+    nivel.setText(buffer);
+    lastNivel = nivelTanque;
+  }
 }
 
+void actualizarPresion()
+{
 
-void actualizarPresion() {
-  char buffer[6];
-  snprintf(buffer, sizeof(buffer), "%.1f", presionActual);
-  presion.setText(buffer);
+  static int lastPresion = -1;
+  if (presionActual != lastPresion)
+  {
+    char buffer[6];
+    snprintf(buffer, sizeof(buffer), "%d", presionActual);
+    presion.setText(buffer);
+    lastPresion = presionActual;
+  }
 }
 
-void actualizarBomba1() {
-  bomba1.setText(digitalRead(BOMBA_1) ? "ON" : "OFF");
+void actualizarBomba1()
+{
+  // bomba1.setText(digitalRead(BOMBA_1) ? "ON" : "OFF");
+
+  static bool lastBomba1State = false;
+  bool current = digitalRead(BOMBA_1);
+
+  if (current != lastBomba1State)
+  {
+    bomba1.setText(current ? "ON" : "OFF");
+    lastBomba1State = current;
+  }
 }
 
-void actualizarBomba2() {
-  bomba2.setText(digitalRead(BOMBA_2) ? "ON" : "OFF");
+void actualizarBomba2()
+{
+  // bomba2.setText(digitalRead(BOMBA_2) ? "ON" : "OFF");
+
+  static bool lastBomba2State = false;
+  bool current = digitalRead(BOMBA_2);
+
+  if (current != lastBomba2State)
+  {
+    bomba2.setText(current ? "ON" : "OFF");
+    lastBomba2State = current;
+  }
 }
 
-void actualizarValvula1() {
-  valvula1Salida.setText(digitalRead(VALVULA_1) ? "ON" : "OFF");
+void actualizarValvula1()
+{
+  // valvula1Salida.setText(digitalRead(VALVULA_1) ? "ON" : "OFF");
+
+  static bool lastValv1State = false;
+  bool current = digitalRead(VALVULA_1);
+
+  if (current != lastValv1State)
+  {
+    valvula1Salida.setText(current ? "ON" : "OFF");
+    lastValv1State = current;
+  }
 }
 
-void actualizarValvula2() {
-  valvula2Entrada.setText(digitalRead(VALVULA_2) ? "ON" : "OFF");
-}
+void actualizarValvula2()
+{
+  // valvula2Entrada.setText(digitalRead(VALVULA_2) ? "ON" : "OFF");
 
+  static bool lastValv2State = false;
+  bool current = digitalRead(VALVULA_2);
+
+  if (current != lastValv2State)
+  {
+    valvula2Entrada.setText(current ? "ON" : "OFF");
+    lastValv2State = current;
+  }
+}
 
 // ================= CALLBACKS DE BOTONES =================
 
-void startBtnCallback(void *ptr) {
+void startBtnCallback(void *ptr)
+{
   Serial.println("🟢 Botón START presionado en HMI");
 
-  if (estadoActual != EMERGENCIA && estadoActual != APAGADO) {
+  if (estadoActual != EMERGENCIA && estadoActual != APAGADO)
+  {
     estadoActual = PROCESANDO;
   }
 }
 
-void stopBtnCallback(void *ptr) {
+void stopBtnCallback(void *ptr)
+{
   Serial.println("🔴 Botón STOP presionado en HMI");
 
-  if (estadoActual != EMERGENCIA && estadoActual != APAGADO) {
+  if (estadoActual != EMERGENCIA && estadoActual != APAGADO)
+  {
     estadoActual = DETENER;
   }
 }
 
-void manualBtnCallback(void *ptr) {
+void manualBtnCallback(void *ptr)
+{
   Serial.println("🔄 Botón MANUAL presionado en HMI");
 
-  if (estadoActual != EMERGENCIA && estadoActual != APAGADO) {
+  if (estadoActual != EMERGENCIA && estadoActual != APAGADO)
+  {
     estadoActual = MANUAL;
   }
 }
 
 // Válvula 1 ON/OFF
-void valvula1BtnCallback(void *ptr) {
+void valvula1BtnCallback(void *ptr)
+{
   Serial.println("💧 Botón VÁLVULA 1 presionado en HMI");
-  
-  if (estadoActual == MANUAL) {
-    valvula_1_auto = !valvula_1_auto;  // Alternar estado
+
+  if (estadoActual == MANUAL)
+  {
+    valvula_1_auto = !valvula_1_auto; // Alternar estado
     digitalWrite(VALVULA_1, valvula_1_auto ? HIGH : LOW);
   }
 }
 
 // Válvula 2 ON/OFF
-void valvula2BtnCallback(void *ptr) {
+void valvula2BtnCallback(void *ptr)
+{
   Serial.println("💧 Botón VÁLVULA 2 presionado en HMI");
-  
-  if (estadoActual == MANUAL) {
+
+  if (estadoActual == MANUAL)
+  {
     valvula_2_auto = !valvula_2_auto;
     digitalWrite(VALVULA_2, valvula_2_auto ? HIGH : LOW);
   }
 }
 
 // Bomba 1 ON/OFF
-void bomba1BtnCallback(void *ptr) {
+void bomba1BtnCallback(void *ptr)
+{
   Serial.println("💦 Botón BOMBA 1 presionado en HMI");
-  
-  if (estadoActual == MANUAL) {
+
+  if (estadoActual == MANUAL)
+  {
     bomba_1_auto = !bomba_1_auto;
     digitalWrite(BOMBA_1, bomba_1_auto ? HIGH : LOW);
   }
 }
 
 // Bomba 2 ON/OFF
-void bomba2BtnCallback(void *ptr) {
+void bomba2BtnCallback(void *ptr)
+{
   Serial.println("💦 Botón BOMBA 2 presionado en HMI");
-  
-  if (estadoActual == MANUAL) {
+
+  if (estadoActual == MANUAL)
+  {
     bomba_2_auto = !bomba_2_auto;
     digitalWrite(BOMBA_2, bomba_2_auto ? HIGH : LOW);
   }
