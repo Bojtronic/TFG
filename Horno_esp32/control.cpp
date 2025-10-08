@@ -1,6 +1,5 @@
 #include "config.h"
 #include "control.h"
-//#include "hmi.h"
 
 // ================= FUNCIONES DE CONTROL PRINCIPAL =================
 

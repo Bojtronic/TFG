@@ -2,7 +2,6 @@
 #include "sensores.h"
 #include "control.h"
 #include "seguridad.h"
-//#include "hmi.h"
 #include "comunicacion.h"
 #include "test.h"
 
