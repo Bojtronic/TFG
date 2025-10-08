@@ -206,7 +206,7 @@ void ejecutarPruebas() {
   static unsigned long inicioSubprueba = millis();
 
   // Tiempo por subprueba individual
-  if (millis() - inicioSubprueba > 15000) {  // 15 segundos por subprueba
+  if (millis() - inicioSubprueba > 20000) {  // 15 segundos por subprueba
     subprueba++;
     inicioSubprueba = millis();
     
@@ -302,12 +302,5 @@ void ejecutarPruebas() {
       testManual(); // Solo 1 prueba para MANUAL
       break;
   }
-
-  /*
-  actualizarActuadores();
-  actualizarPresion();
-  actualizarNivel();
-  actualizarTemperaturas();
-  */
   
 }

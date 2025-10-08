@@ -9,7 +9,7 @@
 void connectToWiFi()
 {
   static unsigned long lastAttemptTime = 0;
-  const unsigned long ATTEMPT_INTERVAL = 200; // ms entre intentos
+  const unsigned long ATTEMPT_INTERVAL = 2000; // ms entre intentos
   const int MAX_ATTEMPTS = 20;
   static int attempts = 0;
 
@@ -52,11 +52,11 @@ void checkForCommands()
   Serial.println("🔍 Consultando comandos...");
 
   client.setInsecure();
-  client.setTimeout(5000); // B. Timeout reducido
+  client.setTimeout(7000); // B. Timeout reducido
 
   if (http.begin(client, commandsURL)) // A. Reutilización
   {
-    http.setTimeout(5000); // B. Timeout reducido
+    http.setTimeout(7000); // B. Timeout reducido
 
     int httpCode = http.GET(); // C. Un solo intento
     Serial.print("📡 Código HTTP: ");
@@ -219,12 +219,12 @@ void sendSystemData()
   HTTPClient http;
 
   client.setInsecure();
-  client.setTimeout(5000); // si la conectividad es buena (internet rapido y servidor estable) es mejor disminuir este tiempo, sino se debe aumentar pero realentiza el sistema
+  client.setTimeout(7000); // si la conectividad es buena (internet rapido y servidor estable) es mejor disminuir este tiempo, sino se debe aumentar pero realentiza el sistema
 
   if (http.begin(client, serverURL))
   {
     http.addHeader("Content-Type", "application/json");
-    http.setTimeout(5000); // si la conectividad es buena (internet rapido y servidor estable) es mejor disminuir este tiempo, sino se debe aumentar pero realentiza el sistema
+    http.setTimeout(7000); // si la conectividad es buena (internet rapido y servidor estable) es mejor disminuir este tiempo, sino se debe aumentar pero realentiza el sistema
 
     messageCount++;
 
@@ -279,7 +279,14 @@ void handleServerCommunication()
 {
   static unsigned long lastCommTime = 0;
   static bool sendDataNext = true;          // Alternar entre envío y recepción
-  const unsigned long COMM_INTERVAL = 5000; 
+  const unsigned long COMM_INTERVAL = 3000; 
+
+  // Reconexión WiFi si es necesario (se mantiene igual)
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("⚠️  WiFi desconectado, reconectando...");
+    connectToWiFi();
+  }
 
   // Verificar si es tiempo de comunicación
   if (millis() - lastCommTime >= COMM_INTERVAL)
@@ -307,10 +314,4 @@ void handleServerCommunication()
     sendDataNext = !sendDataNext;
   }
 
-  // Reconexión WiFi si es necesario (se mantiene igual)
-  if (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.println("⚠️  WiFi desconectado, reconectando...");
-    connectToWiFi();
-  }
 }
