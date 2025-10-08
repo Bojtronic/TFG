@@ -7,7 +7,6 @@
 
 void actualizarEstadoSistemaHMI()
 {
-  static char lastEstado[10] = "";
   const char *estadoStr;
 
   switch (estadoActual)
@@ -41,7 +40,6 @@ void actualizarEstadoSistemaHMI()
 
 void actualizarTemperaturaTanque()
 {
-  static float lastTanqueTemp = -2000;
   if (temperaturas[0] != lastTanqueTemp)
   {
     char buffer[6];
@@ -53,7 +51,6 @@ void actualizarTemperaturaTanque()
 
 void actualizarTemperaturaHorno()
 {
-  static float lastHornoTemp = -2000;
   if (temperaturas[1] != lastHornoTemp)
   {
     char buffer[6];
@@ -65,7 +62,6 @@ void actualizarTemperaturaHorno()
 
 void actualizarTemperaturaCamara()
 {
-  static float lastCamaraTemp = -2000;
   if (temperaturas[2] != lastCamaraTemp)
   {
     char buffer[6];
@@ -77,7 +73,6 @@ void actualizarTemperaturaCamara()
 
 void actualizarTemperaturaSalida()
 {
-  static float lastSalidaTemp = -2000;
   if (temperaturas[3] != lastSalidaTemp)
   {
     char buffer[6];
@@ -89,7 +84,6 @@ void actualizarTemperaturaSalida()
 
 void actualizarNivel()
 {
-  static int lastNivel = -1;
   if (nivelTanque != lastNivel)
   {
     char buffer[6];
@@ -102,7 +96,6 @@ void actualizarNivel()
 void actualizarPresion()
 {
 
-  static int lastPresion = -1;
   if (presionActual != lastPresion)
   {
     char buffer[6];
@@ -114,9 +107,6 @@ void actualizarPresion()
 
 void actualizarBomba1()
 {
-  // bomba1.setText(digitalRead(BOMBA_1) ? "ON" : "OFF");
-
-  static bool lastBomba1State = false;
   bool current = digitalRead(BOMBA_1);
 
   if (current != lastBomba1State)
@@ -128,9 +118,6 @@ void actualizarBomba1()
 
 void actualizarBomba2()
 {
-  // bomba2.setText(digitalRead(BOMBA_2) ? "ON" : "OFF");
-
-  static bool lastBomba2State = false;
   bool current = digitalRead(BOMBA_2);
 
   if (current != lastBomba2State)
@@ -142,9 +129,6 @@ void actualizarBomba2()
 
 void actualizarValvula1()
 {
-  // valvula1Salida.setText(digitalRead(VALVULA_1) ? "ON" : "OFF");
-
-  static bool lastValv1State = false;
   bool current = digitalRead(VALVULA_1);
 
   if (current != lastValv1State)
@@ -156,9 +140,6 @@ void actualizarValvula1()
 
 void actualizarValvula2()
 {
-  // valvula2Entrada.setText(digitalRead(VALVULA_2) ? "ON" : "OFF");
-
-  static bool lastValv2State = false;
   bool current = digitalRead(VALVULA_2);
 
   if (current != lastValv2State)

@@ -30,6 +30,8 @@ EstadoSistema estadoActual = APAGADO;
 MensajeSistema mensajeActual = APAGADO_0;
 bool emergencia = false;
 bool bombaPrincipalActiva = true;
+
+// ===== TIMERS GLOBALES =====
 unsigned long ultimoCambioBomba = 0;
 unsigned long lastReadTime = 0;
 
@@ -44,6 +46,20 @@ unsigned long Valv2Time = 0;
 unsigned long NivelTime = 0;
 unsigned long PresionTime = 0;
 unsigned long EstadoTime = 0;
+
+// ================= VARIABLES PARA ALMACENAR EL ULTIMO VALOR MOSTRADO =================
+char lastEstado[10] = "";
+float lastTanqueTemp = -2000;
+float lastHornoTemp = -2000;
+float lastCamaraTemp = -2000;
+float lastSalidaTemp = -2000;
+int lastNivel = -1;
+float lastPresion = -1;
+bool lastBomba1State = false;
+bool lastBomba2State = false;
+bool lastValv1State = false;
+bool lastValv2State = false;
+
 
 
 // Variables para manejo de pulsadores

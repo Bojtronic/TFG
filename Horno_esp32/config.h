@@ -142,6 +142,8 @@ extern EstadoSistema estadoActual;
 extern MensajeSistema mensajeActual;
 extern bool emergencia;
 extern bool bombaPrincipalActiva;
+
+// ===== TIMERS GLOBALES =====
 extern unsigned long ultimoCambioBomba;
 extern unsigned long lastReadTime;
 
@@ -157,7 +159,18 @@ extern unsigned long NivelTime;
 extern unsigned long PresionTime;
 extern unsigned long EstadoTime;
 
-
+// ================= VARIABLES PARA ALMACENAR EL ULTIMO VALOR MOSTRADO =================
+extern char lastEstado[10];
+extern float lastTanqueTemp;
+extern float lastHornoTemp;
+extern float lastCamaraTemp;
+extern float lastSalidaTemp;
+extern int lastNivel;
+extern float lastPresion;
+extern bool lastBomba1State;
+extern bool lastBomba2State;
+extern bool lastValv1State;
+extern bool lastValv2State;
 
 // Variables comunicación
 extern unsigned long lastSendTime;
