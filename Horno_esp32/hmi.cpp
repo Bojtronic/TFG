@@ -99,7 +99,7 @@ void actualizarPresion()
   if (presionActual != lastPresion)
   {
     char buffer[6];
-    snprintf(buffer, sizeof(buffer), "%d", presionActual);
+    snprintf(buffer, sizeof(buffer), "%.2f", presionActual);
     presion.setText(buffer);
     lastPresion = presionActual;
   }

@@ -51,7 +51,7 @@ void loop() {
   nexLoop(nex_listen_list);
   
   
-  //leerPulsadores();
+  leerPulsadores();
 
   unsigned long now = millis();
 
@@ -69,9 +69,9 @@ void loop() {
     */
     
 
-    ejecutarPruebas();
+    //ejecutarPruebas();
 
-    //leerSensores();
+    leerSensores();
     verificarSeguridad();
     controlarSistema();
     
