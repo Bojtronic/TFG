@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Horno ECOVIEW</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h2><i class="fas fa-fire"></i>Control del Horno de Biomasa</h2>
+      <h1>ECOVIEW</h1>
+    </header>
+
+    <div class="dashboard">
+      <!-- Panel de Temperaturas -->
+      <div class="panel">
+        <h2><i class="fas fa-thermometer-half"></i>Temperaturas</h2>
+        <div class="sensor-grid">
+          <div class="sensor-item" id="temp-tanque">
+            <span class="sensor-label">Tanque de Agua</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
+          </div>
+          <div class="sensor-item" id="temp-horno">
+            <span class="sensor-label">Horno</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
+          </div>
+          <div class="sensor-item" id="temp-camara">
+            <span class="sensor-label">Cámara de Humo</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
+          </div>
+          <div class="sensor-item" id="temp-salida">
+            <span class="sensor-label">Salida de Agua para el usuario</span>
+            <div class="sensor-value">-- <span class="sensor-unit">°C</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Niveles y Presión -->
+      <div class="panel">
+        <h2><i class="fas fa-tachometer-alt"></i> Nivel y Presión</h2>
+        <div class="sensor-grid">
+          <div class="sensor-item" id="nivel-tanque">
+            <span class="sensor-label">Nivel de agua en el tanque</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
+          </div>
+          <!-- 
+          <div class="sensor-item" id="nivel-vacio">
+            <span class="sensor-label">Nivel Vacío</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
+          </div>
+          <div class="sensor-item" id="nivel-mitad">
+            <span class="sensor-label">Nivel Mitad</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
+          </div>
+          <div class="sensor-item" id="nivel-lleno">
+            <span class="sensor-label">Nivel Lleno</span>
+            <div class="sensor-value">-- <span class="sensor-unit">%</span></div>
+          </div>
+          -->
+          <div class="sensor-item" id="presion">
+            <span class="sensor-label">Presión de agua fria disponible</span>
+            <div class="sensor-value">-- <span class="sensor-unit">bar</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Control -->
+      <div class="panel">
+        <h2>
+          <i class="fas fa-cogs"></i> Control de Actuadores
+        </h2>
+        
+
+        <div>
+          <span class="warning-inline" id="text-warning">
+            Considerar que hay transmision de datos cada 8 segundos y se pueden hacer cambios desde la HMI.
+            Despues de activar/desactivar un actuador, esperar 8 segundos para volver a cambiar su estado o cambiar otro switch.
+            Si ha cambiado un switch, ignorar los cambios que se den durante esos 8 segundos, debido a que se estan recibiendo datos del ESP32.
+            En ocasiones puede coincidir el envio del comando con la recepcion de datos, por lo que posiblemente debe enviar de nuevo el comando.
+          </span>
+        </div>
+
+        <div class="control-header">
+          <span class="warning-inline" id="manual-warning">
+            <i class="fas fa-exclamation-triangle"></i> Configurables solo en estado MANUAL
+          </span>
+        </div>
+        
+        <div class="control-panel">
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Válvula Agua Caliente</span>
+              <span class="control-state" id="valv1-state">Cerrada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="valv1-switch">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Válvula Agua Fría</span>
+              <span class="control-state" id="valv2-state">Cerrada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="valv2-switch">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Bomba Principal</span>
+              <span class="control-state" id="bomba1-state">Apagada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="bomba1-switch">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="control-item">
+            <div class="control-info">
+              <span class="control-label">Bomba Redundante</span>
+              <span class="control-state" id="bomba2-state">Apagada</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="bomba2-switch">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- <button id="btn-send-all">Enviar configuración de actuadores</button> -->
+
+        </div>
+      </div>
+
+      <!-- Panel de Estado -->
+      <div class="panel">
+        <h2><i class="fas fa-info-circle"></i> Estado del Sistema</h2>
+        <div class="status-panel">
+          <div class="status-item">
+            <span class="status-label">Estado Actual:</span>
+            <span class="status-value status-apagado" id="system-state">APAGADO</span>
+          </div>
+
+          <div class="status-item">
+            <span class="status-label">Última Actualización:</span>
+            <span class="status-value" id="last-update">--</span>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-start" id="btn-start"><i class="fas fa-play"></i>Iniciar automatico</button>
+          <button class="btn btn-stop" id="btn-stop"><i class="fas fa-stop"></i>Detener/Apagar</button>
+          <button class="btn btn-manual" id="btn-manual"><i class="fas fa-hand-paper"></i>Manual</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensajes del Sistema -->
+    <div class="panel">
+      <h2><i class="fas fa-comment-alt"></i> Mensajes del Sistema</h2>
+      <div class="message-log" id="message-log">
+        <div class="log-entry"><span class="log-time">00:00:00</span> Sistema inicializado</div>
+      </div>
+    </div>
+
+    <!-- Estado de Conexión -->
+    <div class="connection-status">
+      <span id="connection-status" class="status-offline"><i class="fas fa-plug"></i> Desconectado</span>
+      <span id="broker-status">Servidor: Conectado</span>
+    </div>
+
+    <div class="logo-container">
+      <img src="/images/logo.png" alt="ECOVIEW Logo" class="logo">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
