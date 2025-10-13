@@ -3,11 +3,9 @@
 
 #include <Adafruit_MAX31855.h>
 
-// Inicialización
-void inicializarTermocuplas();
-
-// Lectura de sensores
 void leerSensores();
+void inicializarTermocuplas();
+bool verificarSensoresTemperatura();
 void leerTemperaturas();
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero);
 void leerPresion();

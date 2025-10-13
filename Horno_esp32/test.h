@@ -1,8 +1,6 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include "config.h"
-
 // Prueba de conexion
 void testServerConnection();
 
@@ -13,7 +11,7 @@ void testDetener(int caso);
 void testManual();
 void testEmergencia(int caso);
 
-// Controlador de pruebas (ejecuta cada escenario 10s)
+// Controlador de pruebas (ejecuta cada escenario Xs)
 void ejecutarPruebas();
 
 #endif

@@ -3,6 +3,7 @@
 #include "control.h"
 #include "seguridad.h"
 #include "comunicacion.h"
+#include "hmi.h"
 #include "test.h"
 
 
@@ -31,8 +32,6 @@ void setup() {
   // Conectar a WiFi
   connectToWiFi();
   
-  
-  estadoActual = APAGADO;
 
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");

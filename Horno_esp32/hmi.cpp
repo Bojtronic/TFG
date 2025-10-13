@@ -1,7 +1,5 @@
-#include "hmi.h"
 #include "config.h"
-#include "control.h"
-#include "seguridad.h"
+#include "hmi.h"
 
 // ================= FUNCIONES DE ACTUALIZACIÓN =================
 
@@ -95,7 +93,6 @@ void actualizarNivel()
 
 void actualizarPresion()
 {
-
   if (presionActual != lastPresion)
   {
     char buffer[6];
@@ -153,8 +150,7 @@ void actualizarValvula2()
 
 void startBtnCallback(void *ptr)
 {
-  Serial.println("🟢 Botón START presionado en HMI");
-
+  //Serial.println("🟢 Botón START presionado en HMI");
   if (estadoActual != EMERGENCIA && estadoActual != APAGADO)
   {
     estadoActual = PROCESANDO;
@@ -163,8 +159,7 @@ void startBtnCallback(void *ptr)
 
 void stopBtnCallback(void *ptr)
 {
-  Serial.println("🔴 Botón STOP presionado en HMI");
-
+  //Serial.println("🔴 Botón STOP presionado en HMI");
   if (estadoActual != EMERGENCIA && estadoActual != APAGADO)
   {
     estadoActual = DETENER;
@@ -173,19 +168,16 @@ void stopBtnCallback(void *ptr)
 
 void manualBtnCallback(void *ptr)
 {
-  Serial.println("🔄 Botón MANUAL presionado en HMI");
-
+  //Serial.println("🔄 Botón MANUAL presionado en HMI");
   if (estadoActual != EMERGENCIA && estadoActual != APAGADO)
   {
     estadoActual = MANUAL;
   }
 }
 
-// Válvula 1 ON/OFF
 void valvula1BtnCallback(void *ptr)
 {
-  Serial.println("💧 Botón VÁLVULA 1 presionado en HMI");
-
+  //Serial.println("💧 Botón VÁLVULA 1 presionado en HMI");
   if (estadoActual == MANUAL)
   {
     valvula_1_auto = !valvula_1_auto; // Alternar estado
@@ -193,11 +185,9 @@ void valvula1BtnCallback(void *ptr)
   }
 }
 
-// Válvula 2 ON/OFF
 void valvula2BtnCallback(void *ptr)
 {
-  Serial.println("💧 Botón VÁLVULA 2 presionado en HMI");
-
+  //Serial.println("💧 Botón VÁLVULA 2 presionado en HMI");
   if (estadoActual == MANUAL)
   {
     valvula_2_auto = !valvula_2_auto;
@@ -205,11 +195,9 @@ void valvula2BtnCallback(void *ptr)
   }
 }
 
-// Bomba 1 ON/OFF
 void bomba1BtnCallback(void *ptr)
 {
-  Serial.println("💦 Botón BOMBA 1 presionado en HMI");
-
+  //Serial.println("💦 Botón BOMBA 1 presionado en HMI");
   if (estadoActual == MANUAL)
   {
     bomba_1_auto = !bomba_1_auto;
@@ -217,11 +205,9 @@ void bomba1BtnCallback(void *ptr)
   }
 }
 
-// Bomba 2 ON/OFF
 void bomba2BtnCallback(void *ptr)
 {
-  Serial.println("💦 Botón BOMBA 2 presionado en HMI");
-
+  //Serial.println("💦 Botón BOMBA 2 presionado en HMI");
   if (estadoActual == MANUAL)
   {
     bomba_2_auto = !bomba_2_auto;

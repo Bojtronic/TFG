@@ -1,13 +1,11 @@
 #include "config.h"
+#include "seguridad.h"
 #include "control.h"
-
-// ================= FUNCIONES DE CONTROL PRINCIPAL =================
-
 
 void controlarSistema() {
   switch (estadoActual) {
     case APAGADO:
-      Serial.println("Estado APAGADO");
+      //Serial.println(">>>   Estado APAGADO");
       if(verificarCondicionesApagado()){
         apagarTodo();
         mensajeActual = APAGADO_0;
@@ -17,24 +15,24 @@ void controlarSistema() {
       }
       break;
     case DETENER:
-      Serial.println(">>>   Estado DETENER");
+      //Serial.println(">>>   Estado DETENER");
       detenerSistema();
       break;
     case PROCESANDO:
-      Serial.println(">>>   Estado PROCESANDO");
+      //Serial.println(">>>   Estado PROCESANDO");
       iniciarSistema();
       break;
     case EMERGENCIA:
-      Serial.println(">>>   Estado EMERGENCIA");
+      //Serial.println(">>>   Estado EMERGENCIA");
       detenerSistema();
       break;
     case MANUAL:
-      Serial.println(">>>   Estado MANUAL");
+      //Serial.println(">>>   Estado MANUAL");
       manual();
       mensajeActual = MANUAL_0;
       break;
     default:
-      Serial.println(">>>   ESTADO DESCONOCIDO");
+      //Serial.println(">>>   ESTADO DESCONOCIDO");
       mensajeActual = DESCONOCIDO;
       detenerSistema();
       break;
@@ -49,7 +47,8 @@ void iniciarSistema() {
       if(nivelTanque < NIVEL_MITAD){
         mensajeActual = PROCESANDO_1;
         
-        digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque
+        // Abrir la llave para llenar el tanque con agua fria
+        digitalWrite(VALVULA_2, HIGH);
 
         // Apagar bombas y la llave de salida del agua caliente
         digitalWrite(BOMBA_1, LOW);
@@ -59,15 +58,22 @@ void iniciarSistema() {
       else if((nivelTanque >= NIVEL_MITAD) && (nivelTanque < NIVEL_LLENO)){
         mensajeActual = PROCESANDO_2;
 
-        digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque
-        // digitalWrite(VALVULA_1, LOW);
-        alternarBombas(); // Encender bombas de manera alternada
+        // Abrir la llave para llenar el tanque con agua fria
+        digitalWrite(VALVULA_2, HIGH);
+
+        // Cerrar la llave de salida del agua caliente
+        digitalWrite(VALVULA_1, LOW);
+
+        // Encender bombas de manera alternada
+        alternarBombas(); 
       }
       else if(nivelTanque >= NIVEL_LLENO){
         mensajeActual = PROCESANDO_3;
 
-        digitalWrite(VALVULA_2, LOW); // Cerrar la llave para llenar el tanque
-        // digitalWrite(VALVULA_1, HIGH);
+        // Cerrar la llave de entrada de agua fria
+        digitalWrite(VALVULA_2, LOW);
+        
+        // Encender bombas de manera alternada
         alternarBombas();
       }
     } else {
@@ -80,19 +86,24 @@ void iniciarSistema() {
       if(nivelTanque < NIVEL_MITAD){
         mensajeActual = PROCESANDO_4;
 
-        digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque 
+        // Abrir la llave para llenar el tanque con agua fria
+        digitalWrite(VALVULA_2, HIGH);
       }
       else if(nivelTanque >= NIVEL_MITAD){
         mensajeActual = PROCESANDO_5;
 
-        digitalWrite(VALVULA_2, LOW); // Cerrar la llave cuando el tanque esta a la mitad
+        // Cerrar la llave cuando el tanque esta a la mitad o lleno
+        digitalWrite(VALVULA_2, LOW); 
       }
     }
+  }
+  else {
+    // No se cumplen las condiciones para iniciar el sistema
+    detenerSistema();
   }
 }
 
 bool verificarCondicionesInicio() {
-  // Verificar que todas las termocuplas funcionen
   if (thermocouple1.readError()) {
     Serial.println("Error en termocupla 1");
     return false;
@@ -111,33 +122,26 @@ bool verificarCondicionesInicio() {
   }
 
   for (int i = 0; i < 4; i++) {
-    if (temperaturas[i] <= -999.0) {
-      
-      Serial.println("Error: Verificar sensores temp");
-      return false;
-    }
-
-    if (temperaturas[i] < 0 || temperaturas[i] > 600) {
-      Serial.print("Lectura fuera de rango en sensor ");
-      Serial.println(i+1);
+    if (temperaturas[i] < 0 || temperaturas[i] >= 400.0) {
+      //Serial.println("Error: Verificar sensores temp");
+      //Serial.print("Lectura fuera de rango en sensor ");
+      //Serial.println(i+1);
       return false;
     }
   }
     
-  
-  // Verificar presión de agua mínima para iniciar
   if (presionActual <= PRESION_MINIMA) {
     
     Serial.println("No hay agua suficiente para iniciar");
-    //detenerSistema(); // considerar ejecutar el apagado seguro en este punto
     return false;
   }
 
-  // Verificar nivel mínimo para iniciar
   if (nivelTanque <= NIVEL_VACIO) {
     
-    Serial.println("Nivel muy bajo para iniciar");
-    digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
+    //Serial.println("Nivel muy bajo para iniciar");
+
+    // Abrir la llave para llenar el tanque con agua fria
+    digitalWrite(VALVULA_2, HIGH); 
     return false;
   }
   
@@ -145,8 +149,7 @@ bool verificarCondicionesInicio() {
 }
 
 void detenerSistema(){
-  // Condiciones para apagar el sistema de forma segura
-  if ((temperaturas[1] <= TEMP_MIN_HORNO) && (temperaturas[2] <= TEMP_MIN_HORNO)){
+  if (verificarCondicionesApagado()){
     apagarTodo();
     estadoActual = APAGADO;
   }
@@ -154,21 +157,29 @@ void detenerSistema(){
     digitalWrite(BOMBA_1, LOW);
     digitalWrite(BOMBA_2, LOW);
     digitalWrite(VALVULA_1, LOW);
-    digitalWrite(VALVULA_2, LOW); // Considerar abrir la llave para que llegue un poco de agua fria al tanque si es que hay un poco de agua
+
+    // Abrir la llave para que llegue un poco de agua fria al tanque si es que hay un poco de agua
+    digitalWrite(VALVULA_2, HIGH); 
     estadoActual = EMERGENCIA;
     mensajeActual = EMERGENCIA_1;
   }  
   else if((temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO) && (nivelTanque > NIVEL_MITAD)){
     digitalWrite(VALVULA_1, LOW);
     digitalWrite(VALVULA_2, LOW);
-    alternarBombas();   // circulacion de agua mientras se enfria el horno
+
+    // circulacion de agua mientras se enfria el horno
+    alternarBombas();   
     estadoActual = DETENER;
     mensajeActual = DETENER_1;
   }
   else if((presionActual > PRESION_MINIMA) && (temperaturas[1] >= TEMP_MIN_HORNO) && (temperaturas[2] >= TEMP_MIN_HORNO) && (nivelTanque <= NIVEL_MITAD) && (nivelTanque > NIVEL_VACIO)){
     digitalWrite(VALVULA_1, LOW);
-    digitalWrite(VALVULA_2, HIGH); // Abrir la llave para llenar el tanque con agua fria
-    alternarBombas();   // circulacion de agua mientras se enfria el horno
+
+    // Abrir la llave para llenar el tanque con agua fria
+    digitalWrite(VALVULA_2, HIGH); 
+
+    // circulacion de agua mientras se enfria el horno
+    alternarBombas();   
     estadoActual = DETENER;
     mensajeActual = DETENER_2;
   }
@@ -177,7 +188,6 @@ void detenerSistema(){
 // ================= FUNCIONES DE CONTROL DE ACTUADORES =================
 
 void activarCirculacion() {
-  // Activar la bomba principal o redundante según alternancia
   if (bombaPrincipalActiva) {
     digitalWrite(BOMBA_1, HIGH);
     digitalWrite(BOMBA_2, LOW);
@@ -205,7 +215,7 @@ void manual(){
   digitalWrite(VALVULA_2, valvula_2_auto ? HIGH : LOW);
   digitalWrite(BOMBA_1,   bomba_1_auto   ? HIGH : LOW);
   digitalWrite(BOMBA_2,   bomba_2_auto   ? HIGH : LOW);
-  //verificarSeguridad();
+  verificarSeguridad();
 }
 
 bool verificarCondicionesApagado(){
