@@ -9,15 +9,14 @@
 
 // ================= CONFIGURACIÓN INICIAL =================
 void setup() {
-  Serial.begin(115200);
-  delay(1500);
+  //Serial.begin(115200);
+  //delay(1500);
 
   nextionSerial.begin(9600, SERIAL_8N1, NEXTION_RX, NEXTION_TX);
   nexInit();
 
   configurarPines();
   inicializarTermocuplas();
-  
   
   startBtn.attachPush(startBtnCallback, &startBtn);
   stopBtn.attachPush(stopBtnCallback, &stopBtn);
@@ -27,17 +26,16 @@ void setup() {
   valvula2Btn.attachPush(valvula2BtnCallback, &valvula2Btn);
   bomba1Btn.attachPush(bomba1BtnCallback, &bomba1Btn);
   bomba2Btn.attachPush(bomba2BtnCallback, &bomba2Btn);
-  
 
   // Conectar a WiFi
-  connectToWiFi();
-  
-
+  //connectToWiFi();
+  /*
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
   Serial.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+  */
 }
 
 //int numTest = 0;
@@ -45,10 +43,7 @@ void setup() {
 
 // ================= BUCLE PRINCIPAL =================
 void loop() {
-
- 
   nexLoop(nex_listen_list);
-  
   
   leerPulsadores();
 
@@ -67,7 +62,6 @@ void loop() {
     testProcesando(numTest);
     */
     
-
     //ejecutarPruebas();
 
     leerSensores();
@@ -126,7 +120,6 @@ void loop() {
   if (now - TempHornoTime >= ESCRITURA_TEMPHORNO_INTERVAL) {
     TempHornoTime = now;
     actualizarTemperaturaHorno();
-  
   }
 
   if (now - TempCamaraTime >= ESCRITURA_TEMPCAMARA_INTERVAL) {
@@ -139,7 +132,6 @@ void loop() {
     actualizarTemperaturaSalida();  
   }
 
-  
   //Serial.println("-------------- LOOP --------------");
   
   delay(10);
