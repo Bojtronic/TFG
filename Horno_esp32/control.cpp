@@ -148,42 +148,95 @@ bool verificarCondicionesInicio() {
   return true;
 }
 
-void detenerSistema(){
-  if (verificarCondicionesApagado()){
+void detenerSistema() {
+  // Si el sistema está en emergencia, actuar según tipo
+  if (estadoActual == EMERGENCIA) {
+    switch (mensajeActual) {
+      case EMERGENCIA_1:
+      case EMERGENCIA_2:
+        // No hay presión ni agua → apagar todo
+        digitalWrite(BOMBA_1, LOW);
+        digitalWrite(BOMBA_2, LOW);
+        digitalWrite(VALVULA_1, LOW);
+        digitalWrite(VALVULA_2, LOW);
+        break;
+
+      case EMERGENCIA_3:
+        // No hay presión pero aún queda agua → mantener circulación interna
+        digitalWrite(VALVULA_1, LOW);
+        digitalWrite(VALVULA_2, LOW);
+        alternarBombas();
+        break;
+
+      case EMERGENCIA_4:
+        // Tanque y horno/cámara calientes → enfriar con agua fría
+        digitalWrite(VALVULA_2, HIGH);
+        alternarBombas();
+        break;
+
+      case EMERGENCIA_5:
+        // Tanque caliente pero horno/cámara fríos → detener todo
+        digitalWrite(VALVULA_1, LOW);
+        digitalWrite(VALVULA_2, LOW);
+        digitalWrite(BOMBA_1, LOW);
+        digitalWrite(BOMBA_2, LOW);
+        break;
+
+      case EMERGENCIA_6:
+        // Horno muy caliente, tanque no lleno → llenar y circular
+        digitalWrite(VALVULA_2, HIGH);
+        alternarBombas();
+        break;
+
+      case EMERGENCIA_7:
+        // Horno muy caliente, tanque lleno → solo circulación
+        digitalWrite(VALVULA_2, LOW);
+        alternarBombas();
+        break;
+
+      case EMERGENCIA_8:
+        // Cámara muy caliente → enfriar con agua fría
+        digitalWrite(VALVULA_2, HIGH);
+        alternarBombas();
+        break;
+    }
+    return;
+  }
+
+  // Si no está en emergencia, controlar proceso de detención normal
+
+  // Caso 1: horno y cámara aún calientes → mantener enfriamiento
+  if ((temperaturas[1] > TEMP_MIN_HORNO || temperaturas[2] > TEMP_MIN_HORNO)) {
+
+    // Si hay presión y nivel suficiente → continuar enfriamiento
+    if (presionActual >= PRESION_MINIMA && nivelTanque > NIVEL_VACIO) {
+      digitalWrite(VALVULA_1, LOW);
+      digitalWrite(VALVULA_2, LOW);
+      alternarBombas();
+      estadoActual = DETENER;
+      mensajeActual = DETENER_1;
+      return;
+    }
+
+    // Si no hay presión o tanque vacío → apagar bombas
+    if (presionActual < PRESION_MINIMA || nivelTanque <= NIVEL_VACIO) {
+      digitalWrite(BOMBA_1, LOW);
+      digitalWrite(BOMBA_2, LOW);
+      digitalWrite(VALVULA_1, LOW);
+      digitalWrite(VALVULA_2, LOW);
+      estadoActual = DETENER;
+      mensajeActual = DETENER_2; // sin circulación posible
+      return;
+    }
+  }
+
+  // Caso 2: sistema frío y condiciones seguras para apagar
+  if (verificarCondicionesApagado()) {
     apagarTodo();
     estadoActual = APAGADO;
   }
-  else if((presionActual < PRESION_MINIMA) && (temperaturas[1] >= (TEMP_MIN_HORNO*2)) && (temperaturas[2] >= (TEMP_MIN_HORNO*2)) && (nivelTanque <= NIVEL_VACIO)){
-    digitalWrite(BOMBA_1, LOW);
-    digitalWrite(BOMBA_2, LOW);
-    digitalWrite(VALVULA_1, LOW);
-
-    // Abrir la llave para que llegue un poco de agua fria al tanque si es que hay un poco de agua
-    digitalWrite(VALVULA_2, HIGH); 
-    estadoActual = EMERGENCIA;
-    mensajeActual = EMERGENCIA_1;
-  }  
-  else if((temperaturas[1] > TEMP_MIN_HORNO) && (temperaturas[2] > TEMP_MIN_HORNO) && (nivelTanque > NIVEL_MITAD)){
-    digitalWrite(VALVULA_1, LOW);
-    digitalWrite(VALVULA_2, LOW);
-
-    // circulacion de agua mientras se enfria el horno
-    alternarBombas();   
-    estadoActual = DETENER;
-    mensajeActual = DETENER_1;
-  }
-  else if((presionActual > PRESION_MINIMA) && (temperaturas[1] >= TEMP_MIN_HORNO) && (temperaturas[2] >= TEMP_MIN_HORNO) && (nivelTanque <= NIVEL_MITAD) && (nivelTanque > NIVEL_VACIO)){
-    digitalWrite(VALVULA_1, LOW);
-
-    // Abrir la llave para llenar el tanque con agua fria
-    digitalWrite(VALVULA_2, HIGH); 
-
-    // circulacion de agua mientras se enfria el horno
-    alternarBombas();   
-    estadoActual = DETENER;
-    mensajeActual = DETENER_2;
-  }
 }
+
 
 // ================= FUNCIONES DE CONTROL DE ACTUADORES =================
 
