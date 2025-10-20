@@ -6311,6 +6311,12 @@
 		(uuid "9b7021e1-b004-4a20-9319-37ae5f951951")
 	)
 	(junction
+		(at 783.59 350.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9c6a983e-585d-4b4e-8d6d-ec73256f67be")
+	)
+	(junction
 		(at 608.33 336.55)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7277,7 +7283,7 @@
 	)
 	(wire
 		(pts
-			(xy 595.63 241.3) (xy 624.84 241.3)
+			(xy 595.63 241.3) (xy 622.3 241.3)
 		)
 		(stroke
 			(width 0)
@@ -7423,7 +7429,7 @@
 	)
 	(wire
 		(pts
-			(xy 622.3 228.6) (xy 622.3 238.76)
+			(xy 619.76 228.6) (xy 619.76 238.76)
 		)
 		(stroke
 			(width 0)
@@ -7495,6 +7501,16 @@
 			(color 0 0 0 1)
 		)
 		(uuid "1b391372-6a77-4c24-8863-aa5d5c747648")
+	)
+	(wire
+		(pts
+			(xy 624.84 228.6) (xy 624.84 246.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b44882a-e3ab-4092-b647-4217f7629382")
 	)
 	(wire
 		(pts
@@ -7854,6 +7870,17 @@
 			(type default)
 		)
 		(uuid "258a5378-0c93-4768-b1f3-86f556638b86")
+	)
+	(wire
+		(pts
+			(xy 845.82 363.22) (xy 845.82 358.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(uuid "259c3448-2980-46cc-beb4-8f0d7c3fa527")
 	)
 	(wire
 		(pts
@@ -8642,6 +8669,16 @@
 	)
 	(wire
 		(pts
+			(xy 590.55 270.51) (xy 590.55 236.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3ef17130-a7cf-4e6d-8ec2-4f3de98693b1")
+	)
+	(wire
+		(pts
 			(xy 948.69 186.69) (xy 935.99 186.69)
 		)
 		(stroke
@@ -8725,7 +8762,7 @@
 	)
 	(wire
 		(pts
-			(xy 622.3 238.76) (xy 593.09 238.76)
+			(xy 619.76 238.76) (xy 593.09 238.76)
 		)
 		(stroke
 			(width 0)
@@ -9118,6 +9155,16 @@
 			(type default)
 		)
 		(uuid "506be209-3128-4e0a-b58d-ba188ad0207f")
+	)
+	(wire
+		(pts
+			(xy 590.55 236.22) (xy 617.22 236.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "50b4ca29-e1dc-4715-8799-53ddc927bd7d")
 	)
 	(wire
 		(pts
@@ -9546,6 +9593,16 @@
 			(color 255 11 0 1)
 		)
 		(uuid "61b5e6ac-af1b-4d0b-afdc-3c46e1fdd65f")
+	)
+	(wire
+		(pts
+			(xy 617.22 236.22) (xy 617.22 228.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61dc8a22-7772-4cb4-b4a8-0754ad7d3c3d")
 	)
 	(wire
 		(pts
@@ -10950,6 +11007,17 @@
 	)
 	(wire
 		(pts
+			(xy 783.59 358.14) (xy 783.59 350.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(uuid "8f270f7e-476c-46c0-a519-08b1d1f2d65f")
+	)
+	(wire
+		(pts
 			(xy 615.95 336.55) (xy 619.76 336.55)
 		)
 		(stroke
@@ -11215,7 +11283,7 @@
 	)
 	(wire
 		(pts
-			(xy 624.84 228.6) (xy 624.84 241.3)
+			(xy 622.3 228.6) (xy 622.3 241.3)
 		)
 		(stroke
 			(width 0)
@@ -11859,6 +11927,17 @@
 			(type default)
 		)
 		(uuid "aa6b7390-09c6-4afd-99d0-be2e32647fb4")
+	)
+	(wire
+		(pts
+			(xy 845.82 358.14) (xy 783.59 358.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(uuid "aab55936-54d1-4a46-b1db-d61e9156d062")
 	)
 	(wire
 		(pts
@@ -13656,6 +13735,16 @@
 	)
 	(wire
 		(pts
+			(xy 600.71 270.51) (xy 600.71 246.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1e6d2b6-7301-495a-a49f-8fe9db8d6676")
+	)
+	(wire
+		(pts
 			(xy 1023.62 215.9) (xy 1005.84 215.9)
 		)
 		(stroke
@@ -14262,6 +14351,16 @@
 			(type default)
 		)
 		(uuid "f1d37e6b-9b68-44e6-bc35-6ad8184ce99e")
+	)
+	(wire
+		(pts
+			(xy 600.71 246.38) (xy 624.84 246.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f23d8735-83c9-4fd9-8fff-f1ebae3591ec")
 	)
 	(wire
 		(pts
@@ -14989,6 +15088,72 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:Screw_Terminal_01x01")
+		(at 624.84 223.52 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "039219f6-3720-4b2d-b4aa-b12164c2c309")
+		(property "Reference" "PX55"
+			(at 624.84 219.456 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "~"
+			(at 628.65 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_Wire:SolderWire-0.75sqmm_1x01_D1.25mm_OD2.3mm"
+			(at 624.84 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 624.84 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 624.84 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8e6e3cdd-80fa-4250-a03d-9ac3e65efd9f")
+		)
+		(instances
+			(project "PCB_HORNO"
+				(path "/8d52217e-b328-4bb5-80f3-b5c1b02f5a35"
+					(reference "PX55")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
 		(at 316.23 331.47 180)
 		(unit 1)
@@ -15225,7 +15390,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 821.436 351.536 90)
 			(effects
 				(font
@@ -15637,7 +15802,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 185.674 90)
 			(effects
 				(font
@@ -15781,7 +15946,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 821.436 310.896 90)
 			(effects
 				(font
@@ -15983,7 +16148,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 331.724 261.874 90)
 			(effects
 				(font
@@ -16195,7 +16360,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 567.944 273.304 90)
 			(effects
 				(font
@@ -17076,7 +17241,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 250.444 90)
 			(effects
 				(font
@@ -17872,7 +18037,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 971.804 242.824 90)
 			(effects
 				(font
@@ -17940,7 +18105,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 169.164 90)
 			(effects
 				(font
@@ -18049,7 +18214,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 624.84 223.52 90)
+		(at 622.3 223.52 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -18057,7 +18222,7 @@
 		(dnp no)
 		(uuid "312c28b9-180e-4cef-a542-8d1794962622")
 		(property "Reference" "PX111"
-			(at 624.84 219.456 0)
+			(at 622.3 219.456 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18066,7 +18231,7 @@
 			)
 		)
 		(property "Value" "~"
-			(at 628.65 223.52 0)
+			(at 626.11 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18075,7 +18240,7 @@
 			)
 		)
 		(property "Footprint" "Connector_Wire:SolderWire-0.75sqmm_1x01_D1.25mm_OD2.3mm"
-			(at 624.84 223.52 0)
+			(at 622.3 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18084,7 +18249,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 624.84 223.52 0)
+			(at 622.3 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18093,7 +18258,7 @@
 			)
 		)
 		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 624.84 223.52 0)
+			(at 622.3 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18345,7 +18510,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 133.604 90)
 			(effects
 				(font
@@ -18413,7 +18578,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 804.926 351.536 90)
 			(effects
 				(font
@@ -18546,7 +18711,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 423.164 234.696 90)
 			(effects
 				(font
@@ -18753,7 +18918,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 372.364 293.624 90)
 			(effects
 				(font
@@ -18895,7 +19060,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 203.454 90)
 			(effects
 				(font
@@ -19448,7 +19613,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 415.544 259.334 90)
 			(effects
 				(font
@@ -19867,7 +20032,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 499.364 234.696 90)
 			(effects
 				(font
@@ -20083,7 +20248,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 151.384 90)
 			(effects
 				(font
@@ -20502,7 +20667,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 973.074 217.424 90)
 			(effects
 				(font
@@ -20867,7 +21032,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 214.884 90)
 			(effects
 				(font
@@ -21000,7 +21165,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 744.474 284.226 90)
 			(effects
 				(font
@@ -21420,7 +21585,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 231.394 90)
 			(effects
 				(font
@@ -22050,7 +22215,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 952.754 203.454 90)
 			(effects
 				(font
@@ -22956,7 +23121,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 804.926 310.896 90)
 			(effects
 				(font
@@ -23091,7 +23256,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 239.014 90)
 			(effects
 				(font
@@ -23498,7 +23663,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 368.046 260.604 90)
 			(effects
 				(font
@@ -24313,7 +24478,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 115.824 90)
 			(effects
 				(font
@@ -24596,7 +24761,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 754.634 248.666 90)
 			(effects
 				(font
@@ -24999,7 +25164,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 125.984 90)
 			(effects
 				(font
@@ -25944,7 +26109,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 461.264 234.696 90)
 			(effects
 				(font
@@ -26288,7 +26453,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 667.004 284.226 90)
 			(effects
 				(font
@@ -26356,7 +26521,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 262.636 90)
 			(effects
 				(font
@@ -26424,7 +26589,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 677.164 248.666 90)
 			(effects
 				(font
@@ -27163,7 +27328,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 162.814 90)
 			(effects
 				(font
@@ -27233,7 +27398,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 180.594 90)
 			(effects
 				(font
@@ -27497,7 +27662,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 971.804 166.624 90)
 			(effects
 				(font
@@ -28191,7 +28356,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 952.754 228.854 90)
 			(effects
 				(font
@@ -28325,7 +28490,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 952.754 255.524 90)
 			(effects
 				(font
@@ -28393,7 +28558,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 537.464 234.696 90)
 			(effects
 				(font
@@ -29011,7 +29176,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 622.3 223.52 90)
+		(at 619.76 223.52 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -29019,7 +29184,7 @@
 		(dnp no)
 		(uuid "c57bbe1c-5dd0-423b-8f7e-e6344cacf46b")
 		(property "Reference" "PX62"
-			(at 622.3 219.456 0)
+			(at 619.76 219.456 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29028,7 +29193,7 @@
 			)
 		)
 		(property "Value" "~"
-			(at 626.11 223.52 0)
+			(at 623.57 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29037,7 +29202,7 @@
 			)
 		)
 		(property "Footprint" "Connector_Wire:SolderWire-0.75sqmm_1x01_D1.25mm_OD2.3mm"
-			(at 622.3 223.52 0)
+			(at 619.76 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29046,7 +29211,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 622.3 223.52 0)
+			(at 619.76 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29055,7 +29220,7 @@
 			)
 		)
 		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 622.3 223.52 0)
+			(at 619.76 223.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29233,7 +29398,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 491.744 259.334 90)
 			(effects
 				(font
@@ -29369,7 +29534,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 952.754 179.324 90)
 			(effects
 				(font
@@ -29579,7 +29744,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 971.804 192.024 90)
 			(effects
 				(font
@@ -30483,7 +30648,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 110.744 221.234 90)
 			(effects
 				(font
@@ -30619,7 +30784,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 143.764 90)
 			(effects
 				(font
@@ -30765,7 +30930,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 			(at 172.466 198.374 90)
 			(effects
 				(font
@@ -31186,7 +31351,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 529.844 259.334 90)
 			(effects
 				(font
@@ -31529,7 +31694,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 453.644 259.334 90)
 			(effects
 				(font
@@ -31597,7 +31762,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P25.40mm_Horizontal"
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0309_L9.0mm_D3.2mm_P15.24mm_Horizontal"
 			(at 567.944 280.924 90)
 			(effects
 				(font
@@ -31711,6 +31876,72 @@
 			(project "PCB_HORNO"
 				(path "/8d52217e-b328-4bb5-80f3-b5c1b02f5a35"
 					(reference "Q3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Screw_Terminal_01x01")
+		(at 617.22 223.52 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f5477353-2459-46c0-8b63-0819d929debd")
+		(property "Reference" "PX45"
+			(at 617.22 219.456 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "~"
+			(at 621.03 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_Wire:SolderWire-0.75sqmm_1x01_D1.25mm_OD2.3mm"
+			(at 617.22 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 617.22 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 617.22 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0f898388-8146-4e3b-a270-1ce7a3c5f14e")
+		)
+		(instances
+			(project "PCB_HORNO"
+				(path "/8d52217e-b328-4bb5-80f3-b5c1b02f5a35"
+					(reference "PX45")
 					(unit 1)
 				)
 			)
