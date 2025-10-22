@@ -1,24 +1,6 @@
-#include "sensores.h"
 #include "config.h"
+#include "sensores.h"
 
-// Variables globales definidas en 
-extern Adafruit_MAX31855 thermocouple1;
-extern Adafruit_MAX31855 thermocouple2;
-extern Adafruit_MAX31855 thermocouple3;
-extern Adafruit_MAX31855 thermocouple4;
-extern int nivelTanque;
-extern double temperaturas[4];
-extern int niveles[3];
-extern float presionActual;
-
-// Variables para el control automático
-extern bool valvula_1_auto; // Estado automático de la válvula 1
-extern bool valvula_2_auto; // Estado automático de la válvula 2
-extern bool bomba_1_auto;   // Estado automático de la bomba 1
-extern bool bomba_2_auto;   // Estado automático de la bomba 2
-
-
-// ================= FUNCIONES DE LECTURA DE SENSORES =================
 
 void leerSensores() {
   leerTemperaturas();
@@ -27,14 +9,14 @@ void leerSensores() {
 }
 
 void inicializarTermocuplas() {
-  Serial.println("Inicializando termocuplas...");
+  //Serial.println("Inicializando termocuplas...");
   
-  // Variables booleanas para guardar estado de cada termocupla
   bool t1_ok = thermocouple1.begin();
   bool t2_ok = thermocouple2.begin();
   bool t3_ok = thermocouple3.begin();
   bool t4_ok = thermocouple4.begin();
 
+  /*
   // Mensajes para depuración
   if (!t1_ok) Serial.println("ERROR Termocupla 1 (Tanque)"); else Serial.println("Termocupla 1 (Tanque) OK");
   if (!t2_ok) Serial.println("ERROR Termocupla 2 (Horno)"); else Serial.println("Termocupla 2 (Horno) OK");
@@ -49,10 +31,11 @@ void inicializarTermocuplas() {
                    String(" Salida:") + String(t4_ok ? "OK" : "ERR");
 
   Serial.println("Resumen termocuplas -> " + resumen);
+  */
 }
 
 bool verificarSensoresTemperatura() {
-  // Verificar que todas las termocuplas estén funcionando
+  // El valor -999.0 indica error en la lectura
   for (int i = 0; i < 4; i++) {
     if (temperaturas[i] <= -999.0) {
       return false;
@@ -73,6 +56,8 @@ double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
 
   // Si la lectura no es válida
   if (isnan(tempC)) {
+
+    /*
     Serial.print("Error lectura termocupla ");
     Serial.println(numero);
 
@@ -81,6 +66,7 @@ double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
     if (fault & MAX31855_FAULT_OPEN)       Serial.println("FALLA: Termocupla abierta o no conectada.");
     if (fault & MAX31855_FAULT_SHORT_GND)  Serial.println("FALLA: Termocupla en corto a GND.");
     if (fault & MAX31855_FAULT_SHORT_VCC)  Serial.println("FALLA: Termocupla en corto a VCC.");
+    */
 
     return -999.9;  // Valor de error
   }
@@ -131,16 +117,15 @@ void leerPresion() {
 
 
 void leerNiveles() {
-  // Leer los tres contactos secos (lógica negativa/positiva según cableado)
   bool s1 = digitalRead(NIVEL_1);  // contacto para nivel bajo
   bool s2 = digitalRead(NIVEL_2);  // contacto para nivel medio
   bool s3 = digitalRead(NIVEL_3);  // contacto para nivel alto
 
   // - Vacío: los 3 abiertos -> 0
   // - Solo bajo cerrado -> 30%
-  // - Solo medio cerrado -> 60%
-  // - Solo alto cerrado -> 100%
-  // (Si llegara más de uno cerrado, tomamos el mayor nivel válido)
+  // - bajo y medio cerrados -> 60%
+  // - bajo, medio y alto cerrados -> 100%
+  // (Si hubiera un caso inconsistente, se considera vacío para inducir al estado de EMERGENCIA)
 
   //esta para logica negativa en el que 0 es cerrado y 1 abierto
   if (s1 && s2 && s3) {
@@ -163,29 +148,26 @@ void leerPulsadores() {
   bool stopButton   = (digitalRead(STOP_BTN)   == LOW);
   bool manualButton = (digitalRead(MANUAL_BTN) == LOW);
 
-  if(estadoActual != EMERGENCIA){ // En estado de emergencia no se puede cambiar el estado con los botones
+  // En estado de emergencia no se puede cambiar el estado con los botones
+  if(estadoActual != EMERGENCIA){ 
     
     // Flanco de HIGH -> LOW para cada botón
     if (startButton && lastStartState == HIGH && !stopButton && !manualButton) {
       estadoActual = PROCESANDO;
-      Serial.println("📌 Botón START presionado");
+      //Serial.println("📌 Botón START presionado");
     }
     else if (stopButton && lastStopState == HIGH && !startButton && !manualButton) {
       estadoActual = DETENER;
-      Serial.println("📌 Botón STOP presionado");
+      //Serial.println("📌 Botón STOP presionado");
     }
     else if (manualButton && lastManualState == HIGH && !startButton && !stopButton) {
       estadoActual = MANUAL;
-      Serial.println("📌 Botón MANUAL presionado");
+      //Serial.println("📌 Botón MANUAL presionado");
     }
-    // else: no hacer nada, se mantiene el estado actual
-
+    
     // Actualizar últimas lecturas
     lastStartState  = startButton;
     lastStopState   = stopButton;
     lastManualState = manualButton;
   }
-
-  
-  
 }

@@ -1,5 +1,5 @@
+#include "config.h"
 #include "test.h"
-#include "hmi.h"
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <WiFiClientSecure.h>
@@ -259,13 +259,11 @@ void ejecutarPruebas() {
     
     // ================= ESTADO: APAGADO =================
     case 0: 
-      //estadoActual = APAGADO;
       testApagado(); // Solo 1 prueba para APAGADO
       break;
       
     // ================= ESTADO: PROCESANDO =================
     case 1: 
-      //estadoActual = PROCESANDO;
       switch (subprueba) {
         case 0: testProcesando(0); break; // Nivel medio, horno caliente
         case 1: testProcesando(1); break; // Tanque lleno, máxima eficiencia
@@ -276,7 +274,6 @@ void ejecutarPruebas() {
       
     // ================= ESTADO: DETENER =================
     case 2: 
-      //estadoActual = DETENER;
       switch (subprueba) {
         case 0: testDetener(0); break; // Por nivel bajo
         case 1: testDetener(1); break; // Por presión baja
@@ -286,7 +283,6 @@ void ejecutarPruebas() {
       
     // ================= ESTADO: EMERGENCIA =================
     case 3: 
-      //estadoActual = EMERGENCIA;
       switch (subprueba) {
         case 0: testEmergencia(0); break; // Tanque vacío + horno caliente
         case 1: testEmergencia(1); break; // Sobretemperatura en tanque
@@ -298,8 +294,7 @@ void ejecutarPruebas() {
       
     // ================= ESTADO: MANUAL =================
     case 4: 
-      //estadoActual = MANUAL;
-      testManual(); // Solo 1 prueba para MANUAL
+      testManual(); 
       break;
   }
   

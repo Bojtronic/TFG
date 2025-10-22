@@ -1,6 +1,7 @@
 #ifndef COMUNICACION_H
 #define COMUNICACION_H
 
+/*
 // ===== CONFIGURACIÓN SERVIDOR =====
 extern const char* ssid;
 extern const char* password;
@@ -13,6 +14,8 @@ extern unsigned long lastCommandCheck;
 extern int messageCount;
 
 // ===== FUNCIONES COMUNICACIÓN =====
+*/
+
 void connectToWiFi();
 void checkForCommands();
 void sendSystemData();

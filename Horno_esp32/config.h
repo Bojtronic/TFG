@@ -44,7 +44,6 @@
 #define NEXTION_RX 16
 #define NEXTION_TX 17
 
-
 // ================= PARÁMETROS DE CONFIGURACIÓN =================
 #define TEMP_AGUA_CALIENTE 60.0     // Temperatura objetivo de agua caliente para el usuario (°C) temperaturas[3]
 #define TEMP_MAX_TANQUE    70.0     // Temperatura máxima en tanque (°C)
@@ -70,7 +69,6 @@
 #define ESCRITURA_TEMPSALIDA_INTERVAL 4100 
 #define ESCRITURA_NIVEL_INTERVAL 4400 
 #define ESCRITURA_PRESION_INTERVAL 5000 
-
 
 // ================= CONFIGURACIÓN SERVIDOR =================
 extern const char* ssid;
@@ -140,7 +138,7 @@ enum MensajeSistema {
 
 extern EstadoSistema estadoActual;
 extern MensajeSistema mensajeActual;
-extern bool emergencia;
+//extern bool emergencia;
 extern bool bombaPrincipalActiva;
 
 // ===== TIMERS GLOBALES =====
@@ -194,19 +192,22 @@ extern NexText bomba2;
 extern NexButton startBtn;
 extern NexButton stopBtn;
 extern NexButton manualBtn;
-
-// Botones on/off
-extern NexButton valvula1Btn; // id 34, name b3
-extern NexButton valvula2Btn; // id 35, name b4
-extern NexButton bomba1Btn;   // id 36, name b5
-extern NexButton bomba2Btn;   // id 37, name b6
-
+extern NexButton valvula1Btn; 
+extern NexButton valvula2Btn; 
+extern NexButton bomba1Btn;   
+extern NexButton bomba2Btn; 
 extern NexTouch *nex_listen_list[];
 
 
 // ================= DECLARACIONES DE FUNCIONES =================
 // Configuración
 void configurarPines();
+/*
+// Comunicación
+void connectToWiFi();
+void checkForCommands();
+void sendSystemData();
+void handleServerCommunication();
 
 // Sensores
 void inicializarTermocuplas();
@@ -251,11 +252,6 @@ void valvula1BtnCallback(void *ptr);
 void valvula2BtnCallback(void *ptr);
 void bomba1BtnCallback(void *ptr); 
 void bomba2BtnCallback(void *ptr);
-
-// Comunicación
-void connectToWiFi();
-void checkForCommands();
-void sendSystemData();
-void handleServerCommunication();
+*/
 
 #endif
