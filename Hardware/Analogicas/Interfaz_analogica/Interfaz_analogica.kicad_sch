@@ -243,143 +243,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector:Screw_Terminal_01x01"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Screw_Terminal_01x01"
-				(at 0 -2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "screw terminal"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "TerminalBlock*:*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Screw_Terminal_01x01_1_1"
-				(rectangle
-					(start -1.27 1.27)
-					(end 1.27 -1.27)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.5334 0.3302) (xy 0.3302 -0.508)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.3556 0.508) (xy 0.508 -0.3302)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 0 0)
-					(radius 0.635)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Connector:Screw_Terminal_01x03"
 			(pin_names
 				(offset 1.016)
@@ -744,6 +607,179 @@
 				(pin passive line
 					(at 0 -3.81 90)
 					(length 2.794)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R_US"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.54 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R_US"
+				(at -2.54 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 1.016 -0.254 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor, US symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_US_0_1"
+				(polyline
+					(pts
+						(xy 0 2.286) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.286) (xy 1.016 1.905) (xy 0 1.524) (xy -1.016 1.143) (xy 0 0.762)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0.762) (xy 1.016 0.381) (xy 0 0) (xy -1.016 -0.381) (xy 0 -0.762)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -0.762) (xy 1.016 -1.143) (xy 0 -1.524) (xy -1.016 -1.905) (xy 0 -2.286)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.286) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_US_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
 					(name "~"
 						(effects
 							(font
@@ -1128,22 +1164,34 @@
 		(uuid "a5971b7d-5b72-42b2-825a-f0322c8d6aad")
 	)
 	(junction
+		(at 191.77 134.62)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0babf178-da1b-4cc2-ad9d-d414824baef2")
+	)
+	(junction
 		(at 157.48 46.99)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1e68a582-db5b-457b-9d2f-0ac2e35f5101")
 	)
 	(junction
-		(at 191.77 85.09)
+		(at 191.77 82.55)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "2827ab5d-1091-4a07-b323-2f84eeb58be5")
+		(uuid "22c05f96-02a4-4442-9d35-bd02441789cd")
 	)
 	(junction
 		(at 217.17 66.04)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2d5211cc-d51e-47d4-9418-b9a6ae295e44")
+	)
+	(junction
+		(at 191.77 57.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "312e34c7-dc53-4729-819d-5370f937a9bb")
 	)
 	(junction
 		(at 191.77 26.67)
@@ -1182,12 +1230,6 @@
 		(uuid "475c8d20-5b5c-4ff9-940a-402a14997db3")
 	)
 	(junction
-		(at 191.77 110.49)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "56d3b1d7-5f05-4dc1-b77b-27b3750aba19")
-	)
-	(junction
 		(at 76.2 72.39)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1206,6 +1248,12 @@
 		(uuid "65d085a7-f8a9-4284-aa22-aae8ec07ae6e")
 	)
 	(junction
+		(at 191.77 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "682f7ec3-6549-4196-9631-798b4622e52d")
+	)
+	(junction
 		(at 55.88 63.5)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1218,12 +1266,6 @@
 		(uuid "719aeee3-8140-4516-91ed-0935ee7f511d")
 	)
 	(junction
-		(at 191.77 135.89)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "731151e5-f1e3-41c7-84f0-fa7753a1e632")
-	)
-	(junction
 		(at 217.17 90.17)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1234,12 +1276,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "87ab5f66-e56d-497c-b54a-62f2f4df77e8")
-	)
-	(junction
-		(at 191.77 59.69)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "95ab0701-2d6e-4706-b1c3-69624da87ad8")
 	)
 	(junction
 		(at 71.12 76.2)
@@ -1355,16 +1391,6 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 77.47) (xy 204.47 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0771f60b-16b3-4288-bb73-184b49fb3166")
-	)
-	(wire
-		(pts
 			(xy 157.48 46.99) (xy 148.59 46.99)
 		)
 		(stroke
@@ -1375,14 +1401,23 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 85.09) (xy 191.77 110.49)
+			(xy 204.47 102.87) (xy 204.47 109.22)
 		)
 		(stroke
 			(width 0)
 			(type default)
-			(color 0 0 0 1)
 		)
-		(uuid "124c16d5-2fa7-4fad-ad9c-f803c0967511")
+		(uuid "0cada4f6-aad4-44c6-9bc8-6fd0c61c158e")
+	)
+	(wire
+		(pts
+			(xy 201.93 82.55) (xy 204.47 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f0e3c52-e82b-4e6c-9f66-6919d6c8a9ab")
 	)
 	(wire
 		(pts
@@ -1477,6 +1512,26 @@
 			(color 255 6 0 1)
 		)
 		(uuid "2410264e-8aaf-402b-92d1-8582471a8fa7")
+	)
+	(wire
+		(pts
+			(xy 177.8 123.19) (xy 196.85 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "24e70fb0-0b32-4e53-89a0-3a164602b834")
+	)
+	(wire
+		(pts
+			(xy 201.93 109.22) (xy 204.47 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "27ccc1b6-8744-4be8-92aa-d0fad2fa34d6")
 	)
 	(wire
 		(pts
@@ -1626,7 +1681,7 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 123.19) (xy 163.83 123.19)
+			(xy 157.48 123.19) (xy 170.18 123.19)
 		)
 		(stroke
 			(width 0)
@@ -1688,17 +1743,6 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 135.89) (xy 191.77 138.43)
-		)
-		(stroke
-			(width 0)
-			(type default)
-			(color 0 0 0 1)
-		)
-		(uuid "50004ef9-201f-4455-9da5-ad1a0ed00d2d")
-	)
-	(wire
-		(pts
 			(xy 100.33 39.37) (xy 138.43 39.37)
 		)
 		(stroke
@@ -1721,13 +1765,24 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 128.27) (xy 204.47 130.81)
+			(xy 204.47 128.27) (xy 204.47 134.62)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "58c694f3-1e4f-4bfb-9d7b-74d2b94de188")
+	)
+	(wire
+		(pts
+			(xy 191.77 109.22) (xy 191.77 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(uuid "5942642d-ae94-49f4-96cf-7cd5eca6e8c1")
 	)
 	(wire
 		(pts
@@ -1815,7 +1870,7 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 46.99) (xy 163.83 46.99)
+			(xy 157.48 46.99) (xy 170.18 46.99)
 		)
 		(stroke
 			(width 0)
@@ -1868,6 +1923,27 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 82.55) (xy 191.77 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(uuid "7a7fbe2f-5c51-4326-b21f-929ebdad9cdb")
+	)
+	(wire
+		(pts
+			(xy 177.8 72.39) (xy 196.85 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7af27714-6744-4a60-ac6b-058f726c69e9")
+	)
+	(wire
+		(pts
 			(xy 115.57 95.25) (xy 133.35 95.25)
 		)
 		(stroke
@@ -1889,7 +1965,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 26.67) (xy 191.77 59.69)
+			(xy 191.77 26.67) (xy 191.77 57.15)
 		)
 		(stroke
 			(width 0)
@@ -1983,7 +2059,7 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 72.39) (xy 163.83 72.39)
+			(xy 157.48 72.39) (xy 170.18 72.39)
 		)
 		(stroke
 			(width 0)
@@ -2015,27 +2091,6 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 110.49) (xy 191.77 135.89)
-		)
-		(stroke
-			(width 0)
-			(type default)
-			(color 0 0 0 1)
-		)
-		(uuid "948522d6-59a0-4cc0-9b55-4a4b3d47a8a1")
-	)
-	(wire
-		(pts
-			(xy 184.15 97.79) (xy 196.85 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "95c47f33-0203-451a-9b22-251fcda088cb")
-	)
-	(wire
-		(pts
 			(xy 81.28 69.85) (xy 81.28 95.25)
 		)
 		(stroke
@@ -2046,7 +2101,7 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 97.79) (xy 163.83 97.79)
+			(xy 157.48 97.79) (xy 170.18 97.79)
 		)
 		(stroke
 			(width 0)
@@ -2159,6 +2214,17 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 57.15) (xy 191.77 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(uuid "a93a0399-9977-458d-a7c5-c528f2f59373")
+	)
+	(wire
+		(pts
 			(xy 229.87 53.34) (xy 204.47 53.34)
 		)
 		(stroke
@@ -2180,13 +2246,13 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 102.87) (xy 204.47 105.41)
+			(xy 177.8 97.79) (xy 196.85 97.79)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "ae4defc2-ff3a-4afa-b506-446a7bb409a5")
+		(uuid "b3aed82d-f355-4195-b657-c9819dc1b8c1")
 	)
 	(wire
 		(pts
@@ -2222,7 +2288,17 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 53.34) (xy 204.47 54.61)
+			(xy 177.8 46.99) (xy 196.85 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ba2395fc-2a2e-4898-ae11-a9edb8f9b10f")
+	)
+	(wire
+		(pts
+			(xy 204.47 53.34) (xy 204.47 57.15)
 		)
 		(stroke
 			(width 0)
@@ -2305,34 +2381,33 @@
 	)
 	(wire
 		(pts
-			(xy 184.15 46.99) (xy 196.85 46.99)
+			(xy 201.93 134.62) (xy 204.47 134.62)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "d25a7442-6e6a-4f24-bd38-cc5283e59493")
+		(uuid "d255f673-c3af-45a9-a680-5456cdc1add7")
 	)
 	(wire
 		(pts
-			(xy 191.77 59.69) (xy 191.77 85.09)
+			(xy 204.47 77.47) (xy 204.47 82.55)
 		)
 		(stroke
 			(width 0)
 			(type default)
-			(color 0 0 0 1)
 		)
-		(uuid "d6406d94-339a-42d1-a591-155ddfe487fe")
+		(uuid "d32cea5c-d991-470e-a932-9ee54a5e171e")
 	)
 	(wire
 		(pts
-			(xy 184.15 72.39) (xy 196.85 72.39)
+			(xy 201.93 57.15) (xy 204.47 57.15)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "d6a3f218-6423-46e8-ac92-71e9b4bec0ab")
+		(uuid "d8a65de6-ad56-483c-8c20-51728d674278")
 	)
 	(wire
 		(pts
@@ -2388,6 +2463,16 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 134.62) (xy 194.31 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1ee74f4-56a6-4a84-8139-aca8966c3f9c")
+	)
+	(wire
+		(pts
 			(xy 102.87 130.81) (xy 138.43 130.81)
 		)
 		(stroke
@@ -2410,6 +2495,16 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 57.15) (xy 194.31 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e36b94eb-1d11-4d65-acbc-931259472d07")
+	)
+	(wire
+		(pts
 			(xy 138.43 115.57) (xy 100.33 115.57)
 		)
 		(stroke
@@ -2418,6 +2513,16 @@
 			(color 255 6 0 1)
 		)
 		(uuid "e5e3a3ea-24da-4e8b-a4c6-dbde19a5dbcf")
+	)
+	(wire
+		(pts
+			(xy 191.77 109.22) (xy 194.31 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e76721c6-d843-4895-a779-dd6dbc229ce6")
 	)
 	(wire
 		(pts
@@ -2475,16 +2580,6 @@
 	)
 	(wire
 		(pts
-			(xy 184.15 123.19) (xy 196.85 123.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f071f60c-1b64-4169-9f93-c3399353a165")
-	)
-	(wire
-		(pts
 			(xy 204.47 118.11) (xy 204.47 115.57)
 		)
 		(stroke
@@ -2505,139 +2600,26 @@
 		)
 		(uuid "f9b8c938-0912-401e-8d45-3a43a1e9d298")
 	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 204.47 85.09 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0395a1d8-9edf-4314-bc28-224be8bb40c1")
-		(property "Reference" "J6-2"
-			(at 208.788 81.788 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+	(wire
+		(pts
+			(xy 191.77 82.55) (xy 194.31 82.55)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 203.2001 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
+		(stroke
+			(width 0)
+			(type default)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 204.47 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 204.47 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 204.47 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5834a002-2991-4e8f-ba24-00f44ea55e96")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J6-2")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "faa4b55d-b503-4d8f-b026-c897955e60f8")
 	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 204.47 110.49 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0728aa0e-0480-4557-b4c8-6de758c45113")
-		(property "Reference" "J7-2"
-			(at 208.788 107.188 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+	(wire
+		(pts
+			(xy 191.77 134.62) (xy 191.77 138.43)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 203.2001 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 204.47 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 204.47 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 204.47 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "51fee797-f2c8-415b-ac84-21d79094ac36")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J7-2")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "fc40e5d0-c2a0-4ab9-b43d-34809f9c2534")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -2710,35 +2692,33 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 168.91 97.79 0)
+		(lib_id "Device:R_US")
+		(at 173.99 46.99 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "26a02c48-6c3f-40c8-b5af-515b04b32440")
-		(property "Reference" "J3-1"
-			(at 165.608 93.472 0)
+		(uuid "1c6e6bf8-3167-42a9-81cf-a40c062a3841")
+		(property "Reference" "R1"
+			(at 174.244 43.434 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 171.45 99.0599 0)
+		(property "Value" "R_US"
+			(at 173.99 43.18 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 168.91 97.79 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 174.244 45.974 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2747,7 +2727,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 168.91 97.79 0)
+			(at 173.99 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2755,22 +2735,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 168.91 97.79 0)
+		(property "Description" "Resistor, US symbol"
+			(at 173.99 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "8d9a6478-4ecf-4b8a-8345-51ea65263aad")
 		)
 		(pin "1"
-			(uuid "1b345088-4ab2-4702-8a6a-6fc52edca962")
+			(uuid "5af530b5-0658-471b-8d89-dd55032f39bb")
 		)
 		(instances
-			(project "Interfaz_analogica"
+			(project ""
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J3-1")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -3021,73 +3004,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 196.85 110.49 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "3e35732b-a37a-4c68-aba1-0abc89db76ab")
-		(property "Reference" "J7-1"
-			(at 193.548 106.172 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 199.39 111.7599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 196.85 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 196.85 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 196.85 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "41869e57-574e-401d-9008-3107dd2e39c7")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J7-1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Transistor_BJT:2N2219")
 		(at 201.93 72.39 0)
 		(unit 1)
@@ -3158,73 +3074,6 @@
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
 					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 196.85 85.09 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "43d8f9d3-769c-4e77-a8dc-f141d59408ab")
-		(property "Reference" "J6-1"
-			(at 193.548 80.772 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 199.39 86.3599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 196.85 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 196.85 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 196.85 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a552f149-a291-4ae3-a125-d3e4b49d73ae")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J6-1")
 					(unit 1)
 				)
 			)
@@ -3305,35 +3154,33 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 196.85 135.89 0)
+		(lib_id "Device:R_US")
+		(at 198.12 57.15 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "4b49e9c2-a04f-4924-aed6-1a6862d55ddc")
-		(property "Reference" "J8-1"
-			(at 193.548 131.572 0)
+		(uuid "4726c243-786e-4cec-ab29-859925040325")
+		(property "Reference" "R5"
+			(at 198.374 53.594 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 199.39 137.1599 0)
+		(property "Value" "R_US"
+			(at 198.12 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 196.85 135.89 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 198.374 56.134 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3342,7 +3189,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 196.85 135.89 0)
+			(at 198.12 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3350,57 +3197,58 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 196.85 135.89 0)
+		(property "Description" "Resistor, US symbol"
+			(at 198.12 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "01cd6e4d-c6d7-42bc-98f3-dd813ab3f2c7")
 		)
 		(pin "1"
-			(uuid "54a0ee32-0f5b-4946-9f85-bae64f5f0401")
+			(uuid "a6b44beb-3694-44ab-9d9a-5052932de7f0")
 		)
 		(instances
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J8-1")
+					(reference "R5")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 168.91 72.39 0)
+		(lib_id "Device:R_US")
+		(at 198.12 134.62 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "4f10df59-2bae-4872-a3d4-f13da7d48636")
-		(property "Reference" "J2-1"
-			(at 165.608 68.072 0)
+		(uuid "53a6e953-5f43-42d6-b3ed-e867863eb815")
+		(property "Reference" "R8"
+			(at 198.374 131.064 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 171.45 73.6599 0)
+		(property "Value" "R_US"
+			(at 198.12 130.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 168.91 72.39 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 198.374 133.604 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3409,7 +3257,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 168.91 72.39 0)
+			(at 198.12 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3417,22 +3265,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 168.91 72.39 0)
+		(property "Description" "Resistor, US symbol"
+			(at 198.12 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "55b27182-2a27-49e7-ba64-e4d272c45a44")
 		)
 		(pin "1"
-			(uuid "b4e7f5d6-b0c9-4ee1-986e-ebe64a9c64fb")
+			(uuid "cbe1bb7b-1cbc-4ab4-ad75-53e20875916b")
 		)
 		(instances
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J2-1")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -3584,6 +3435,74 @@
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
 					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 198.12 82.55 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "704108ab-53bb-47c0-b28f-06239cfbb50f")
+		(property "Reference" "R6"
+			(at 198.374 78.994 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "R_US"
+			(at 198.12 78.74 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 198.374 81.534 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 198.12 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 198.12 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "5d7b2cf8-a430-4efe-b6a1-12e2ada419bd")
+		)
+		(pin "1"
+			(uuid "f270d880-cfc6-481c-924c-9616e4bbb437")
+		)
+		(instances
+			(project "Interfaz_analogica"
+				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -3812,35 +3731,33 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 168.91 123.19 0)
+		(lib_id "Device:R_US")
+		(at 198.12 109.22 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "98505884-98ec-469b-8881-0f6dd9780652")
-		(property "Reference" "J4-1"
-			(at 165.608 118.872 0)
+		(uuid "94942253-6c73-441c-ad02-09503f57b212")
+		(property "Reference" "R7"
+			(at 198.374 105.664 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 171.45 124.4599 0)
+		(property "Value" "R_US"
+			(at 198.12 105.41 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 168.91 123.19 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 198.374 108.204 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3849,7 +3766,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 168.91 123.19 0)
+			(at 198.12 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3857,22 +3774,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 168.91 123.19 0)
+		(property "Description" "Resistor, US symbol"
+			(at 198.12 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "e135a381-0952-4716-91aa-67b5f686d6ec")
 		)
 		(pin "1"
-			(uuid "b7ed3ff0-ef77-4609-9c9b-70ff3864c2b1")
+			(uuid "5529c2db-258b-483d-8226-9da8b00c3acb")
 		)
 		(instances
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J4-1")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -3955,35 +3875,33 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 204.47 59.69 270)
+		(lib_id "Device:R_US")
+		(at 173.99 72.39 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b708e61c-d8bf-4635-b3ea-f0d6994b34d2")
-		(property "Reference" "J5-2"
-			(at 208.788 56.388 90)
+		(uuid "ae731eba-4a4b-4cac-b1cb-2320a469eb51")
+		(property "Reference" "R2"
+			(at 174.244 68.834 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 203.2001 62.23 0)
+		(property "Value" "R_US"
+			(at 173.99 68.58 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 204.47 59.69 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 174.244 71.374 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3992,7 +3910,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 204.47 59.69 0)
+			(at 173.99 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4000,22 +3918,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 204.47 59.69 0)
+		(property "Description" "Resistor, US symbol"
+			(at 173.99 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "a584fde8-b2c6-4253-87af-cedb102ff951")
 		)
 		(pin "1"
-			(uuid "1d618e6e-698e-4683-b501-044569049efc")
+			(uuid "83d7248a-0f63-4741-a3e3-4e79638697ab")
 		)
 		(instances
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J5-2")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -4088,24 +4009,24 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 179.07 97.79 180)
+		(lib_id "Device:R_US")
+		(at 173.99 97.79 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "c65e7eef-0342-496b-8af8-b497007fbcf3")
-		(property "Reference" "J3-2"
-			(at 179.832 93.218 0)
+		(uuid "dd67e3c2-3d7d-48c0-8590-149e483b1c50")
+		(property "Reference" "R3"
+			(at 174.244 94.234 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 179.07 93.98 0)
+		(property "Value" "R_US"
+			(at 173.99 93.98 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4113,8 +4034,8 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 179.07 97.79 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 174.244 96.774 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4123,7 +4044,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 179.07 97.79 0)
+			(at 173.99 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4131,286 +4052,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 179.07 97.79 0)
+		(property "Description" "Resistor, US symbol"
+			(at 173.99 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "35df4d70-a142-4cca-b25a-dac2d4d22cc5")
 		)
 		(pin "1"
-			(uuid "83ea927e-d1ca-4676-89fa-a063291197ec")
+			(uuid "dcd2eb2e-7f70-4913-bbe8-81af9d176dd3")
 		)
 		(instances
 			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J3-2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 179.07 123.19 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "cae5b857-6e8e-480e-88d5-fbaf21d60302")
-		(property "Reference" "J4-2"
-			(at 179.832 118.618 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 179.07 119.38 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 179.07 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 179.07 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 179.07 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "40cfb025-6325-49ae-8f8d-ec2b88f93473")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J4-2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 204.47 135.89 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d0f0ec86-8453-4718-bbab-5df046098d80")
-		(property "Reference" "J8-2"
-			(at 208.788 132.588 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 203.2001 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 204.47 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 204.47 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 204.47 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "274817b5-8b7e-4c1a-bac0-e76564c16448")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J8-2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 179.07 46.99 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d5910684-626c-4c0c-b4db-b30d415cd1e3")
-		(property "Reference" "J1-2"
-			(at 179.832 42.418 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 179.07 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 179.07 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 179.07 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 179.07 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0dbdf608-7385-442a-b1ff-f2640c779aad")
-		)
-		(instances
-			(project ""
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J1-2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 196.85 59.69 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d78dd07f-db23-4b82-af24-91403a6aae7b")
-		(property "Reference" "J5-1"
-			(at 193.548 55.372 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 199.39 60.9599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 196.85 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 196.85 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 196.85 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5ef7d533-5e1a-409c-b841-15408deca10c")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J5-1")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -4712,71 +4372,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 179.07 72.39 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f0338bba-5fb2-492d-b735-8d6da0b44e37")
-		(property "Reference" "J2-2"
-			(at 179.832 67.818 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 179.07 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 179.07 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 179.07 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 179.07 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "05c622ff-23e0-4271-ae8c-c9f2e840fff3")
-		)
-		(instances
-			(project "Interfaz_analogica"
-				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J2-2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Transistor_BJT:2N2219")
 		(at 201.93 97.79 0)
 		(unit 1)
@@ -4929,35 +4524,33 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Screw_Terminal_01x01")
-		(at 168.91 46.99 0)
+		(lib_id "Device:R_US")
+		(at 173.99 123.19 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ffebfd26-3d8d-446f-afb2-d3a3df5edfcc")
-		(property "Reference" "J1-1"
-			(at 165.608 42.672 0)
+		(uuid "fdd8ff7e-211f-43bb-9331-ee5161b9f8f6")
+		(property "Reference" "R4"
+			(at 174.244 119.634 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x01"
-			(at 171.45 48.2599 0)
+		(property "Value" "R_US"
+			(at 173.99 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_360271_1x01_Horizontal_ScrewM3.0_Boxed"
-			(at 168.91 46.99 0)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 174.244 122.174 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4966,7 +4559,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 168.91 46.99 0)
+			(at 173.99 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4974,22 +4567,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 168.91 46.99 0)
+		(property "Description" "Resistor, US symbol"
+			(at 173.99 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "2a3184f5-57ed-4ab1-904e-bf1e44b9b10e")
 		)
 		(pin "1"
-			(uuid "7149b855-eee6-47a5-bacb-da7e4831a3e1")
+			(uuid "813303f1-9071-4126-b464-0f83a4ebf3c3")
 		)
 		(instances
-			(project ""
+			(project "Interfaz_analogica"
 				(path "/96912705-3009-49f3-89bf-847b2dd7c494"
-					(reference "J1-1")
+					(reference "R4")
 					(unit 1)
 				)
 			)
