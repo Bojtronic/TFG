@@ -5714,6 +5714,46 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "5 voltios"
+		(exclude_from_sim no)
+		(at 805.434 194.31 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "05ab7720-c38d-4a48-82c7-ae2a3033b22a")
+	)
+	(text "-5 voltios"
+		(exclude_from_sim no)
+		(at 643.128 258.064 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "099bc032-306b-4624-94f0-a8d1cc81b04f")
+	)
+	(text "3.3 voltios"
+		(exclude_from_sim no)
+		(at 875.538 258.826 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "176295e8-df2b-486c-9ed4-0ec9b4554ee9")
+	)
+	(text "+15 voltios"
+		(exclude_from_sim no)
+		(at 806.196 267.208 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "18dd5d0e-624f-477c-be05-f185f83f55b7")
+	)
 	(text "Otro ESP32 u otros modulos"
 		(exclude_from_sim no)
 		(at 592.836 138.684 0)
@@ -5724,6 +5764,86 @@
 		)
 		(uuid "3a10c802-51c4-44f7-93dd-3e6f9ed47775")
 	)
+	(text "5 voltios"
+		(exclude_from_sim no)
+		(at 832.358 195.326 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "41e43e95-b57c-4a81-95e7-09accbdc7eb4")
+	)
+	(text "3.3 voltios"
+		(exclude_from_sim no)
+		(at 877.062 203.708 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "43eb94e8-ce89-4487-8369-b92ca0f986b7")
+	)
+	(text "3.3 voltios"
+		(exclude_from_sim no)
+		(at 371.856 217.17 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "5d53aaae-ac25-4f7d-951c-9cf41fde1400")
+	)
+	(text "5 voltios"
+		(exclude_from_sim no)
+		(at 25.146 177.546 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "5e335e81-939c-40e3-a076-feccfab69833")
+	)
+	(text "3.3 voltios"
+		(exclude_from_sim no)
+		(at 320.802 233.426 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "6ea2a1cc-ed7b-499b-8960-90db8afc9a76")
+	)
+	(text "-15 voltios"
+		(exclude_from_sim no)
+		(at 828.294 266.7 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "7c24444c-6c9b-441a-9577-4d8e59f7f207")
+	)
+	(text "5 voltios"
+		(exclude_from_sim no)
+		(at 754.38 194.31 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "82ba7309-cbd1-47c1-8cd1-e8d0e5d004ff")
+	)
+	(text "-5 voltios"
+		(exclude_from_sim no)
+		(at 719.582 258.064 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "a7504327-aedb-4c66-91a1-7c4caaf42b22")
+	)
 	(text "ESP32"
 		(exclude_from_sim no)
 		(at 594.106 85.09 0)
@@ -5733,6 +5853,46 @@
 			)
 		)
 		(uuid "ab9f0a94-32ba-4e46-ba8b-2a4a859cb7f2")
+	)
+	(text "+15 voltios"
+		(exclude_from_sim no)
+		(at 779.018 256.286 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "acd4b30c-8cb5-4599-86ae-abb2cb1a2586")
+	)
+	(text "0-10 voltios"
+		(exclude_from_sim no)
+		(at 1107.948 182.626 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "c165cecd-9c6b-41f4-84ee-27244c38125e")
+	)
+	(text "5 voltios"
+		(exclude_from_sim no)
+		(at 307.34 269.748 0)
+		(effects
+			(font
+				(size 2.286 2.286)
+			)
+		)
+		(uuid "c9a817d3-7a13-431e-9fe2-a5e54d21c718")
+	)
+	(text "+15 voltios"
+		(exclude_from_sim no)
+		(at 701.04 257.81 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+		)
+		(uuid "f2685548-b799-4efc-99ca-ad50f920a5b9")
 	)
 	(junction
 		(at 656.59 209.55)
@@ -15003,7 +15163,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 669.2901 365.76 0)
 			(effects
 				(font
@@ -15031,7 +15191,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 670.56 368.3 0)
 			(effects
 				(font
@@ -15208,7 +15368,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de aplicación cruce por cero"
 			(at 312.42 331.47 90)
 			(effects
 				(font
@@ -15419,7 +15579,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la aplicación salida analógica"
 			(at 821.69 354.33 90)
 			(effects
 				(font
@@ -15642,7 +15802,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x20"
+		(property "Value" "20 Pin 2.54mm Header Male Breakable"
 			(at 570.23 135.8899 0)
 			(effects
 				(font
@@ -15670,7 +15830,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x20, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Una fila recta de 20 conectores macho con 2.54mm entre pines - Largo del pin: 10.25mm"
 			(at 567.69 133.35 0)
 			(effects
 				(font
@@ -15831,7 +15991,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 182.88 90)
 			(effects
 				(font
@@ -15975,7 +16135,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la aplicación salida analógica"
 			(at 821.69 313.69 90)
 			(effects
 				(font
@@ -16177,7 +16337,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "330Ω  -  1/4 W"
 			(at 331.47 259.08 90)
 			(effects
 				(font
@@ -16247,7 +16407,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0515SC"
 			(at 709.422 247.396 90)
 			(effects
 				(font
@@ -16266,7 +16426,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 697.23 273.05 0)
 			(effects
 				(font
@@ -16276,7 +16436,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 5V input, 15V output, SIP"
 			(at 689.61 246.38 0)
 			(effects
 				(font
@@ -16389,7 +16549,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la aplicación puente H"
 			(at 567.69 270.51 90)
 			(effects
 				(font
@@ -16723,7 +16883,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 372.1099 369.57 0)
 			(effects
 				(font
@@ -16751,7 +16911,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 370.84 367.03 0)
 			(effects
 				(font
@@ -16863,7 +17023,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0515SC"
 			(at 819.15 247.396 90)
 			(effects
 				(font
@@ -16882,7 +17042,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 805.18 273.05 0)
 			(effects
 				(font
@@ -16892,7 +17052,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 5V input, 15V output, SIP"
 			(at 812.8 246.38 0)
 			(effects
 				(font
@@ -16940,7 +17100,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "L298HN"
+		(property "Value" "L298HN Multiwatt15 H"
 			(at 610.362 280.162 90)
 			(effects
 				(font
@@ -17069,7 +17229,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.irf.com/product-info/datasheets/data/irg4pf50w.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/116087/IRF/IRG4PF50W/56/1/IRG4PF50W.html"
 			(at 668.02 297.18 0)
 			(effects
 				(font
@@ -17123,7 +17283,7 @@
 				)
 			)
 		)
-		(property "Value" "Fujitsu_FTR-LYCA005x"
+		(property "Value" "Fujitsu FTR-LYCA005x"
 			(at 525.78 321.818 90)
 			(effects
 				(font
@@ -17142,7 +17302,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.fujitsu.com/sg/imagesgig5/ftr-ly.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/194908/FUJITSU/FTR-LY/293/1/FTR-LY.html"
 			(at 521.97 322.58 0)
 			(effects
 				(font
@@ -17270,13 +17430,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 251.4599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -17636,7 +17797,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 40.64 170.1799 0)
 			(effects
 				(font
@@ -17664,7 +17825,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 43.18 168.91 0)
 			(effects
 				(font
@@ -17776,7 +17937,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 472.4401 365.76 0)
 			(effects
 				(font
@@ -17804,7 +17965,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 473.71 368.3 0)
 			(effects
 				(font
@@ -17850,7 +18011,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 434.3401 365.76 0)
 			(effects
 				(font
@@ -17878,7 +18039,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 435.61 368.3 0)
 			(effects
 				(font
@@ -17990,7 +18151,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0505SC"
 			(at 724.662 247.396 90)
 			(effects
 				(font
@@ -18009,7 +18170,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 739.14 273.05 0)
 			(effects
 				(font
@@ -18019,7 +18180,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 5V input, 5V output, SIP"
 			(at 731.52 246.38 0)
 			(effects
 				(font
@@ -18066,7 +18227,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "7.5KΩ  -  1/4 W"
 			(at 971.55 240.03 90)
 			(effects
 				(font
@@ -18134,7 +18295,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 166.37 90)
 			(effects
 				(font
@@ -18467,7 +18628,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 1101.09 200.6599 0)
 			(effects
 				(font
@@ -18495,7 +18656,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 1103.63 199.39 0)
 			(effects
 				(font
@@ -18539,7 +18700,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 130.81 90)
 			(effects
 				(font
@@ -18607,7 +18768,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la aplicación salida analógica"
 			(at 805.18 354.33 90)
 			(effects
 				(font
@@ -18740,7 +18901,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 420.37 234.95 90)
 			(effects
 				(font
@@ -18809,7 +18970,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 621.0299 370.84 0)
 			(effects
 				(font
@@ -18837,7 +18998,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 619.76 368.3 0)
 			(effects
 				(font
@@ -18947,7 +19108,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de aplicación disparo con triac"
 			(at 372.11 290.83 90)
 			(effects
 				(font
@@ -19017,7 +19178,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 40.64 179.0699 0)
 			(effects
 				(font
@@ -19045,7 +19206,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 43.18 177.8 0)
 			(effects
 				(font
@@ -19089,7 +19250,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 200.66 90)
 			(effects
 				(font
@@ -19642,7 +19803,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la tensión aplicada a la bobina del rele"
 			(at 415.29 256.54 90)
 			(effects
 				(font
@@ -19712,7 +19873,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 449.5801 365.76 0)
 			(effects
 				(font
@@ -19740,7 +19901,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 450.85 368.3 0)
 			(effects
 				(font
@@ -20061,7 +20222,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 496.57 234.95 90)
 			(effects
 				(font
@@ -20277,7 +20438,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 148.59 90)
 			(effects
 				(font
@@ -20345,7 +20506,7 @@
 				)
 			)
 		)
-		(property "Value" "Fujitsu_FTR-LYCA005x"
+		(property "Value" "Fujitsu FTR-LYCA005x"
 			(at 411.48 321.818 90)
 			(effects
 				(font
@@ -20364,7 +20525,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.fujitsu.com/sg/imagesgig5/ftr-ly.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/194908/FUJITSU/FTR-LY/293/1/FTR-LY.html"
 			(at 407.67 322.58 0)
 			(effects
 				(font
@@ -20426,7 +20587,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 746.7601 365.76 0)
 			(effects
 				(font
@@ -20454,7 +20615,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 748.03 368.3 0)
 			(effects
 				(font
@@ -20696,7 +20857,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "7.5KΩ  -  1/4 W"
 			(at 972.82 214.63 90)
 			(effects
 				(font
@@ -21061,13 +21222,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 215.8999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -21194,7 +21356,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "10Ω  -  1/4 W"
 			(at 741.68 284.48 90)
 			(effects
 				(font
@@ -21283,7 +21445,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.irf.com/product-info/datasheets/data/irg4pf50w.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/116087/IRF/IRG4PF50W/56/1/IRG4PF50W.html"
 			(at 745.49 297.18 0)
 			(effects
 				(font
@@ -21405,7 +21567,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0303SC"
 			(at 872.49 247.396 90)
 			(effects
 				(font
@@ -21424,7 +21586,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 858.52 273.05 0)
 			(effects
 				(font
@@ -21434,7 +21596,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 3V3 output, SIP"
 			(at 866.14 246.38 0)
 			(effects
 				(font
@@ -21614,13 +21776,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 232.4099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -21896,7 +22059,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 40.64 187.9599 0)
 			(effects
 				(font
@@ -21924,7 +22087,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 43.18 186.69 0)
 			(effects
 				(font
@@ -22244,7 +22407,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "39Ω  -  1/4 W"
 			(at 952.5 200.66 90)
 			(effects
 				(font
@@ -22380,7 +22543,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x20"
+		(property "Value" "20 Pin 2.54mm Header Male Breakable"
 			(at 615.95 133.3501 0)
 			(effects
 				(font
@@ -22408,7 +22571,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x20, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Una fila recta de 20 conectores macho con 2.54mm entre pines - Largo del pin: 10.25mm"
 			(at 618.49 135.89 0)
 			(effects
 				(font
@@ -22570,7 +22733,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0515SC"
 			(at 786.892 247.396 90)
 			(effects
 				(font
@@ -22589,7 +22752,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 774.7 273.05 0)
 			(effects
 				(font
@@ -22599,7 +22762,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 5V input, 15V output, SIP"
 			(at 767.08 246.38 0)
 			(effects
 				(font
@@ -22712,7 +22875,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 332.7399 369.57 0)
 			(effects
 				(font
@@ -22740,7 +22903,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 331.47 367.03 0)
 			(effects
 				(font
@@ -22937,7 +23100,7 @@
 				)
 			)
 		)
-		(property "Value" "Fujitsu_FTR-LYCA005x"
+		(property "Value" "Fujitsu FTR-LYCA005x"
 			(at 487.68 321.818 90)
 			(effects
 				(font
@@ -22956,7 +23119,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.fujitsu.com/sg/imagesgig5/ftr-ly.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/194908/FUJITSU/FTR-LY/293/1/FTR-LY.html"
 			(at 483.87 322.58 0)
 			(effects
 				(font
@@ -23150,7 +23313,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la aplicación salida analógica"
 			(at 805.18 313.69 90)
 			(effects
 				(font
@@ -23285,7 +23448,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 236.22 90)
 			(effects
 				(font
@@ -23620,7 +23783,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 411.4801 365.76 0)
 			(effects
 				(font
@@ -23648,7 +23811,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 412.75 368.3 0)
 			(effects
 				(font
@@ -23692,7 +23855,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 370.84 260.35 90)
 			(effects
 				(font
@@ -23827,7 +23990,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 599.4399 370.84 0)
 			(effects
 				(font
@@ -23855,7 +24018,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 598.17 368.3 0)
 			(effects
 				(font
@@ -24507,7 +24670,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 113.03 90)
 			(effects
 				(font
@@ -24790,7 +24953,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 751.84 248.92 90)
 			(effects
 				(font
@@ -25193,13 +25356,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 126.9999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -25917,7 +26081,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de aplicación cruce por cero"
 			(at 326.39 295.91 90)
 			(effects
 				(font
@@ -26003,7 +26167,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.vishay.com/docs/88656/gbu8a.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/1923901/ONSEMI/GBU8J/249/1/GBU8J.html"
 			(at 330.2 312.42 0)
 			(effects
 				(font
@@ -26059,7 +26223,7 @@
 				)
 			)
 		)
-		(property "Value" "Fujitsu_FTR-LYCA005x"
+		(property "Value" "Fujitsu FTR-LYCA005x"
 			(at 449.58 321.818 90)
 			(effects
 				(font
@@ -26078,7 +26242,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.fujitsu.com/sg/imagesgig5/ftr-ly.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/194908/FUJITSU/FTR-LY/293/1/FTR-LY.html"
 			(at 445.77 322.58 0)
 			(effects
 				(font
@@ -26138,7 +26302,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 458.47 234.95 90)
 			(effects
 				(font
@@ -26348,7 +26512,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de aplicación cruce por cero"
 			(at 340.36 331.47 90)
 			(effects
 				(font
@@ -26482,7 +26646,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "10Ω  -  1/4 W"
 			(at 664.21 284.48 90)
 			(effects
 				(font
@@ -26550,7 +26714,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω  -  1/4 W"
 			(at 172.72 265.43 90)
 			(effects
 				(font
@@ -26618,7 +26782,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 674.37 248.92 90)
 			(effects
 				(font
@@ -26755,7 +26919,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 525.7801 365.76 0)
 			(effects
 				(font
@@ -26783,7 +26947,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 527.05 368.3 0)
 			(effects
 				(font
@@ -26829,7 +26993,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 1101.09 191.7699 0)
 			(effects
 				(font
@@ -26857,7 +27021,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 1103.63 190.5 0)
 			(effects
 				(font
@@ -27232,7 +27396,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x20"
+		(property "Value" "20 Pin 2.54mm Header Male Breakable"
 			(at 615.95 82.5501 0)
 			(effects
 				(font
@@ -27260,7 +27424,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x20, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Una fila recta de 20 conectores macho con 2.54mm entre pines - Largo del pin: 10.25mm"
 			(at 618.49 85.09 0)
 			(effects
 				(font
@@ -27357,13 +27521,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 163.8299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -27427,13 +27592,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 181.6099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -27691,7 +27857,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "7.5KΩ  -  1/4 W"
 			(at 971.55 163.83 90)
 			(effects
 				(font
@@ -27958,7 +28124,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 487.6801 365.76 0)
 			(effects
 				(font
@@ -27986,7 +28152,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 488.95 368.3 0)
 			(effects
 				(font
@@ -28031,7 +28197,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0305SC"
 			(at 314.96 247.396 90)
 			(effects
 				(font
@@ -28050,7 +28216,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 300.99 273.05 0)
 			(effects
 				(font
@@ -28174,7 +28340,7 @@
 				)
 			)
 		)
-		(property "Value" "R_Potentiometer_US"
+		(property "Value" "10KΩ Bourns 3266W"
 			(at 388.62 271.78 90)
 			(effects
 				(font
@@ -28192,7 +28358,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.alldatasheet.es/html-pdf/221234/BOURNS/3266/213/1/3266.html"
 			(at 388.62 265.43 0)
 			(effects
 				(font
@@ -28247,7 +28413,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 844.5501 365.76 0)
 			(effects
 				(font
@@ -28275,7 +28441,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 845.82 368.3 0)
 			(effects
 				(font
@@ -28385,7 +28551,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "39Ω  -  1/4 W"
 			(at 952.5 226.06 90)
 			(effects
 				(font
@@ -28519,7 +28685,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "39Ω  -  1/4 W"
 			(at 952.5 252.73 90)
 			(effects
 				(font
@@ -28587,7 +28753,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "270Ω  -  1/4 W"
 			(at 534.67 234.95 90)
 			(effects
 				(font
@@ -28940,7 +29106,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 510.5401 365.76 0)
 			(effects
 				(font
@@ -28968,7 +29134,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 511.81 368.3 0)
 			(effects
 				(font
@@ -29080,7 +29246,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 548.6401 365.76 0)
 			(effects
 				(font
@@ -29108,7 +29274,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 549.91 368.3 0)
 			(effects
 				(font
@@ -29153,7 +29319,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0515SC"
 			(at 845.82 247.396 90)
 			(effects
 				(font
@@ -29172,7 +29338,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 831.85 273.05 0)
 			(effects
 				(font
@@ -29182,7 +29348,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 5V input, 15V output, SIP"
 			(at 839.47 246.38 0)
 			(effects
 				(font
@@ -29427,7 +29593,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la tensión aplicada a la bobina del rele"
 			(at 491.49 256.54 90)
 			(effects
 				(font
@@ -29563,7 +29729,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "39Ω  -  1/4 W"
 			(at 952.5 176.53 90)
 			(effects
 				(font
@@ -29773,7 +29939,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "7.5KΩ  -  1/4 W"
 			(at 971.55 189.23 90)
 			(effects
 				(font
@@ -30040,7 +30206,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x03"
+		(property "Value" "Terminales de tornillo espaciados en 3.5mm"
 			(at 589.2799 370.84 0)
 			(effects
 				(font
@@ -30068,7 +30234,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Terminales de tornillo espaciados en 3.5mm"
 			(at 588.01 368.3 0)
 			(effects
 				(font
@@ -30677,7 +30843,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "100 Ω   -  1/4 W"
 			(at 110.49 218.44 90)
 			(effects
 				(font
@@ -30813,13 +30979,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 144.7799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -30959,13 +31126,14 @@
 				(justify left)
 			)
 		)
-		(property "Value" "560 Ω   1/4 W"
+		(property "Value" "560Ω  -  1/4 W"
 			(at 173.99 199.3899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
@@ -31159,7 +31327,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MEE1S0315SC"
+		(property "Value" "MEE1S0505SC"
 			(at 647.7 247.396 90)
 			(effects
 				(font
@@ -31178,7 +31346,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://power.murata.com/pub/data/power/ncl/kdc_mee1.pdf"
+		(property "Datasheet" "https://www.alldatasheet.com/html-pdf/528940/MURATA-PS/MEE1S0305DC/490/1/MEE1S0305DC.html"
 			(at 661.67 273.05 0)
 			(effects
 				(font
@@ -31188,7 +31356,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 3V3 input, 15V output, SIP"
+		(property "Description" "1W, 1000 VDC isolated DC/DC converter, 5V input, 5V output, SIP"
 			(at 654.05 246.38 0)
 			(effects
 				(font
@@ -31380,7 +31548,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la tensión aplicada a la bobina del rele"
 			(at 529.59 256.54 90)
 			(effects
 				(font
@@ -31723,7 +31891,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la tensión aplicada a la bobina del rele"
 			(at 453.39 256.54 90)
 			(effects
 				(font
@@ -31791,7 +31959,7 @@
 				)
 			)
 		)
-		(property "Value" "R_US"
+		(property "Value" "Depende de la aplicación puente H"
 			(at 567.69 278.13 90)
 			(effects
 				(font
@@ -32090,7 +32258,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Screw_Terminal_01x20"
+		(property "Value" "20 Pin 2.54mm Header Male Breakable"
 			(at 570.23 85.0899 0)
 			(effects
 				(font
@@ -32118,7 +32286,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generic screw terminal, single row, 01x20, script generated (kicad-library-utils/schlib/autogen/connector/)"
+		(property "Description" "Una fila recta de 20 conectores macho con 2.54mm entre pines - Largo del pin: 10.25mm"
 			(at 567.69 82.55 0)
 			(effects
 				(font
