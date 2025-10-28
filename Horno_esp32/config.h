@@ -76,6 +76,10 @@ extern const char* password;
 extern const char* serverURL;
 extern const char* commandsURL;
 
+// ================= WHATSAPP =================
+extern String numeroCelular;
+extern String apiKey;
+
 // ================= DECLARACIONES GLOBALES =================
 // Termocuplas
 extern Adafruit_MAX31855 thermocouple1; // tanque
@@ -135,6 +139,9 @@ enum MensajeSistema {
   MANUAL_0,
   DESCONOCIDO
 };
+
+// Mensajes que se envían por WhatsApp
+extern const char* MENSAJES[];
 
 extern EstadoSistema estadoActual;
 extern MensajeSistema mensajeActual;

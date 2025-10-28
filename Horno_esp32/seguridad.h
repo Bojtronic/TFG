@@ -2,6 +2,7 @@
 #define SEGURIDAD_H
 
 void apagarTodo();
+void enviarWhatsapp(String mensaje);
 void verificarSeguridad();
 
 #endif

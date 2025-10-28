@@ -7,6 +7,10 @@ const char* password = "7012digi19";
 const char* serverURL = "https://tfg-server-ecoview.onrender.com/api/message";
 const char* commandsURL = "https://tfg-server-ecoview.onrender.com/api/esp32-commands";
 
+// ================= WHATSAPP =================
+String numeroCelular = "+506XXXXXXXX";
+String apiKey = "REPLAZAR_CON_API_KEY";
+
 // ================= DEFINICIÓN DE VARIABLES GLOBALES =================
 // Termocuplas
 Adafruit_MAX31855 thermocouple1(MAX_CLK, MAX_CS1, MAX_MISO);
@@ -111,6 +115,28 @@ NexTouch *nex_listen_list[] = {
   &bomba1Btn,
   &bomba2Btn,
   NULL
+};
+
+// Mensajes que se envían por WhatsApp
+const char* MENSAJES[] = {
+    "SISTEMA APAGADO",                                                        // 0
+    "Horno y camara calientes, Nivel del tanque mas de la mitad",            // 1
+    "Hay presion de agua, Horno y camara calientes, Nivel del tanque está entre vacio y mitad", // 2
+    "Horno y camara calientes, Nivel del tanque menor a la mitad",           // 3
+    "Horno y camara calientes, Nivel del tanque mayor a la mitad",           // 4
+    "Horno y camara calientes, Nivel del tanque lleno",                      // 5
+    "Horno y camara frios, Nivel del tanque menor a la mitad",               // 6
+    "Horno y camara frios, Nivel del tanque mayor a la mitad",               // 7
+    "GRAVE: No hay presion de agua, Horno y camara DEMASIADO calientes, Tanque vacio", // 8
+    "No hay presion de agua, Nivel de tanque vacio, Horno caliente",         // 9
+    "No hay presion de agua, El tanque tiene algo de agua, Horno caliente",  // 10
+    "Tanque de agua esta muy caliente y no esta lleno, Horno y camara calientes", // 11
+    "Tanque de agua esta muy caliente y no esta lleno, Horno y camara frios", // 12
+    "Horno caliente, El tanque no esta lleno",                               // 13
+    "Horno caliente, El tanque esta lleno",                                  // 14
+    "Camara de humo caliente, El tanque no esta lleno",                      // 15
+    "Modo MANUAL activado",                                                  // 16
+    "DESCONOCIDO"                                                            // 17
 };
 
 // ================= FUNCIÓN DE CONFIGURACIÓN DE PINES =================
