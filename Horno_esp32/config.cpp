@@ -8,8 +8,8 @@ const char* serverURL = "https://tfg-server-ecoview.onrender.com/api/message";
 const char* commandsURL = "https://tfg-server-ecoview.onrender.com/api/esp32-commands";
 
 // ================= WHATSAPP =================
-String numeroCelular = "+506XXXXXXXX";
-String apiKey = "REPLAZAR_CON_API_KEY";
+String numeroCelular = "50664565786";
+String apiKey = "6395997";
 
 // ================= DEFINICIÓN DE VARIABLES GLOBALES =================
 // Termocuplas
