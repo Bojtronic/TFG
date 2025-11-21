@@ -127,14 +127,13 @@ void leerNiveles() {
   // - bajo, medio y alto cerrados -> 100%
   // (Si hubiera un caso inconsistente, se considera vacío para inducir al estado de EMERGENCIA)
 
-  //esta para logica negativa en el que 0 es cerrado y 1 abierto
-  if (s1 && s2 && s3) {
+  if (!s1 && !s2 && !s3) {
     nivelTanque = 0;      // Vacío
-  } else if (!s1 && s2 && s3) {
+  } else if (s1 && !s2 && !s3) {
     nivelTanque = 30;     // Bajo
-  } else if (!s1 && !s2 && s3) {
+  } else if (s1 && s2 && !s3) {
     nivelTanque = 60;     // Medio
-  } else if (!s1 && !s2 && !s3) {
+  } else if (s1 && s2 && s3) {
     nivelTanque = 100;    // Lleno
   } else {
     // Caso inconsistente 
@@ -144,9 +143,9 @@ void leerNiveles() {
 
 void leerPulsadores() {
   // Lógica negativa: LOW cuando está presionado
-  bool startButton  = (digitalRead(START_BTN)  == LOW);
-  bool stopButton   = (digitalRead(STOP_BTN)   == LOW);
-  bool manualButton = (digitalRead(MANUAL_BTN) == LOW);
+  bool startButton  = (digitalRead(START_BTN)  == HIGH);
+  bool stopButton   = (digitalRead(STOP_BTN)   == HIGH);
+  bool manualButton = (digitalRead(MANUAL_BTN) == HIGH);
 
   // En estado de emergencia no se puede cambiar el estado con los botones
   if(estadoActual != EMERGENCIA){ 
@@ -154,15 +153,15 @@ void leerPulsadores() {
     // Flanco de HIGH -> LOW para cada botón
     if (startButton && lastStartState == HIGH && !stopButton && !manualButton) {
       estadoActual = PROCESANDO;
-      //Serial.println("📌 Botón START presionado");
+      Serial.println("📌 Botón START presionado");
     }
     else if (stopButton && lastStopState == HIGH && !startButton && !manualButton) {
       estadoActual = DETENER;
-      //Serial.println("📌 Botón STOP presionado");
+      Serial.println("📌 Botón STOP presionado");
     }
     else if (manualButton && lastManualState == HIGH && !startButton && !stopButton) {
       estadoActual = MANUAL;
-      //Serial.println("📌 Botón MANUAL presionado");
+      Serial.println("📌 Botón MANUAL presionado");
     }
     
     // Actualizar últimas lecturas

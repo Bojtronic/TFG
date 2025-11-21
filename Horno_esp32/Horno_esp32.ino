@@ -38,7 +38,7 @@ void setup() {
   */
 }
 
-//int numTest = 0;
+int numTest = 0;
 
 
 // ================= BUCLE PRINCIPAL =================
@@ -52,7 +52,7 @@ void loop() {
   if (now - lastReadTime >= LECTURA_INTERVAL) {
     lastReadTime = now;
     
-    /*
+    
     if(numTest < 4){
       numTest++;
     }
@@ -60,11 +60,12 @@ void loop() {
       numTest = 0;
     }
     testProcesando(numTest);
-    */
+    
     
     //ejecutarPruebas();
 
-    leerSensores();
+    leerNiveles();
+    //leerSensores();
     verificarSeguridad();
     controlarSistema();
     
