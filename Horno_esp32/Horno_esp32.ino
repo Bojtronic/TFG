@@ -64,7 +64,8 @@ void loop() {
     
     //ejecutarPruebas();
 
-    leerNiveles();
+    //leerNiveles();
+    leerPresion();
     //leerSensores();
     verificarSeguridad();
     controlarSistema();
