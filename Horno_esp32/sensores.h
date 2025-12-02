@@ -5,6 +5,8 @@
 
 void leerSensores();
 void inicializarTermocuplas();
+void verificarErrorTermocupla(int numero, Adafruit_MAX31855 &termocupla);
+void diagnosticoCompletoTermocuplas();
 bool verificarSensoresTemperatura();
 void leerTemperaturas();
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero);

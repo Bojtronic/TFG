@@ -34,6 +34,105 @@ void inicializarTermocuplas() {
   */
 }
 
+void verificarErrorTermocupla(int numero, Adafruit_MAX31855 &termocupla) {
+  uint8_t error = termocupla.readError();
+  
+  if (error) {
+    Serial.print("Termocupla ");
+    Serial.print(numero);
+    Serial.print(" - Error: ");
+    
+    // Verificar usando las constantes correctas
+    if (error == MAX31855_FAULT_OPEN) {
+      Serial.println("CIRCUITO ABIERTO - Termocupla desconectada");
+    } 
+    else if (error == MAX31855_FAULT_SHORT_GND) {
+      Serial.println("CORTOCIRCUITO A TIERRA");
+    }
+    else if (error == MAX31855_FAULT_SHORT_VCC) {
+      Serial.println("CORTOCIRCUITO A VCC");
+    }
+    else if (error == MAX31855_FAULT_NONE) {
+      // Este caso no debería entrar aquí ya que error != 0
+      Serial.println("SIN ERROR (esto no debería aparecer)");
+    }
+    else {
+      Serial.print("ERROR DESCONOCIDO - Código: 0x");
+      Serial.println(error, HEX);
+    }
+  }
+}
+
+void diagnosticoCompletoTermocuplas() {
+  Serial.println("\n=== DIAGNÓSTICO COMPLETO TERMOCUPLAS ===");
+  
+  // Verificar pines CS
+  Serial.println("Pines CS configurados:");
+  Serial.print("CS1 (Tanque): Pin ");
+  Serial.println(MAX_CS1);
+  Serial.print("CS2 (Horno): Pin ");
+  Serial.println(MAX_CS2);
+  Serial.print("CS3 (Camara): Pin ");
+  Serial.println(MAX_CS3);
+  Serial.print("CS4 (Salida): Pin ");
+  Serial.println(MAX_CS4);
+  
+  // Verificar inicialización
+  Serial.println("\nEstado de inicialización:");
+  bool estados[4] = {
+    thermocouple1.begin(),
+    thermocouple2.begin(),
+    thermocouple3.begin(),
+    thermocouple4.begin()
+  };
+  
+  for (int i = 0; i < 4; i++) {
+    Serial.print("Termocupla ");
+    Serial.print(i+1);
+    Serial.print(": ");
+    Serial.println(estados[i] ? "INICIALIZADA" : "FALLA INICIALIZACIÓN");
+  }
+  
+  // Leer temperaturas y errores
+  Serial.println("\nLecturas actuales:");
+  Adafruit_MAX31855* termocuplas[4] = {
+    &thermocouple1, &thermocouple2, &thermocouple3, &thermocouple4
+  };
+  
+  for (int i = 0; i < 4; i++) {
+    Serial.print("TC");
+    Serial.print(i+1);
+    Serial.print(": ");
+    
+    // Intentar lectura
+    double temp = termocuplas[i]->readCelsius();
+    uint8_t error = termocuplas[i]->readError();
+    
+    if (isnan(temp)) {
+      Serial.print("TEMP=NAN, ");
+    } else {
+      Serial.print(temp);
+      Serial.print("°C, ");
+    }
+    
+    Serial.print("ERROR=0x");
+    Serial.print(error, HEX);
+    
+    if (error == MAX31855_FAULT_NONE) {
+      Serial.println(" (Ninguno)");
+    } else if (error == MAX31855_FAULT_OPEN) {
+      Serial.println(" (Circuito abierto)");
+    } else if (error == MAX31855_FAULT_SHORT_GND) {
+      Serial.println(" (Corto a tierra)");
+    } else if (error == MAX31855_FAULT_SHORT_VCC) {
+      Serial.println(" (Corto a VCC)");
+    } else {
+      Serial.println(" (Desconocido)");
+    }
+  }
+  Serial.println("=====================================\n");
+}
+
 bool verificarSensoresTemperatura() {
   // El valor -999.0 indica error en la lectura
   for (int i = 0; i < 4; i++) {
@@ -49,6 +148,13 @@ void leerTemperaturas() {
   temperaturas[1] = leerTermocupla(thermocouple2, 2); // horno
   temperaturas[2] = leerTermocupla(thermocouple3, 3); // camara
   temperaturas[3] = leerTermocupla(thermocouple4, 4); // salida
+
+  verificarErrorTermocupla(1, thermocouple1);
+  verificarErrorTermocupla(2, thermocouple2);
+  verificarErrorTermocupla(3, thermocouple3);
+  verificarErrorTermocupla(4, thermocouple4);
+
+  //diagnosticoCompletoTermocuplas();
 }
 
 double leerTermocupla(Adafruit_MAX31855 &sensor, int numero) {
@@ -153,15 +259,15 @@ void leerPulsadores() {
     // Flanco de HIGH -> LOW para cada botón
     if (startButton && lastStartState == HIGH && !stopButton && !manualButton) {
       estadoActual = PROCESANDO;
-      Serial.println("📌 Botón START presionado");
+      //Serial.println("📌 Botón START presionado");
     }
     else if (stopButton && lastStopState == HIGH && !startButton && !manualButton) {
       estadoActual = DETENER;
-      Serial.println("📌 Botón STOP presionado");
+      //Serial.println("📌 Botón STOP presionado");
     }
     else if (manualButton && lastManualState == HIGH && !startButton && !stopButton) {
       estadoActual = MANUAL;
-      Serial.println("📌 Botón MANUAL presionado");
+      //Serial.println("📌 Botón MANUAL presionado");
     }
     
     // Actualizar últimas lecturas

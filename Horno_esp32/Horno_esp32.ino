@@ -59,13 +59,18 @@ void loop() {
     else{
       numTest = 0;
     }
+
+    //leerNiveles();
+    //leerPresion();
+    leerTemperaturas();
+    
     testProcesando(numTest);
     
     
     //ejecutarPruebas();
 
-    //leerNiveles();
-    leerPresion();
+    
+
     //leerSensores();
     verificarSeguridad();
     controlarSistema();

@@ -13,7 +13,7 @@
 
 // CS individuales para cada MAX31855
 #define MAX_CS1   22
-#define MAX_CS2   23
+#define MAX_CS2   26  //23
 #define MAX_CS3   5
 #define MAX_CS4   21
 
