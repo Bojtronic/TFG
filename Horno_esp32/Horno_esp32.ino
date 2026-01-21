@@ -62,7 +62,7 @@ void loop() {
 
     //leerNiveles();
     //leerPresion();
-    leerTemperaturas();
+    //leerTemperaturas();
     
     testProcesando(numTest);
     

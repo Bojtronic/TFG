@@ -57,40 +57,40 @@ void testProcesando(int caso) {
   switch (caso) {
     case 0:
       Serial.println("🔹 TEST: PROCESANDO - Nivel medio, horno caliente");
-      //temperaturas[0] = 50;   // Tanque (MAX 70°C)
-      //temperaturas[1] = 100;  // Horno caliente (MIN 35°C, MAX 200°C)
-      //temperaturas[2] = 90;   // Camara (MAX 150°C)
-      //temperaturas[3] = 50;   // Salida de agua caliente para el usuario
+      temperaturas[0] = 50;   // Tanque (MAX 70°C)
+      temperaturas[1] = 100;  // Horno caliente (MIN 35°C, MAX 200°C)
+      temperaturas[2] = 90;   // Camara (MAX 150°C)
+      temperaturas[3] = 50;   // Salida de agua caliente para el usuario
       nivelTanque     = 60;   // Medio (40–80%)
       presionActual   = 5;    // Correcta (MIN 1 bar)
       break;
       
     case 1:
       Serial.println("🔹 TEST: PROCESANDO - Tanque lleno, máxima eficiencia");
-      //temperaturas[0] = 65;   // Tanque cerca del máximo
-      //temperaturas[1] = 150;  // Horno muy caliente
-      //temperaturas[2] = 120;  // Camara caliente
-      //temperaturas[3] = 62;   // Agua casi en temperatura objetivo
+      temperaturas[0] = 65;   // Tanque cerca del máximo
+      temperaturas[1] = 150;  // Horno muy caliente
+      temperaturas[2] = 120;  // Camara caliente
+      temperaturas[3] = 62;   // Agua casi en temperatura objetivo
       nivelTanque     = 95;   // Casi lleno (>80%)
       presionActual   = 6;    // Buena presión
       break;
       
     case 2:
       Serial.println("🔹 TEST: PROCESANDO - Nivel bajo, necesita llenado");
-      //temperaturas[0] = 45;   // Tanque 
-      //temperaturas[1] = 80;   // Horno caliente
-      //temperaturas[2] = 70;   // Camara caliente
-      //temperaturas[3] = 40;   // Agua fría
+      temperaturas[0] = 45;   // Tanque 
+      temperaturas[1] = 80;   // Horno caliente
+      temperaturas[2] = 70;   // Camara caliente
+      temperaturas[3] = 40;   // Agua fría
       nivelTanque     = 20;   // Bajo (<40%)
       presionActual   = 4;    // Presión adecuada
       break;
       
     case 3:
       Serial.println("🔹 TEST: PROCESANDO - Temperatura límite tanque");
-      //temperaturas[0] = 68;   // Tanque cerca del máximo (70°C)
-      //temperaturas[1] = 120;  // Horno caliente
-      //temperaturas[2] = 100;  // Camara caliente
-      //temperaturas[3] = 65;   // Agua caliente
+      temperaturas[0] = 68;   // Tanque cerca del máximo (70°C)
+      temperaturas[1] = 120;  // Horno caliente
+      temperaturas[2] = 100;  // Camara caliente
+      temperaturas[3] = 65;   // Agua caliente
       nivelTanque     = 70;   // Medio-alto
       presionActual   = 5;    // Presión normal
       break;
